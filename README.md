@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Getting Started
 
 Installing the tools needed to leverage this project.
