@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Getting Started
 
 Installing the tools needed to leverage this project.
@@ -104,18 +105,10 @@ Master should always be stable, versioned, and fully functional.  New developmen
 ```
 git fetch
 git checkout master
-git pull
+
 git checkout <<branch_name>>
 git pull
 git rebase master
 git push --force-with-lease
 ```
 
-
-### TODO
-1. Package devops-application into an usable artifact
-   * e.g., docker container
-1. Define and implement version number strategy
-   * e.g., semantic versioning, tying to Paxata releases, etc.
-1. Set up Continuous Build for Master and PR branches
-1. Publish build artifacts to a Docker repository
