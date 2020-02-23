@@ -1,0 +1,11 @@
+# A Configmap of ARNs and whatnot that are specific to this region
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: region-config
+  namespace: pax-operator
+data:
+  AWS-ZONE-TYPE: "public"
+  AWS-TLS-CERTIFICATE-ARN: arn:aws:acm:us-east-1:365762923425:certificate/aabe96cb-8f94-46e7-971c-5a66cd82b788
+  DNS-DOMAIN-SUFFIX: paxata.com
+  INTERNAL-ELB: "false"

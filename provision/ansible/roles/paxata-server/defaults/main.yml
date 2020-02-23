@@ -1,0 +1,9 @@
+---
+#Todo,  put these into group or host vars
+paxata_user: paxata
+paxata_home: /usr/local/paxata/server
+
+paxata_version: "2020.1"
+pax_server_ver: paxata-server-{{paxata_version}}
+
+tmp_dir: /usr/local/paxata/server/tmp

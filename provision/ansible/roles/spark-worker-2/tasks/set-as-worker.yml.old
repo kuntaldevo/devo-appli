@@ -1,0 +1,12 @@
+---
+# deprecated
+- name: Copy spark-worker startup script
+  copy:
+    src: "{{ item }}"
+    dest: /etc/init.d/{{ item }}
+    owner: root
+    group: root
+    mode: 0755
+    backup: true
+  with_items:
+    - spark-worker

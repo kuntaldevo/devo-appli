@@ -1,0 +1,8 @@
+---
+
+- name:
+  replace:
+    path: /etc/nginx/conf.d/default.conf
+    regexp: '({instana-api-key})'
+    replace: "{{instana_api_key}}"
+    backup: yes

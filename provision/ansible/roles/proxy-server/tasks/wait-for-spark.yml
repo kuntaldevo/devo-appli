@@ -1,0 +1,16 @@
+
+- name: Copy wait for Spark master.sh
+  copy:
+    src: wait-for-spark-master.sh
+    dest: /etc/nginx/wait-for-spark-master.sh
+    owner: root
+    group: root
+    mode: 0555
+    backup: true
+
+
+- name:  Add a call to wait for spark
+  lineinfile:
+    path: /usr/lib/systemd/system/nginx.service
+    insertafter: '\[Service\]'
+    line: 'ExecStartPre=/etc/nginx/wait-for-spark-master.sh'

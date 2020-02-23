@@ -1,0 +1,10 @@
+# Personally added this Kustomization File so the parent doesnt need to explicitly mention every file
+resources:
+  - configMap.yaml
+  - daemonset.yaml
+  - secret.yaml
+
+patchesStrategicMerge:
+- patch-daemonset.yaml
+- patch-toleration-all-nodes.yaml
+- patch-secret.yaml

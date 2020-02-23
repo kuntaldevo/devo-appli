@@ -1,0 +1,13 @@
+---
+
+
+- name: Add Simple auth HDFS Block to px.properties
+  blockinfile:
+    path: "{{ paxata_home }}/config/px.properties"
+    marker: "# {mark} HDFS"
+    block: |
+      px.library.storage.fs.type=simple
+      px.library.storage.fs.distribution=cdh5
+      px.library.storage.fs.rootDirectory=/user/datalibrary/performance-sbx/
+      px.library.storage.fs.fs=hdfs://qa-hdp1.paxatadev.com:8020
+      px.library.storage.fs.user=hdfs

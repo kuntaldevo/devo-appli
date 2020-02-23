@@ -1,0 +1,12 @@
+[paxata-repo]
+humanname=Paxata S3 Release Repo
+name=Paxata S3 Release Repo
+baseurl=http://paxata-repos-int.s3-website-us-west-2.amazonaws.com/release/
+enabled=1
+gpgcheck=0
+protect=0
+autorefresh=1
+metadata_expire=30s
+s3_enabled=1
+key_id=AKIAIBDL3W7YUQDJPFHA
+secret_key=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

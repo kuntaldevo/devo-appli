@@ -1,0 +1,4 @@
+---
+
+- name: Get the SSL Certificates from the Vault and install them
+  import_tasks: install-s3-vault.yml

@@ -1,0 +1,15 @@
+resources:
+- pax-installation.yaml
+
+
+configurations:
+- kustomizeconfig/pax-installation.yaml
+
+vars:
+  - name: INSTALLATION-NAME
+    objref:
+      kind: PaxInstallation
+      name: pax-installation
+      apiVersion: paxata.com/v1
+    fieldref:
+      fieldpath: metadata.name

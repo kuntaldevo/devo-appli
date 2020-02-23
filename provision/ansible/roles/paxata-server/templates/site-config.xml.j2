@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"                             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+  <context:property-placeholder
+      location="classpath:/database.properties,classpath:/zookeeper.properties,classpath:/hornetq.properties,classpath:/px.properties,classpath:/paxata/paxata.properties"/>
+
+  <!-- For on-site customizations. -->
+  <!--
+  <bean id="tempStorage" class="com.paxata.services.fs.PXLocalFileSystem" scope="singleton">
+    <constructor-arg value="${px.root.dir}"/>
+  </bean>
+  -->
+  
+   <!--Sentry secured config below Only use either the config above or below START-->
+{# {% if ansible_local.ec2.tag.cluster_name in ["prod-e1", "prod-e2", "prod-e3", "qa-c1", "dev-c1", "qa-s1"] %}
+  {% if kerberos_hadoop is defined and kerberos_hadoop  %}
+    <bean class="com.paxata.library.hadoop.hive.HiveProcessor" init-method="initialize">
+    <property name="connectUrl" value="jdbc:hive2://{{ groups['hive_metastore'][0] }}:10000/default;principal=hive/{{ groups['hive_metastore'][0] }}@{{ ansible_local.ec2.tag.kerberos_realm }}"/>
+        <property name="defaultProcessor" value="false"/>
+        <property name="username" value="datalibrary"/>
+        <property name="password" value="{{ datalibrary_pw }}"/>
+    </bean>
+  {% else %} 
+  <!-- need to check preprod -->
+    {% if ansible_local.ec2.tag.cluster_name in ["dev-c2", "dev-c3"] %}
+      <bean class="com.paxata.library.hadoop.hive.HiveProcessor" init-method="initialize">
+        <property name="connectUrl" value="jdbc:hive2://wa-cms.paxatadev.com:10000/"/>
+        <property name="defaultProcessor" value="false"/>
+      </bean>
+    {% elif ansible_local.ec2.tag.cluster_name in ["prod-e1", "prod-e2", "prod-e3"] %}
+      {% if active_prod is defined and active_prod  %}
+      <bean class="com.paxata.library.hadoop.hive.HiveProcessor" init-method="initialize">
+        <property name="connectUrl" value="jdbc:hive2://{{ hive_metastore_server }}:10000/"/>
+        <property name="defaultProcessor" value="false"/>
+        <property name="username" value="datalibrary"/>
+        <property name="password" value="{{ datalibrary_pw }}"/>
+      </bean>
+      {% else %}
+      <!--
+      <bean class="com.paxata.library.hadoop.hive.HiveProcessor" init-method="initialize">
+        <property name="connectUrl" value="jdbc:hive2://{{ hive_metastore_server }}:10000/"/>
+        <property name="defaultProcessor" value="false"/>
+        <property name="username" value="datalibrary"/>
+        <property name="password" value="{{ datalibrary_pw }}"/>
+      </bean>
+      -->
+      {% endif %}
+<!-- endif for cluster_name -->
+    {% endif %}
+<!-- endif for kerberos -->
+  {% endif %}
+{% else %}
+  <bean class="com.paxata.library.hadoop.hive.HiveProcessor" init-method="initialize">
+    <!--    <property name="connectUrl" value="jdbc:hive2://wa-nn1.paxatadev.com:10000/"/> -->
+    <property name="connectUrl" value="jdbc:hive2://wa-cms.paxatadev.com:10000/"/>
+    <property name="defaultProcessor" value="false"/>
+    <!--
+    <property name="username" value="datalibrary"/>
+    <property name="password" value="49jXKeJiNCgsPiF"/>
+    -->
+  </bean>
+{% endif %}
+
+    <!--
+  <bean class="com.paxata.library.hadoop.impala.ImpalaProcessor" init-method="initialize">
+    <property name="connectUrl" value="jdbc:hive2://{{ ansible_local.ec2.tag.cluster_name }}-cms.paxata.com:21050/;auth=noSasl"/>
+    <property name="defaultProcessor" value="true"/>
+  </bean>
+  -->
+
+   <!--Configure Ldap Service-->
+{% if ansible_local.ec2.tag.cluster_name in ["prod-e1", "prod-e2", "prod-e3"] %}
+  {% if active_prod is defined and active_prod  %}
+  <bean class="com.paxata.library.expose.ldap.OpenLdapServiceImpl" init-method="initialize">
+    <constructor-arg name="server" value="ldapserver-ldap1.paxata.com"/>
+    <constructor-arg name="port" value="389"/>
+    <constructor-arg name="bindUser" value="cn=Manager,dc=paxata,dc=com"/>
+    <constructor-arg name="bindPassword" value="qju$Q:5'K8Z#_{q"/>
+    <constructor-arg name="baseDN" value="dc=paxata,dc=com"/>
+    <constructor-arg name="username" value="datalibrary"/>
+    <constructor-arg name="password" value="8dApquDm0Z"/>
+  </bean>
+  {% else %}
+    <!--
+  <bean class="com.paxata.library.expose.ldap.OpenLdapServiceImpl" init-method="initialize">
+  <constructor-arg name="server" value="{{ openldap_server }}"/>
+      <constructor-arg name="port" value="389"/>
+      <constructor-arg name="bindUser" value="cn=Manager,dc=paxata,dc=com"/>
+      <constructor-arg name="bindPassword" value="qju$Q:5'K8Z#_{q"/>
+      <constructor-arg name="baseDN" value="dc=paxata,dc=com"/>
+      <constructor-arg name="username" value="datalibrary"/>
+      <constructor-arg name="password" value="{{ datalibrary_pw }}"/>
+  </bean>
+-->
+   {% endif %}
+{% elif ansible_local.ec2.tag.cluster_name in ["qa-c1", "qa-s1"] %}
+  {% if groups['openldap'] is defined %}
+  <bean class="com.paxata.library.expose.ldap.OpenLdapServiceImpl" init-method="initialize">
+  <constructor-arg name="server" value="{{ groups['openldap'][0] }}"/>
+    <constructor-arg name="port" value="389"/>
+    <constructor-arg name="bindUser" value="cn=Manager,dc=paxatadev,dc=com"/>
+    <constructor-arg name="bindPassword" value="paxata123"/>
+    <constructor-arg name="baseDN" value="dc=paxatadev,dc=com"/>
+    <constructor-arg name="username" value="datalibrary"/>
+    <constructor-arg name="password" value="{{ datalibrary_pw }}"/>
+  </bean>
+  {% else %}
+  <bean class="com.paxata.library.expose.ldap.OpenLdapServiceImpl" init-method="initialize">
+  <constructor-arg name="server" value="{{ openldap_server }}"/>
+    <constructor-arg name="port" value="389"/>
+    <constructor-arg name="bindUser" value="cn=Manager,dc=paxatadev,dc=com"/>
+    <constructor-arg name="bindPassword" value="paxata123"/>
+    <constructor-arg name="baseDN" value="dc=paxatadev,dc=com"/>
+    <constructor-arg name="username" value="datalibrary"/>
+    <constructor-arg name="password" value="{{ datalibrary_pw }}"/>
+  </bean>
+
+  <!--
+  <bean class="com.paxata.library.expose.ldap.OpenLdapServiceImpl" init-method="initialize">
+    <constructor-arg name="server" value="ldapdev-ldap.paxatadev.com"/>
+    <constructor-arg name="port" value="389"/>
+    <constructor-arg name="bindUser" value="cn=Manager,dc=paxatadev,dc=com"/>
+    <constructor-arg name="bindPassword" value="paxata123"/>
+    <constructor-arg name="baseDN" value="cn=PAXATADEV.COM,cn=krb5,dc=paxatadev,dc=com"/>
+    <constructor-arg name="username" value="datalibrary"/>
+    <constructor-arg name="password" value="49jXKeJiNCgsPiF"/>
+  </bean>
+  -->
+  {% endif %}
+{% endif %}
+
+<!-- need to check preprod -->
+{% if ansible_local.ec2.tag.cluster_name in ["prod-e1", "prod-e2", "prod-e3"] %}
+  {% if active_prod is defined and active_prod  %}
+  <bean class="com.paxata.services.locks.ZooKeeperLockService" init-method="initialize">
+    <property name="rootNode" value="/paxata/locks"></property>
+    <property name="hosts" value="{{ cdh4_zookeeper }}"></property>
+  </bean>
+  {% else %}
+<!--
+  <bean class="com.paxata.services.locks.ZooKeeperLockService" init-method="initialize">
+    <property name="rootNode" value="/paxata/locks"></property>
+    <property name="hosts" value="{{ cdh4_zookeeper }}"></property>
+  </bean>
+-->
+  {% endif %}
+{% elif ansible_local.ec2.tag.cluster_name in ["qa-c1", "qa-s1"] %}
+  <bean class="com.paxata.services.locks.ZooKeeperLockService" init-method="initialize">
+    <property name="rootNode" value="/paxata/locks"></property>
+    <property name="hosts" value="wa-nn1.paxatadev.com:2181"></property>
+  </bean>
+{% elif ansible_local.ec2.tag.cluster_name in ["dev-c2", "dev-c3"] %}
+  <bean class="com.paxata.services.locks.ZooKeeperLockService" init-method="initialize">
+    <property name="rootNode" value="/paxata/locks"></property>
+    <property name="hosts" value="wa-cms.paxatadev.com:2181"></property>
+  </bean>
+{% endif %}
+
+{% if ansible_local.ec2.tag.cluster_name in ["prod-e1", "prod-e2", "prod-e3", "qa-c1"]  %}
+<!--This has to match the config property, hive.sentry.server, in the hadoop cluster-->
+  {% if active_prod is defined and active_prod  %}
+  <bean class="com.paxata.library.expose.sentry.SentryServiceCDH4Impl" init-method="initialize" scope="singleton">
+      <constructor-arg name="policyFile" value="sentry/sentry-provider.ini"/>
+      <constructor-arg name="sentryServer" value="server1"/>
+      <constructor-arg name="username" value="datalibrary"/>
+  </bean>
+  {% else %}
+<!--
+  <bean class="com.paxata.library.expose.sentry.SentryServiceCDH4Impl" init-method="initialize" scope="singleton">
+      <constructor-arg name="policyFile" value="sentry/sentry-provider.ini"/>
+      <constructor-arg name="sentryServer" value="server1"/>
+      <constructor-arg name="username" value="datalibrary"/>
+  </bean>
+-->
+  {% endif %}
+{% elif ansible_local.ec2.tag.cluster_name in ["qa-s1"] %}
+<!--This has to match the config property, hive.sentry.server, in the hadoop cluster-->
+  <bean class="com.paxata.library.expose.sentry.SentryServiceCDH4Impl" init-method="initialize" scope="singleton">
+      <constructor-arg name="policyFile" value="sentry/sentry-provider.ini"/>
+      <constructor-arg name="sentryServer" value="server1"/>
+      <constructor-arg name="username" value="datalibrary"/>
+  </bean>
+{% endif %}
+
+{% if ansible_local.ec2.tag.cluster_name in ["prod-e1", "prod-e2", "prod-e3"] %}
+  {% if active_prod is defined and active_prod  %}
+  <bean class="com.paxata.library.streaming.webservice.SalesforceClientUtil" init-method="initialize">
+    <property name="clientId" value="3MVG9y6x0357Hlecr3BihltLg_uLl6mHb0fdUWM95YlrtGxcr5N_QdxsaWvJDutB2GdNAbEV5SGXkA9ePb_ek"/>
+    <property name="clientSecret" value="8236676818423176897"/>
+    <property name="loginUrl" value="login.salesforce.com"/>
+    <property name="redirectUri" value="https://sfdcint.paxata.com/oauth/salesforce"/>
+    <property name="proxyHost" value=""/>
+    <property name="proxyPort" value=""/>
+  </bean>
+  {% else %}
+<!--
+  <bean class="com.paxata.library.streaming.webservice.SalesforceClientUtil" init-method="initialize">
+    <property name="clientId" value="3MVG9y6x0357Hlecr3BihltLg_uLl6mHb0fdUWM95YlrtGxcr5N_QdxsaWvJDutB2GdNAbEV5SGXkA9ePb_ek"/>
+    <property name="clientSecret" value="8236676818423176897"/>
+    <property name="loginUrl" value="login.salesforce.com"/>
+    <property name="redirectUri" value="https://sfdcint.paxata.com/oauth/salesforce"/>
+    <property name="proxyHost" value=""/>
+     <property name="proxyPort" value=""/>
+  </bean>
+-->
+  {% endif %}
+{% elif ansible_local.ec2.tag.cluster_name in ["preprod-e1", "qa-s1"] %}
+  <bean class="com.paxata.library.streaming.webservice.SalesforceClientUtil" init-method="initialize">
+    <property name="clientId" value="3MVG9y6x0357Hlecr3BihltLg_pVp4g1ooZGVAIHCqS9ZoytMwPDtjK3FYHFpqKjvIpU8nAIM43BoYEu2YnLc"/>
+    <property name="clientSecret" value="5235210715439739239"/>
+    <property name="loginUrl" value="login.salesforce.com"/>
+    <property name="redirectUri" value="https://sfdcint-qa.paxatadev.com/oauth/salesforce"/>
+  </bean>
+{% endif %} #}
+ <!--
+	<bean class="com.paxata.library.expose.ldap.OpenLdapServiceImpl" init-method="initialize">
+	  <constructor-arg name="server" value="ldapdev-ldap.paxatadev.com"/>
+	  <constructor-arg name="port" value="389"/>
+	  <constructor-arg name="bindUser" value="cn=Manager,dc=paxatadev,dc=com"/>
+	  <constructor-arg name="bindPassword" value="*****"/>
+	  <constructor-arg name="baseDN" value="cn=PAXATADEV.COM,cn=krb5,dc=paxatadev,dc=com"/>
+	  <constructor-arg name="username" value="datalibrary"/>
+	  <constructor-arg name="password" value="*******"/>
+	</bean>
+-->
+</beans>

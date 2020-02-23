@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongo-pes-key
+type: Opaque
+stringData:
+  pes.properties: |-
+    px.encryption.pes.keyseed=aX0wAFI5Om0dYIHwJZmT1ZbB6qcWLg34qPgp4muBMEc=

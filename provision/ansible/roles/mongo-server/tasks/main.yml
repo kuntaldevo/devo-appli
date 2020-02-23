@@ -1,0 +1,34 @@
+
+---
+- name: Download and Install Mongo
+  import_tasks: install-mongo.yml
+
+- name:  Set the default configuration file
+  import_tasks: configure-mongo.yml
+
+- name: Enable the service to autostart
+  import_tasks: enable-service.yml
+
+- name: All set and ready to go. Restart mongo
+  import_tasks: start-mongod.yml
+
+- name: Define the standard user for paxata
+  import_tasks: paxata-user.yml
+
+- name: Stop mongodb
+  service:
+    name: mongod
+    state: stopped
+
+#NOTE: these are diabled because mongo will not start until the replica-set is created inside of mongo
+# a manual process at the moment
+
+- name: Update mongo conf adding disabled replication
+  lineinfile:
+    path: "/etc/mongod.conf"
+    line: '#replication:'
+
+- name: Update mongo conf adding disabled replication
+  lineinfile:
+    path: "/etc/mongod.conf"
+    line: '#  replSetName: "rs_paxata"'

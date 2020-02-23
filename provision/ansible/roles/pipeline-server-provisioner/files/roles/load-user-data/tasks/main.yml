@@ -1,0 +1,23 @@
+- name: Collect the EC2 Facts, especially the user-data
+  ec2_metadata_facts:
+
+#Get Standard Default Vars etc
+# Use this syntax because of the '-' ( dash ) in the names
+
+- name: Get the Server's Role
+  set_fact:
+    server_role: '{{ansible_ec2_user_data|from_json|json_query( query ) }}'
+  vars:
+    query: '"server-role"'
+
+- name: Get the Feature DDL Flag
+  set_fact:
+    feature_ddl: '{{ansible_ec2_user_data|from_json|json_query( query ) }}'
+  vars:
+    query: '"feature-ddl"'
+
+- name: Get the Volume Labels
+  set_fact:
+    volume_labels: '{{ansible_ec2_user_data|from_json|json_query( query ) }}'
+  vars:
+    query: '"volume-labels"'

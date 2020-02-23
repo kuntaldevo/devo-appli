@@ -1,0 +1,7 @@
+all:
+  hosts:
+    paxata-server
+  children:
+    aws:
+      hosts:
+        paxata-server:

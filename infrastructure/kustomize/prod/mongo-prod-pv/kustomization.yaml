@@ -1,0 +1,5 @@
+
+resources:
+- persistent-volume-claim.yaml
+- persistent-volume.yaml
+- storage-class.yaml

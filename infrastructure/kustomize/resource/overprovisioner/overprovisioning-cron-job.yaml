@@ -1,0 +1,87 @@
+
+---
+
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: overprovisioning-scale
+rules:
+- apiGroups: ["apps", "extensions"]
+  resources: ["deployments", "deployments/scale"]
+  verbs: ["get", "list", "update", "patch"]
+
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: overprovisioning-sa
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: overprovisioning-scale
+subjects:
+  - kind: ServiceAccount
+    name: overprovisioning-sa
+roleRef:
+  kind: Role
+  name: overprovisioning-scale
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# DAYTIME_REPLICAS and NIGHTTIME_REPLICAS are both env vars so that it's easier to override them with kustomize
+
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: daytime-overprovisioning
+spec:
+  # Run at 10:00 am UTC (timezone of the k8s api server) every day
+  schedule: "0 10 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: overprovisioning-sa
+          containers:
+          - name: increase-replicas
+            image: bitnami/kubectl:1.12.10-ol-7-r82
+            command:
+            - /bin/sh
+            - -c
+            - 'kubectl -n overprovisioning scale --replicas ${DAYTIME_REPLICAS} deployment/pipeline-overprovisioning'
+            env:
+              - name: DAYTIME_REPLICAS
+                value: "19"
+          restartPolicy: OnFailure
+
+---
+
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: nighttime-overprovisioning
+spec:
+  # Run at 1:00 UTC (timezone of the k8s api server) every day
+  schedule: "0 1 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: overprovisioning-sa
+          containers:
+          - name: increase-replicas
+            image: bitnami/kubectl:1.12.10-ol-7-r82
+            command:
+            - /bin/sh
+            - -c
+            - 'kubectl -n overprovisioning scale --replicas ${NIGHTTIME_REPLICAS} deployment/pipeline-overprovisioning'
+            env:
+              - name: NIGHTTIME_REPLICAS
+                value: "0"
+          restartPolicy: OnFailure
+
+---

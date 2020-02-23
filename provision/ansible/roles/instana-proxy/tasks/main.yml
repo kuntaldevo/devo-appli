@@ -1,0 +1,7 @@
+---
+
+- name: Add Configuration to the proxy
+  import_tasks: update-nginx.conf.yml
+
+- name: Add Bash History
+  import_tasks: install-bash_history.yml

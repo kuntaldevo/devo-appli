@@ -1,0 +1,6 @@
+sudo rm -f /opt/instana/agent/data/log/*.*
+sudo service instana-agent stop
+sudo vi /etc/default/instana-agent
+cat /opt/instana/agent/bin/setenv
+sudo service instana-agent start
+tailf -1000 /opt/instana/agent/data/log/agent.log

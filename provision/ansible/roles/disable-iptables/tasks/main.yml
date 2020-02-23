@@ -1,0 +1,5 @@
+---
+- name: Disable the IP Tables serivce to prevent it from starting
+  service:
+    name: iptables
+    enabled: no

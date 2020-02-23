@@ -1,0 +1,20 @@
+
+
+configurations:
+- varconfig.yaml
+
+resources:
+- velero-install.yaml
+- secret-restic.yaml
+- config-map-backup-script.yaml
+- config-map-backup-mongo.yaml
+- cronjob-kubernetes.yaml
+- cronjob-mongo.yaml
+
+secretGenerator:
+- name: cloud-credentials
+  files:
+  - cloud
+
+patchesStrategicMerge:
+- patch-toleration-all-nodes.yaml

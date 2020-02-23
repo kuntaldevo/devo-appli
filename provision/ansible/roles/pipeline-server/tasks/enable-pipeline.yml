@@ -1,0 +1,14 @@
+
+# For Now just use theirs
+#- name: Add Updated Paxata Pipeline dot sh
+#  copy:
+#    src: "paxata-pipeline.sh"
+#    dest: "{{pipeline_home}}/paxata-pipeline.sh"
+#    mode: 0744
+#    backup: true
+
+
+- name: Enable the Pipeline to start on server start
+  service:
+    name: paxata-pipeline
+    enabled: true

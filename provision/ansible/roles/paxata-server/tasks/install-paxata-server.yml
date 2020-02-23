@@ -1,0 +1,27 @@
+---
+
+- name: Validate feature_source is set
+  assert:
+      that:
+        - "feature_source != '' "
+      msg: "feature_source, [s3 | teamcity | flash | url ] is required"
+
+#- name: Install via S3
+#  import_tasks: install-via-s3.yml
+#  when:
+#    - feature_source == "s3"
+
+- name: Install via Team City
+  import_tasks: install-via-teamcity.yml
+  when:
+    - feature_source == "teamcity"
+
+#- name: Install via Flash
+#  import_tasks: install-via-flash.yml
+#  when:
+#    - feature_source == "flash"
+
+#- name: Install via Flash
+#  import_tasks: install-via-url.yml
+#  when:
+#    - feature_source == "url"

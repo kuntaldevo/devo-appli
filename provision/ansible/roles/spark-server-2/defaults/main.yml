@@ -1,0 +1,7 @@
+---
+# Spark Version
+spark_archive: "{{spark_version}}.tgz"
+
+paxata_file_repo_s3: paxata-deployment
+pfr_aws_access_key: AKIAIBDL3W7YUQDJPFHA
+pfr_aws_secret_key: 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

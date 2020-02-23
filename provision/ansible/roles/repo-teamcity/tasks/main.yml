@@ -1,0 +1,70 @@
+---
+
+- name: Validate build_id is set
+  assert:
+      that:
+        - "build_id != '' "
+      msg: "When feature_source == teamcity, the build_id is required"
+
+- name: Validate artifact_path is set
+  assert:
+      that:
+        - "artifact_path != '' "
+      msg: "When feature_source == teamcity, the artifact_path is required"
+
+- name: Concat TC Suffix and Build
+  set_fact:
+    team_city_request : "{{teamcity_prefix + teamcity_build}}"
+
+- name: Conditional Set Fact with Branch
+  set_fact:
+    team_city_request : "{{team_city_request + teamcity_branch}}"
+  when:
+    - branch_id | default (false)
+
+- name: Conditional Set Fact with Tag is set
+  set_fact:
+    team_city_request : "{{team_city_request + teamcity_tag}}"
+  when:
+    - tag_id | default (false)
+
+- name: Add locator filter for TC
+  set_fact:
+    team_city_request : "{{team_city_request + teamcity_suffix}}"
+
+- name: Get the URL to the Artifact
+  uri:
+    url: "{{team_city_request}}"
+    url_username: devops
+    url_password: l6hKW1CzRULbuLQQgEIs
+    headers:
+      Accept: "application/json"
+    return_content: yes
+    body_format: json
+  register: webpage
+
+- name: Debug Find Artifact
+  debug:
+    msg: "{{webpage}}"
+
+- name: Fail if no artifacts were found or more than one
+  fail:
+    msg: "TeamCity didn't return only one artifact. Count was {{webpage.json.count}}"
+  when: "webpage.json.count|int != 1 "
+
+- name: Debug Download Artifact
+  debug:
+    msg: "{{ webpage.json | json_query('file[0].content.href') }}"
+
+- name: Download the RPM from TeamCity
+  get_url:
+    url_username: devops
+    url_password: l6hKW1CzRULbuLQQgEIs
+    url: http://tc.paxatadev.com{{ webpage.json | json_query('file[0].content.href') }}
+    dest: /tmp/paxata-artifact.rpm
+    mode: 0440
+
+- name: Install RPM File
+  yum:
+    name: /tmp/paxata-artifact.rpm
+    state: present

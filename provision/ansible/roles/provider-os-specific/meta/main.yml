@@ -1,0 +1,11 @@
+---
+dependencies:
+
+  - role: aws-centos-6
+    when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "6"
+
+  - role: aws-centos-7
+    when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
+
+# Se Linux Properties are set inside of here and vary based on the distro
+  - role: disable-selinux

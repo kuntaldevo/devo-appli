@@ -1,0 +1,6 @@
+---
+dependencies:
+  - { role: disable-iptables }
+  - { role: repo-epel-release }
+  - { role: aws-cli }
+  - { role: cloud-init.growpart }

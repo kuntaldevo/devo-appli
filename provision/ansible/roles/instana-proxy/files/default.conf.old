@@ -1,0 +1,63 @@
+#server {
+#
+#  listen 80;
+#   server_name localhost;
+#location /nginx_status {
+#  stub_status  on;
+#  access_log   off;
+#}
+#
+##   return 301 https://$host$request_uri;
+#}
+
+
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        default_type text/plain;
+
+        add_header  X-Request  $request;
+
+        return 200 "$date_gmt \n $request" ;
+    }
+
+
+
+upstream eumtracer {
+  server eum.instana.io:443;
+  keepalive 6;
+}
+
+
+map $http_referer $instana_key {
+
+   default "NOT-FOUND-4-$http_referer";
+
+   ~*paxata-dev.paxatadev.com "-jvjaIHtSpSL4PSbZp3I7w";
+}
+
+
+server {
+
+    listen       443 ssl;
+    server_name         localhost;
+    ssl_certificate     star.paxatadev.com.crt;
+    ssl_certificate_key star.paxatadev.com.key;
+
+    location / {
+
+    set $args "$args&k=$instana_key";
+
+    proxy_pass https://eumtracer/;
+    proxy_set_header X-Real-IP $remote_addr;
+
+    add_header  X-Args  $args;
+  }
+
+# For retrieving the JavaScript use this one without setting all the extra stuff
+  location ~ \.(js)$ {
+    proxy_pass https://eumtracer;
+  }
+}

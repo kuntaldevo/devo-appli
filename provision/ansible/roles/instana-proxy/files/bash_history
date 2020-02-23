@@ -1,0 +1,3 @@
+tailf -1000 /usr/local/openresty/nginx/logs/error.log
+sudo vi /usr/local/openresty/nginx/conf/nginx.conf
+sudo service openresty status

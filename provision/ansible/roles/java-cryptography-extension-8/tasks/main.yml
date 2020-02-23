@@ -1,0 +1,12 @@
+---
+
+- name: Move and overwrite JARs in the java installation
+  copy:
+    src: "{{ item }}"
+    dest: "{{ actual_java_exe_dir }}/../lib/security/{{ item }}"
+    force: true
+    backup: yes
+  with_items:
+    - local_policy.jar
+    - README.txt
+    - US_export_policy.jar

@@ -1,0 +1,5 @@
+---
+- name: Install 'util-linux-ng' via Yum
+  yum:
+    name: util-linux-ng
+    state: latest

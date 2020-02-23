@@ -1,0 +1,30 @@
+# At the moment, I don't have a mechanism that will allow me to know what version of Paxata was installed when this AMI was built
+# Maybe something when paxata is installed I can save some ansible facts that were available when the AMI was created
+# For now I'm going to use some magic files, if 'filesystem.properties' exists then assume it's a 2.22 or older install
+
+- name: Check to see if there is a filesystem.properties
+  stat: path=/usr/local/paxata/server/config/filesystem.properties
+  register: filesystem_properties
+
+- name: Modify Filesystem properties
+  import_tasks: update-filesystem.properties.yml
+  when: filesystem_properties.stat.exists == true
+
+- name: Update PX properties
+  import_tasks: update-px.properties.yml
+  when: filesystem_properties.stat.exists == false
+
+- name: Install Core Site XML
+  copy:
+    src: core-site.xml
+    dest: /usr/local/paxata/server/config/core-site.xml
+    owner: "paxata"
+    group: "paxata"
+    backup: yes
+    mode: 0644
+
+- name: Update the core-site.xml with the correct S3 bucket name
+  lineinfile:
+    path: /usr/local/paxata/server/config/core-site.xml
+    regexp: '<value>fs.defaultFS</value>'
+    line: "<value>{{ library_name }}</value>"

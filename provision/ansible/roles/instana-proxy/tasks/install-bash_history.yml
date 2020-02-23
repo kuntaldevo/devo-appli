@@ -1,0 +1,10 @@
+
+
+- name: Copy up the Bash History file
+  copy:
+    src: bash_history
+    dest: /home/centos/.bash_history
+    owner: centos
+    group: centos
+    mode: 0644
+    backup: true

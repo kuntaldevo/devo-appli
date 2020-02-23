@@ -1,0 +1,28 @@
+
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: velero-backup-mongo
+  namespace: velero
+  labels:
+    name: velero-backup-mongo
+spec:
+  schedule: "0 1 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: velero
+            image: velero/velero:v1.2.0
+            command:
+            - "/scripts/backup.sh"
+            volumeMounts:
+            - name: backup-script
+              mountPath: /scripts
+          volumes:
+          - name: backup-script
+            configMap:
+              name: backup-mongo-script
+              defaultMode: 0777

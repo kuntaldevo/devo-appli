@@ -1,0 +1,10 @@
+---
+# This Ansible playbook triggers the role that we desire
+
+- hosts: all
+#  strategy: debug
+
+  vars:
+
+  roles:
+  - aws-security-groups

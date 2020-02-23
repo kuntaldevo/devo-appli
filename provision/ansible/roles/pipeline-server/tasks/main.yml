@@ -1,0 +1,18 @@
+---
+- name: Create the Paxata User
+  import_tasks: create-user.yml
+
+- name: Install pipeline
+  import_tasks: install-pipeline.yml
+
+- name: Install Properties Files
+  import_tasks: install-properties.yml
+
+- name: Add some empty directories
+  import_tasks: create-directories.yml
+
+- name: Enable the Pipeline Service to start on server start
+  import_tasks: enable-pipeline.yml
+
+- name: Add Sym Links to Var Log
+  import_tasks: configure-var-log.yml

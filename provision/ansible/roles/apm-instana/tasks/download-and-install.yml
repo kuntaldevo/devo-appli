@@ -1,0 +1,25 @@
+
+---
+#uri: curl -o setup_agent.sh https://setup.instana.io/agent && chmod 700 ./setup_agent.sh && sudo ./setup_agent.sh -a 0V3BqEeNQyaCNwjJyxwoLw -t dynamic -l us -s -y
+  - name: Download Instana Agent Installer - Latest
+    get_url:
+      url:  https://setup.instana.io/agent
+      dest:  "{{agent_installer_path}}"
+      mode: 0700
+
+  - name: Install Instana
+    shell: "{{agent_installer_path}} -a 0V3BqEeNQyaCNwjJyxwoLw -t dynamic -l us -s -y"
+
+  - name: Validate Instana
+    shell: chkconfig --add instana-agent
+
+  - name: Enable Instana
+    shell: chkconfig instana-agent on
+
+  - name: Create link for instana agent logs
+    file:
+      src: "/opt/instana/agent/data/log/"
+      dest: "/var/log/instana"
+      state: link
+      mode: 0777
+      force: yes

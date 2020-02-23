@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pax-operator-env
+  namespace: pax-operator
+data:
+  SPARK_NODE_HOST_PATH: /mnt/cache
+  MONGO-REPLICA-COUNT: "3"
+  DNS_DOMAIN_SUFFIX: $(DNS-DOMAIN-SUFFIX)
+  DTR_AUTH_TOKEN: eyJhdXRocyI6eyJkdHIucGF4YXRhZGV2LmNvbSI6eyJ1c2VybmFtZSI6Ims4cyIsInBhc3N3b3JkIjoibm94cW85LWphd2p5dy1HYWdzYWIiLCJlbWFpbCI6ImRsZXZpbmdlckBwYXhhdGEuY29tIiwiYXV0aCI6ImF6aHpPbTV2ZUhGdk9TMXFZWGRxZVhjdFIyRm5jMkZpIn19fQ==
+  MONGO_AUTHENTICATION_DATABASE: admin
+  MONGO_HOSTS: "mongo-deployment-0.mongo.mongo,mongo-deployment-1.mongo.mongo,mongo-deployment-2.mongo.mongo"
+  MONGO_PASSWORD: <IN_LASTPASS>
+  MONGO_USERNAME: admin
+  PIPELINE_PROXY_READINESS_INITIAL_DELAY: "5"
+  SPARK_DRIVER_CORES: "7"
+  SPARK_DRIVER_MEMORY: 30g
+  SPARK_EXECUTOR_CORES: "6"
+  SPARK_EXECUTOR_MEMORY: 22500m
+  SPARK_NODE_SELECTOR: spark-server
+  SHORTEN_PAX_HOSTNAME_COMPARE_VALUE: paxata

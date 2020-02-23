@@ -1,0 +1,13 @@
+---
+
+- name: Set Server Alias
+  lineinfile:
+    path: "{{ paxata_home }}/config/px.properties"
+    regexp: '^[#]?px.clientId=.*$'
+    line: 'px.clientId=paxata-server'
+
+- name: Set Pipeline URL
+  lineinfile:
+    path: "{{ paxata_home }}/config/px.properties"
+    regexp: '^[#]?px.pipeline.url=.*$'
+    line: 'px.pipeline.url=http://pipeline-server:8090'

@@ -1,0 +1,11 @@
+---
+dependencies:
+  - { role: repo-epel-release }
+  - { role: cloud-init.growpart }
+  - { role: cloud-init.preserve-hostname }
+  - { role: install-mdadm }
+  - { role: install-boto3 }
+  - { role: install-netcat }
+  - { role: install-lsof }
+  - { role: aws-cli }
+  - { role: file-limit }

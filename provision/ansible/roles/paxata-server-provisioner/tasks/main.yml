@@ -1,0 +1,28 @@
+---
+
+- name: Upload the shell script for cloud cfg
+  copy:
+    src: paxata-provision.sh
+    dest: /var/lib/cloud/scripts/per-instance/paxata-provision.sh
+    mode: 0744
+    backup: true
+
+- name: Creates directory for files
+  file:
+    path: /var/lib/cloud/scripts/per-instance/paxata-server-provisioner
+    state: directory
+
+- name: Upload the main playbook
+  copy:
+    src: paxata-server-provisioner-playbook.yml
+    dest: /var/lib/cloud/scripts/per-instance/paxata-server-provisioner/paxata-server-provisioner-playbook.yml
+    mode: 0644
+    backup: true
+
+# Note: No slash for recursive copy
+- name: Install the Roles
+  copy:
+    src: roles
+    dest: /var/lib/cloud/scripts/per-instance/paxata-server-provisioner/
+    mode: 0744
+    backup: true

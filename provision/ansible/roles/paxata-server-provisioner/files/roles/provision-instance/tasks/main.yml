@@ -1,0 +1,19 @@
+---
+
+- name: Configure the Library
+  import_tasks: configure-library.yml
+
+- name: Configure Jetty
+  import_tasks: configure-jetty.yml
+
+
+- name:  Wait for Cache
+  wait_for:
+    path: /mnt/cache/MOUNTED.txt
+    timeout: 5000
+
+- name: Create Temp Folder and temp folders
+  file:
+    path: "/mnt/cache/tmp"
+    mode: 0777
+    state: directory

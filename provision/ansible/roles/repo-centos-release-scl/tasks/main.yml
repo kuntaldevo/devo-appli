@@ -1,0 +1,8 @@
+---
+
+# Need this repo to get Apache24
+- name: Install Repository centos-release-scl
+  yum:
+    name: centos-release-scl
+    enablerepo: "extras"
+    state: present

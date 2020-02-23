@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>s3a://paxata-datavalidation</value>
+    </property>
+    <!-- comment out fs.s3a.access.key and fs.s3a.secret.key for IAM Role setup-->
+    <property>
+        <name>fs.s3a.access.key</name>
+        <value>AKIAJUZ7E72AXV7QBOQQ</value>
+    </property>
+    <property>
+        <name>fs.s3a.secret.key</name>
+        <value>L9qGknRBj+kdYnYTAA4i4dEdQhF7Yv0QVb5vKAAm</value>
+    </property>
+    <property>
+        <name>fs.s3a.aws.credentials.provider</name>
+        <value>org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider</value>
+    </property>
+    <property>
+        <name>hadoop.security.authentication</name>
+        <value>simple</value>
+    </property>
+    <property>
+        <name>fs.s3a.buffer.dir</name>
+        <value>/usr/local/paxata/server/s3a-tmp-upload</value>
+    </property>
+    <property>
+        <name>fs.s3a.impl</name>
+        <value>org.apache.hadoop.fs.s3a.S3AFileSystem</value>
+        <description>The implementation class of the S3A Filesystem</description>
+    </property>
+    <property>
+        <name>fs.s3.enableServerSideEncryption</name>
+        <value>true</value>
+    </property>
+        <property>
+                <name>fs.s3a.fast.upload</name>
+        <value>true</value>
+    </property>
+</configuration>

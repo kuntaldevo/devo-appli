@@ -1,0 +1,14 @@
+---
+# This Ansible playbook triggers the role that we desire
+
+- hosts: all
+  remote_user: centos
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Install the Pipeline Server
+      include_role:
+        name: pipeline-server
+    - name: Install the Spark Libraries for pipeline to use
+      include_role:
+        name: spark-server-2

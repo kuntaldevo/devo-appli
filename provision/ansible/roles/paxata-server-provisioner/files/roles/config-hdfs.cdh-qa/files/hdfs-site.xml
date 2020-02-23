@@ -1,0 +1,376 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+  <!-- the logical name for nameservice -->
+    <property>
+    <name>dfs.nameservices</name>
+    <value>hdfspax</value>
+  </property>
+  
+  <!-- Default block replication -->
+  <property>
+    <name>dfs.replication</name>
+    <value>3</value>
+  </property>
+
+
+   <property>
+    <name>dfs.replication.max</name>
+    <value>50</value>
+  </property>
+
+  <property>
+     <name>dfs.client.use.datanode.hostname</name>
+     <value>true</value>
+     <description>Whether clients should use datanode hostnames when connecting to datanodes.</description>
+  </property>
+
+    <!-- Relax the requirement in case we miss some reversed DNS records for DNs -->
+  <property>
+    <name>dfs.namenode.datanode.registration.ip-hostname-check</name>
+    <value>false</value>
+  </property>
+
+  <!-- Determines where on the local filesystem an DFS data node should store its blocks -->
+  <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>/data/1/dfs/dn,/data/2/dfs/dn,/data/3/dfs/dn</value>
+  </property>
+
+  <!-- The name of the group of super-users -->
+  <property>
+    <name>dfs.permissions.superusergroup</name>
+    <value>hdfs</value>
+  </property>
+
+  <!-- turn off/on the permission checking -->
+  <property>
+    <name>dfs.permissions.enabled</name>
+    <value>true</value>
+  </property>
+ 
+    <!-- the fully-qualified RPC address for each NameNode to listen on -->
+  <property>
+    <name>dfs.namenode.rpc-address.hdfspax.cdh-qa-nn1.paxatadev.com</name>
+    <value>cdh-qa-nn1.paxatadev.com:8020</value>
+  </property>
+  <property>
+    <name>dfs.namenode.rpc-address.hdfspax.cdh-qa-nn2.paxatadev.com</name>
+    <value>cdh-qa-nn2.paxatadev.com:8020</value>
+  </property>
+  
+<!-- the fully-qualified HTTP address for each NameNode to listen on -->
+  <property>
+    <name>dfs.namenode.http-address.hdfspax.cdh-qa-nn1.paxatadev.com</name>
+    <value>cdh-qa-nn1.paxatadev.com:50070</value>
+  </property>
+  <property>
+    <name>dfs.namenode.http-address.hdfspax.cdh-qa-nn2.paxatadev.com</name>
+    <value>cdh-qa-nn2.paxatadev.com:50070</value>
+  </property>
+   
+  <!-- unique identifiers for each NameNode in the nameservice --> 
+  <property>
+    <name>dfs.ha.namenodes.hdfspax</name>
+    <value>cdh-qa-nn1.paxatadev.com,cdh-qa-nn2.paxatadev.com</value>
+  </property>
+
+  <!-- the location of the shared storage directory --> 
+  <property>
+    <name>dfs.namenode.shared.edits.dir</name>
+    <value>qjournal://cdh-qa-nn1.paxatadev.com:8485;cdh-qa-nn2.paxatadev.com:8485;cdh-qa-hive1.paxatadev.com:8485/hdfspax</value>
+  </property>
+
+  <!-- Determines where on the local filesystem the DFS name node should store the name table(fsimage) --> 
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>/data/1/dfs/nn,/data/2/dfs/nn,/data/3/dfs/nn</value>
+  </property>
+
+  
+
+  <!-- Automatic failover by the ZKFailoverController process --> 
+  <property>
+    <name>dfs.ha.automatic-failover.enabled</name>
+    <value>true</value>
+  </property>
+
+  <!-- the path where the JournalNode daemon will store its local state -->
+  <property>
+    <name>dfs.journalnode.edits.dir</name>
+    <value>/var/hadoop/data/dfs/jn</value>
+  </property> 
+ 
+    <!-- the Java class that HDFS clients use to contact the Active NameNode --> 
+  <property>
+    <name>dfs.client.failover.proxy.provider.hdfspax</name>
+    <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+  </property>
+  
+
+
+  <!-- ssh to the other NN to fence the Active NameNode -->
+  <property>
+    <name>dfs.ha.fencing.methods</name>
+    <value>sshfence(hdfs)</value>
+  </property>
+
+  <property>
+    <name>dfs.ha.fencing.ssh.private-key-files</name>
+    <value>/var/lib/hadoop-hdfs/.ssh/id_rsa</value>
+  </property>
+  <property>
+    <name>dfs.ha.fencing.ssh.connect-timeout</name>
+    <value>30000</value>
+    <description> in milliseconds </description>
+  </property>
+
+  <property>
+    <name>dfs.blockreport.initialDelay</name>
+    <value>120</value>
+    <description>Delay for first block report in seconds.</description>
+  </property> 
+ 
+  <!-- The default block size for new files, in bytes --> 
+  <property>
+    <name>dfs.blocksize</name>
+    <value>134217728</value>
+  </property>
+
+  <!-- The number of server threads for the namenode -->
+  <property>
+    <name>dfs.namenode.handler.count</name>
+    <value>256</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.accesstime.precision</name>
+    <value>0</value>
+    <description>The access time for HDFS file is precise upto this value. The default value is 1 hour. Setting a value of 0 disables access times for HDFS.</description>
+  </property> 
+  <property>
+    <name>dfs.namenode.avoid.read.stale.datanode</name>
+    <value>false</value>
+  </property> 
+
+  <property>
+    <name>dfs.namenode.avoid.write.stale.datanode</name>
+    <value>false</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.stale.datanode.interval</name>
+    <value>30000</value>
+  </property> 
+
+  <property>
+    <name>dfs.namenode.startup.delay.block.deletion.sec</name>
+    <value>3600</value>
+    <description>The delay in seconds at which we will pause the blocks deletion after Namenode startup. By default it's disabled. In the case a directory has large number of directories and files are deleted, suggested delay is one hour to give the administrator enough time to notice large number of pending deletion blocks and take corrective action.</description>
+  </property>
+ 
+  <!-- The number of server threads for the datanode -->
+  <property>
+    <name>dfs.datanode.handler.count</name>
+    <value>32</value>
+  </property> 
+
+  <!-- Reserved space in bytes per volume. Always leave this much space free for non dfs use -->
+  <property>
+    <name>dfs.datanode.du.reserved</name>
+    <value>1024000</value>
+  </property>
+
+  <!-- Specifies the maximum amount of bandwidth that each datanode can utilize for the balancing purpose in term of the number of bytes per second -->
+  <property>
+    <name>dfs.balance.bandwidthPerSec</name>
+    <value>314572800</value>
+  </property>
+
+  <!-- Names a file that contains a list of hosts that are not permitted to connect to the namenode -->
+  <property>
+    <name>dfs.hosts.exclude</name>
+    <value>/etc/hadoop/conf/datanodes.exclude</value>
+  </property>
+
+  <!-- 	Specifies the maximum number of threads to use for transferring data in and out of the DN  -->
+  <property>
+    <name>dfs.datanode.max.transfer.threads</name>
+    <value>4096</value>
+  </property>
+
+  <!-- configure storage balancing -->
+  <property>
+    <name>dfs.datanode.fsdataset.volume.choosing.policy</name>
+    <value>org.apache.hadoop.hdfs.server.datanode.fsdataset.AvailableSpaceVolumeChoosingPolicy</value>
+  </property>
+  <property>
+    <name>dfs.datanode.available-space-volume-choosing-policy.balanced-space-threshold</name>
+    <value>10737418240</value>
+  </property>
+  <property>
+    <name>dfs.datanode.available-space-volume-choosing-policy.balanced-space-preference-fraction</name>
+    <value>0.75</value>
+  </property>
+
+  <!-- A Hadoop HDFS DataNode has an upper bound on the number of files that it can serve at any one time -->
+  <property>
+    <name>dfs.datanode.max.xcievers</name>
+    <value>4096</value>
+  </property>
+
+  <!-- enable webhdfs -->
+  <property>
+    <name>dfs.webhdfs.enabled</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>dfs.checksum.type</name>
+    <value>CRC32</value>
+  </property>
+
+
+  <!-- timeout -->
+  <property>
+    <name>dfs.client.socket-timeout</name>
+    <value>1800000</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.socket.write.timeout</name>
+    <value>1800000</value>
+  </property>
+
+<!-- Kerberos -->
+  <property>
+    <name>dfs.block.access.token.enable</name>
+    <value>true</value>
+    <description>If "true", access tokens are used as capabilities for accessing datanodes. If "false", no access tokens are checked on accessing datanodes. </description>
+  </property>
+  <!--
+              This enables or disables wire encryption for HDFS. 
+
+              The possible values for this are:
+              * HTTP_ONLY
+              * HTTPS_ONLY
+              * HTTP_AND_HTTPS : Service is provided both on http and https
+      -->
+  <!-- SASL enabled with HTTPS_ONLY: no HADOOP_SECURE_DN_USER is defined
+      core-site.xml's dfs.data.transfer.protection must be set
+      dfs.datanode.address to port greater than 1024
+      dfs.http.policy to HTTPS_ONLY
+  -->
+  <property>
+    <name>dfs.http.policy</name>                                             
+    <value>HTTP_ONLY</value>
+  </property>
+
+
+<!-- NameNode security config -->
+<property>
+  <name>dfs.namenode.keytab.file</name>
+  <value>/etc/hadoop/conf/hdfs.service.keytab</value>
+</property>
+
+<property>
+  <name>dfs.namenode.kerberos.principal</name>
+  <value>hdfs/_HOST@PAXATADEV.COM</value>
+</property>
+<property>
+  <name>dfs.namenode.kerberos.internal.spnego.principal</name>
+  <value>HTTP/_HOST@PAXATADEV.COM</value>
+</property>
+
+<!-- journalnode -->
+<property>
+  <name>dfs.journalnode.keytab.file</name>
+  <value>/etc/hadoop/conf/hdfs.service.keytab</value>
+</property>
+<property>
+  <name>dfs.journalnode.kerberos.principal</name>
+  <value>hdfs/_HOST@PAXATADEV.COM</value>
+</property>
+<property>
+  <name>dfs.journalnode.kerberos.internal.spnego.principal</name>
+  <value>HTTP/_HOST@PAXATADEV.COM</value>
+</property>
+
+<!-- DataNode security config -->
+  <property>
+    <name>dfs.datanode.data.dir.perm</name>
+    <value>700</value> 
+  </property>
+  <property>
+    <name>dfs.datanode.address</name>
+    <value>0.0.0.0:1004</value>
+  </property>
+  <property>
+    <name>dfs.datanode.http.address</name>
+    <value>0.0.0.0:1006</value>
+  </property>
+<!--
+  <property>
+    <name>dfs.datanode.ipc.address</name>
+    <value>0.0.0.0:50020</value>
+  </property> 
+-->
+  <property>
+    <name>dfs.datanode.keytab.file</name>
+    <value>/etc/hadoop/conf/hdfs.service.keytab</value> 
+  </property>
+  <property>
+    <name>dfs.datanode.kerberos.principal</name>
+    <value>hdfs/_HOST@PAXATADEV.COM</value>
+  </property>
+
+<!-- webhdfs -->
+  <property>
+    <name>dfs.web.authentication.kerberos.principal</name>
+    <value>HTTP/_HOST@PAXATADEV.COM</value>
+  </property>
+  <property>
+    <name>dfs.web.authentication.kerberos.keytab</name>
+    <value>/etc/hadoop/conf/hdfs.service.keytab</value> 
+  </property>
+
+<!--- end of Kerberos -->
+           
+
+<!-- enable short circuit reads -->
+<property>
+    <name>dfs.client.read.shortcircuit</name>
+    <value>true</value>
+</property>
+<property>
+    <name>dfs.domain.socket.path</name>
+    <value>/var/run/hdfs-sockets/dn</value>
+    <description>This is a path to a UNIX domain socket that will be used for communication between the DataNode and local HDFS clients. If the string "_PORT" is present in this path, it will be replaced by the TCP port of the DataNode.</description>
+</property> 
+<property>
+    <name>dfs.client.file-block-storage-locations.timeout.millis</name>
+    <value>10000</value>
+</property>
+<!-- enable block location tracking -->
+<property>
+  <name>dfs.datanode.hdfs-blocks-metadata.enabled</name>
+  <value>true</value>
+</property> 
+</configuration>

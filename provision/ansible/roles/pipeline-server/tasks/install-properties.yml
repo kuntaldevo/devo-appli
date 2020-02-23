@@ -1,0 +1,24 @@
+
+
+- name: Overlay the spark.properties
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ pipeline_home }}/config/{{ item }}"
+    owner: "{{ pipeline_user }}"
+    group: "{{ pipeline_user }}"
+    mode: 0644
+    backup: yes
+  with_items:
+    - spark.properties
+
+- name: Overlay properties files
+  copy:
+    src: "{{ item }}"
+    dest: "{{ pipeline_home }}/config/{{ item }}"
+    owner: "{{ pipeline_user }}"
+    group: "{{ pipeline_user }}"
+    mode: 0644
+    backup: yes
+  with_items:
+    - log4j.properties
+    - paxata.properties

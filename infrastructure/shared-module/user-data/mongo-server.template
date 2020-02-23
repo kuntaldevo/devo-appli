@@ -1,0 +1,10 @@
+{
+
+  "server-role": "${server-role}",
+  "env-key": "${env-key}",
+  "region-id": "${region-id}",
+  "host-name": "${host-name-count}",
+
+  "null": "null"
+
+}

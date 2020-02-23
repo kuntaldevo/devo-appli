@@ -1,0 +1,27 @@
+---
+
+# Install libselinux-python support so we can add the cloudera repo
+- name: Install libselinux-python for repo "cloudera-cdh5"
+  yum: name=libselinux-python state=present
+
+# tasks file for roles/paxata.application-repos
+- name: Add Yum Repo for Cloudera
+  copy:
+    src: "centos-6.repo"
+    dest: "/etc/yum.repos.d/cloudera-cdh5.repo"
+    owner: root
+    group: root
+    mode: 0644
+    backup: true
+  when: ansible_distribution == 'CentOS' and ansible_distribution_major_version == "6"
+
+# tasks file for roles/paxata.application-repos
+- name: Add Yum Repo for Cloudera
+  copy:
+    src: "centos-7.repo"
+    dest: "/etc/yum.repos.d/cloudera-cdh5.repo"
+    owner: root
+    group: root
+    mode: 0644
+    backup: true
+  when: ansible_distribution == 'CentOS' and ansible_distribution_major_version == "7"

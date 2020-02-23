@@ -1,0 +1,13 @@
+---
+# from https://github.com/ptonelli/centos-ami-builder/blob/master/builder.sh
+- name: Make sure that cloud init's growpart is available
+  yum:
+    name: cloud-utils-growpart
+    state: present
+
+- name: Install Cloud-Init file to run growpart
+  copy:
+    src: "06_growpart.cfg"
+    dest: "/etc/cloud/cloud.cfg.d/06_growpart.cfg"
+    mode: 0644
+    backup: true

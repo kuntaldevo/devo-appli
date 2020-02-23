@@ -1,0 +1,12 @@
+---
+
+- name: Set the Path for Paxata Server config
+  set_fact:
+    config_path: /usr/local/paxata/server/config/px.properties
+
+- name: Update px.properties to use the domain from the user data
+  replace:
+    path: "{{config_path}}"
+    regexp: '({java-key-store})'
+    replace: "/usr/local/paxata/ssl-cert/star.{{public_domain}}.jks"
+    backup: yes

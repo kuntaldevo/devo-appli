@@ -1,0 +1,13 @@
+---
+# New Method, instead of wholesale overwrite, just update the properties we want to
+- name: Configure Jetty in px.properties
+  blockinfile:
+    path: "{{ paxata_home }}/config/px.properties"
+    marker: "# {mark} Jetty"
+    block: |
+      px.use.ssl=true
+      px.ssl.keystore={java-key-store}
+      px.ssl.truststore={java-key-store}
+      px.ssl.keystore.password=OBF:1lfg1i9a1mme1ri71z0f1ri71mig1i6o1lc2
+      px.ssl.keystore.truststore=OBF:1lfg1i9a1mme1ri71z0f1ri71mig1i6o1lc2
+      px.ssl.cert.alias=server

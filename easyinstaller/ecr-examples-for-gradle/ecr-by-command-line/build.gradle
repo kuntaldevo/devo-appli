@@ -1,0 +1,18 @@
+
+
+task buildImage(type: Exec) {
+    commandLine '../build-development.sh'
+}
+
+task pushImagetoECR(type: Exec) {
+
+  dependsOn buildImage
+
+  commandLine './push-to-ecr.sh'
+}
+
+
+task install {
+
+  dependsOn pushImagetoECR
+}

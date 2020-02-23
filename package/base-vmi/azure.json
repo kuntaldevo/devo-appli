@@ -1,0 +1,71 @@
+{
+  "variables": {
+    "region-id": "{{env `REGION_ID`}}",
+
+    "client_id": "{{env `client_id`}}",
+    "client_secret": "{{env `client_secret`}}",
+    "subscription_id": "{{env `subscription_id`}}",
+    "tenant_id": "{{env `tenant_id`}}",
+
+    "os_type": "{{env `os_type`}}",
+    "image_publisher": "{{env `image_publisher`}}",
+    "image_offer": "{{env `image_offer`}}",
+    "image_sku": "{{env `image_sku`}}",
+    "image_version": "{{env `image_version`}}",
+
+    "plan-name": "{{env `plan_name`}}",
+    "plan-product": "{{env `plan_product`}}",
+    "plan-publisher": "{{env `plan_publisher`}}",
+
+    "image_store_id": "{{env `image_store_id`}}",
+    "project-root": "{{env `PROJECT_ROOT`}}",
+    "scm-branch": "{{env `SCM_BRANCH`}}",
+
+    "create-user": "{{env `SCM_USER`}}",
+    "scm-id": "{{env `SCM_SHA`}}",
+    "scm-branch": "{{env `SCM_BRANCH`}}",
+
+    "create-user": "{{env `SCM_USER`}}"
+  },
+  "builders": [
+    {
+      "type": "azure-arm",
+      "location": "{{user `region-id`}}",
+
+      "client_id": "{{user `client_id`}}",
+      "client_secret": "{{user `client_secret`}}",
+      "subscription_id": "{{user `subscription_id`}}",
+      "tenant_id": "{{user `tenant_id`}}",
+
+      "managed_image_resource_group_name": "{{user `image_store_id`}}",
+      "managed_image_name": "image-cloudera-68",
+
+      "os_type": "{{user `os_type`}}",
+      "image_publisher": "{{user `image_publisher`}}",
+      "image_offer": "{{user `image_offer`}}",
+      "image_sku": "{{user `image_sku`}}",
+      "image_version": "{{user `image_version`}}",
+
+      "plan_name": "{{user `plan-name`}}",
+      "plan_product": "{{user `plan-product`}}",
+      "plan_publisher": "{{user `plan-publisher`}}",
+
+      "azure_tags": {
+        "Name": "Building the Centos Base Server",
+        "role": "centos-base-server",
+        "scm-id": "{{user `scm-id`}}",
+        "scm-branch": "{{user `scm-branch`}}",
+        "create-timestamp": "{{isotime}}",
+        "create-user": "{{user `create-user`}}"
+      }
+    }
+  ],
+  "provisioners": [{
+    "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'",
+    "inline": [
+      "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
+    ],
+    "inline_shebang": "/bin/sh -x",
+    "type": "shell"
+  }]
+}

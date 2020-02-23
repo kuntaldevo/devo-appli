@@ -1,0 +1,5 @@
+---
+- name: Install Linux Standard Base via Yum
+  yum:
+    name: lsb
+    state: latest

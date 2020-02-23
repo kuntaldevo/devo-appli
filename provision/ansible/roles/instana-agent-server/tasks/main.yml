@@ -1,0 +1,7 @@
+---
+
+- name:  Copy 'instana-agent' to /etc/default
+  copy:
+    src: instana-agent.txt
+    dest: "/etc/default/instana-agent"
+    backup: true

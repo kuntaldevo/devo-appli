@@ -1,0 +1,16 @@
+---
+
+- name: Copy up configuration settings
+  import_tasks: configure.yml
+
+#- name: Turn the spark installation into a spark worker
+#  import_tasks: set-as-worker.yml
+
+- name: Create symbolic links for when the Ephemeral storage is added at run time
+  import_tasks: link-cache-dirs.yml
+
+- name: Add additional JARs
+  import_tasks: add-jars.yml
+
+- name: Enable the spark service to run on boot
+  import_tasks: enable-service.yml

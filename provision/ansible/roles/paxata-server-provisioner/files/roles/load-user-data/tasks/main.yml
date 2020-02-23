@@ -1,0 +1,46 @@
+- name: Collect the EC2 Facts, especially the user-data
+  ec2_metadata_facts:
+
+#Get Standard Default Vars etc
+# Use this syntax because of the '-' ( dash ) in the names
+- name: Get the Server's Role
+  set_fact:
+    server_role: '{{ansible_ec2_user_data|from_json|json_query( query ) }}'
+  vars:
+    query: '"server-role"'
+
+- name: Get the ENV-Key
+  set_fact:
+    env_key: '{{ansible_ec2_user_data|from_json|json_query( query ) }}'
+  vars:
+    query: '"env-key"'
+
+- name: Get the Region Id
+  set_fact:
+    region_id: '{{ansible_ec2_user_data|from_json|json_query( query ) }}'
+  vars:
+    query: '"region-id"'
+
+- name: Get the Hostname
+  set_fact:
+    host_name: '{{ansible_ec2_user_data|from_json|json_query( query ) }}'
+  vars:
+    query: '"host-name"'
+
+- name: Get the Server's Domain
+  set_fact:
+    public_domain: '{{ansible_ec2_user_data|from_json|json_query( query ) }}'
+  vars:
+    query: '"public-domain"'
+    
+- name: Get the Library Type
+  set_fact:
+    feature_library: '{{ansible_ec2_user_data|from_json|json_query( query ) }}'
+  vars:
+    query: '"feature-library"'
+
+- name: Get the Library Auth Type
+  set_fact:
+    library_auth: '{{ansible_ec2_user_data|from_json|json_query( query ) }}'
+  vars:
+    query: '"library-auth"'

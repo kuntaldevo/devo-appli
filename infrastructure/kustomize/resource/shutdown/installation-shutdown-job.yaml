@@ -1,0 +1,77 @@
+# Shuts down pax installations after a configurable amount of time
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: installation-shutdown
+  namespace: pax-operator
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  namespace: default
+  name: installation-shutdown
+rules:
+  - apiGroups: ["paxata.com"]
+    resources: ["paxinstallations"]
+    verbs: ["get", "list", "patch", "update"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: installation-shutdown
+  namespace: default
+subjects:
+  - kind: ServiceAccount
+    name: installation-shutdown
+    namespace: pax-operator
+roleRef:
+  kind: ClusterRole
+  name: installation-shutdown
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: pax-operator
+  name: installation-shutdown-script
+binaryData:
+  installation-shutdown.sh: "IyEvdXNyL2Jpbi9lbnYgYmFzaAoKIyBSdW5zIGFzIGEgY3JvbiBqb2IgaW4gdGhlIHNoYXJlZCBkZXYgY2x1c3RlciB0byBhdXRvbWF0aWNhbGx5IHNodXQgZG93biBpbnN0YWxsYXRpb25zIHRoYXQgaGF2ZSBiZWVuIGFjdGl2ZSBmb3IgYSBjb25maWd1cmFibGUgcGVyaW9kLgojIFRoaXMgd2lsbCBub3QgZGVsZXRlIHRoZSBpbnN0YWxsYXRpb25zLCBidXQgbWVyZWx5IHN0b3AgdGhlbQoKc2V0IC1lCgpTSFVURE9XTl9BTk5PVEFUSU9OPSJwYXhhdGEuY29tL2luc3RhbGxhdGlvbi1zaHV0ZG93bi1hdCIKU0hVVERPV05fSlNPTl9QQVRDSD0nW3sib3AiOiJyZW1vdmUiLCJwYXRoIjoiL21ldGFkYXRhL2Fubm90YXRpb25zL3BheGF0YS5jb21+MWluc3RhbGxhdGlvbi1zaHV0ZG93bi1hdCJ9LHsib3AiOiJyZXBsYWNlIiwicGF0aCI6Ii9zcGVjL2FjdGl2ZSIsInZhbHVlIjpmYWxzZX1dJwpMSVNUX0pTT05fUEFUSD0ie3JhbmdlIC5pdGVtc1sqXX17LnNwZWMuYWN0aXZlfXsnICd9ey5tZXRhZGF0YS5uYW1lc3BhY2V9eycgJ317Lm1ldGFkYXRhLm5hbWV9eycgJ317Lm1ldGFkYXRhLmFubm90YXRpb25zWydwYXhhdGFcLmNvbS9pbnN0YWxsYXRpb24tc2h1dGRvd24tYXQnXX17J1xuJ317ZW5kfSIKCiMgZGVmYXVsdCB0aGUgaWRsZSB0aW1lb3V0IHRvIDQgaG91cnMgaWYgdW5zZXQKOiAiJHtJTlNUQUxMQVRJT05fSURMRV9USU1FX1NFQ09ORFM6PTE0NDAwfSIKCmZ1bmN0aW9uIGxvZygpIHsKICAgIGVjaG8gIlskKGRhdGUpXSAtICRAIgp9CgpmdW5jdGlvbiBzZXRfYW5ub3RhdGlvbigpIHsKICAgIGxvY2FsIG5hbWVzcGFjZT0iJDEiCiAgICBsb2NhbCBuYW1lPSIkMiIKICAgIGxvY2FsIG5vdz0iJChkYXRlICslcykiCiAgICBsb2NhbCBzaHV0ZG93bl9hdD0kKCgkbm93ICsgJElOU1RBTExBVElPTl9JRExFX1RJTUVfU0VDT05EUykpCgogICAgbG9nICJTZXR0aW5nIGFubm90YXRpb24gb24gaW5zdGFsbGF0aW9uICRuYW1lc3BhY2UvJG5hbWUsICAke1NIVVRET1dOX0FOTk9UQVRJT059OiAke3NodXRkb3duX2F0fSIKCiAgICBrdWJlY3RsIC1uICR7bmFtZXNwYWNlfSBwYXRjaCBwYXggJHtuYW1lfSAtLXR5cGUgbWVyZ2UgLXAgIntcIm1ldGFkYXRhXCI6e1wiYW5ub3RhdGlvbnNcIjp7XCIke1NIVVRET1dOX0FOTk9UQVRJT059XCI6XCIke3NodXRkb3duX2F0fVwifX19Igp9CgpmdW5jdGlvbiBzaHV0ZG93bl9pbnN0YWxsYXRpb24oKSB7CiAgICBsb2NhbCBuYW1lc3BhY2U9IiQxIgogICAgbG9jYWwgbmFtZT0iJDIiCgogICAgaWYgW1sgLXogIiREUllfUlVOIiBdXTsgdGhlbgogICAgICAgIGt1YmVjdGwgLW4gIiRuYW1lc3BhY2UiIHBhdGNoIHBheCAiJG5hbWUiIC0tdHlwZSBqc29uIC1wICIkU0hVVERPV05fSlNPTl9QQVRDSCIKICAgICAgICBsb2cgIlN1Y2Nlc3NmdWxseSBzaHV0ZG93biBpbnN0YWxsYXRpb24gJHtuYW1lc3BhY2V9LyR7bmFtZX0iCgogICAgZWxzZQogICAgICAgIGxvZyAiTm90IHNodXR0aW5nIGRvd24gJHtuYW1lc3BhY2V9LyR7bmFtZX0gYmVjYXVzZSBEUllfUlVOIGlzIHNldCIKICAgIGZpCn0KCmZ1bmN0aW9uIG1heWJlX2RlYWN0aXZhdGUoKSB7CiAgICBsb2NhbCBuYW1lc3BhY2U9IiQxIgogICAgbG9jYWwgbmFtZT0iJDIiCiAgICBsb2NhbCBzaHV0ZG93bl9hdF92YWx1ZT0iJDMiCgogICAgbG9nICJDaGVja2luZyB0byBzZWUgaWYgJHtuYW1lc3BhY2V9LyR7bmFtZX0gc2hvdWxkIGJlIHNodXRkb3duIgoKICAgICMgbG9jYWwgc2h1dGRvd25fYXRfdmFsdWU9JChrdWJlY3RsIC1uICR7bmFtZXNwYWNlfSBnZXQgcGF4ICR7bmFtZX0gLW89anNvbnBhdGg9InsubWV0YWRhdGEuYW5ub3RhdGlvbnNbJyRTSFVURE9XTl9BTk5PVEFUSU9OJ119IikKCiAgICBsb2cgIiRTSFVURE9XTl9BTk5PVEFUSU9OIGZvciAke25hbWVzcGFjZX0vJHtuYW1lfTogJyRzaHV0ZG93bl9hdF92YWx1ZSciCgogICAgaWYgW1sgJChlY2hvICIkc2h1dGRvd25fYXRfdmFsdWUiIHwgZ3JlcCAtRSAiXlxkKyQiKSBdXTsgdGhlbgogICAgICAgICMgVGhpcyBpbnN0YWxsYXRpb24gaGFzIGJlZW4gYW5ub3RhdGVkIHdpdGggYSBzaHV0ZG93biB0aW1lLCBzbyB3ZSdsbCBjaGVjayB0byBzZWUgaWYgaXQgc2hvdWxkIGJlIHNodXRkb3duCiAgICAgICAgbG9jYWwgbm93PSIkKGRhdGUgKyVzKSIKICAgICAgICBpZiBbWyAiJG5vdyIgLWd0ICIkc2h1dGRvd25fYXRfdmFsdWUiIF1dOyB0aGVuCiAgICAgICAgICAgIGxvZyAiV2lsbCBhdHRlbXB0IHRvIHNodXRkb3duIGluc3RhbGxhdGlvbiAke25hbWVzcGFjZX0vJHtuYW1lfSBiZWNhdXNlIHRoZSBhbm5vdGF0ZWQgc2h1dGRvd24gdGltZSBvZiAnJHtzaHV0ZG93bl9hdF92YWx1ZX0nIGlzIGxlc3MgdGhhbiB0aGUgY3VycmVudCB0aW1lICckbm93JyIKICAgICAgICAgICAgc2h1dGRvd25faW5zdGFsbGF0aW9uICIkbmFtZXNwYWNlIiAiJG5hbWUiCiAgICAgICAgZWxzZQogICAgICAgICAgICBsb2cgIk5vdCBzaHV0dGluZyBkb3duIGluc3RhbGxhdGlvbiAke25hbWVzcGFjZX0vJHtuYW1lfSBiZWNhdXNlIHRoZSBhbm5vdGF0ZWQgc2h1dGRvd24gdGltZSBvZiAnJHtzaHV0ZG93bl9hdF92YWx1ZX0nIGlzIGdyZWF0ZXIgdGhhbiB0aGUgY3VycmVudCB0aW1lICckbm93JyIKICAgICAgICBmaQoKICAgIGVsc2UKICAgICAgICAjIFRoZSBhbm5vdGF0aW9uIHdhcyBub3QgcHJlc2VudCBvciBtYWxmb3JtZWQsIHNvIHdlJ2xsIHNldCB0aGUgc2h1dGRvd24tYXQgYW5ub3RhdGlvbgogICAgICAgIHNldF9hbm5vdGF0aW9uICIkbmFtZXNwYWNlIiAiJG5hbWUiCiAgICBmaQp9CgpmdW5jdGlvbiByZW1vdmVfYW5ub3RhdGlvbigpIHsKICAgIGxvY2FsIG5hbWVzcGFjZT0iJDEiCiAgICBsb2NhbCBuYW1lPSIkMiIKCiAgICBrdWJlY3RsIC1uICIkbmFtZXNwYWNlIiBhbm5vdGF0ZSBwYXggIiRuYW1lIiAiJHtTSFVURE9XTl9BTk5PVEFUSU9OfS0iCiAgICBsb2cgInN1Y2Nlc3NmdWxseSByZW1vdmVkIGFubm90YXRpb24gZnJvbSAke25hbWVzcGFjZX0vJHtuYW1lfSIKfQoKQUxMX0lOU1RBTExTPSQoa3ViZWN0bCBnZXQgcGF4IC0tYWxsLW5hbWVzcGFjZXMgLW89anNvbnBhdGg9IiRMSVNUX0pTT05fUEFUSCIpCndoaWxlIHJlYWQgYWN0aXZlIG5hbWVzcGFjZSBuYW1lIHNodXRkb3duX2F0IDsgZG8KICAgIGxvZyAiUHJvY2Vzc2luZyBpbnN0YWxsICR7bmFtZXNwYWNlfS8ke25hbWV9IC0gYWN0aXZlOiAke2FjdGl2ZX0sIHNodXRkb3duX2F0OiAnJHtzaHV0ZG93bl9hdH0nIgoKICAgIGlmIFtbICIkYWN0aXZlIiA9PSAidHJ1ZSIgXV07IHRoZW4KICAgICAgICBtYXliZV9kZWFjdGl2YXRlICIkbmFtZXNwYWNlIiAiJG5hbWUiICIkc2h1dGRvd25fYXQiCiAgICBlbHNlCiAgICAgICAgaWYgISBbWyAteiAiJHNodXRkb3duX2F0IiBdXTsgdGhlbgogICAgICAgICAgICBsb2cgInJlbW92aW5nIGFubm90YXRpb24gZnJvbSAke25hbWVzcGFjZX0vJHtuYW1lfSIKICAgICAgICAgICAgcmVtb3ZlX2Fubm90YXRpb24gIiRuYW1lc3BhY2UiICIkbmFtZSIKICAgICAgICBmaQogICAgZmkKZG9uZSA8PDwgIiRBTExfSU5TVEFMTFMiCg=="
+
+---
+
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  namespace: pax-operator
+  name: installation-shutdown
+spec:
+  schedule: "*/15 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 240
+      template:
+        spec:
+          serviceAccountName: installation-shutdown
+          containers:
+            - name: installation-shutdown
+              image: docker.io/roffe/kubectl:v1.11.5
+              command:
+                - /usr/local/bin/dumb-init
+                - bash
+                - /etc/installation-shutdown/installation-shutdown.sh
+              volumeMounts:
+                - name: script
+                  mountPath: /etc/installation-shutdown
+          restartPolicy: Never
+          volumes:
+            - name: script
+              configMap:
+                name: installation-shutdown-script

@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: splunk-kubernetes-logging
+spec:
+  template:
+    spec:
+      tolerations:
+      - effect: "NoSchedule"
+        operator: "Exists"

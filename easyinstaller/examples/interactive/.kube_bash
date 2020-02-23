@@ -1,0 +1,77 @@
+function kube_prompt() {
+    echo "[$(basename $(kubectl config current-context))]"
+}
+
+export PS1="\$(kube_prompt)$PS1"
+
+export KUBENS=''
+
+function ekubectl() {
+    if [[ -z "$KUBENS" ]]; then
+        echo "Running without namespace: kubectl $@"
+        kubectl "$@"
+    else
+        echo "Running with namespace: kubectl -n $KUBENS $@"
+        kubectl -n "$KUBENS" "$@"
+    fi
+}
+
+function nskubectl() {
+    export KUBENS="$1"
+    if [[ "$#" -gt 1 ]]; then
+        ekubectl "${@:2}"
+    fi
+}
+
+function kubectl_bash() {
+    ekubectl exec -it "$1" bash
+}
+
+alias kl='saml2aws login --url=https://sso.jumpcloud.com/saml2/awsdevadmin --force && export AWS_PROFILE=saml'
+
+alias kb='kubectl_bash'
+
+alias kns='nskubectl'
+alias k='ekubectl'
+
+alias kg='k get'
+alias kge='kg events --sort-by=.metadata.creationTimestamp'
+alias kgcm='kg configmap'
+alias kgcr='kg clusterrole'
+alias kgcrb='kg clusterrolebinding'
+alias kgd='kg deployment'
+alias kgds='kg daemonset'
+alias kgi='kg ingress'
+alias kgn='kg nodes'
+alias kgnp='kg networkpolicy'
+alias kgp='k get pod'
+alias kgs='k get service'
+alias kgse='k get secret'
+alias kgss='k get statefulset'
+
+alias kgacj='kubectl get cronjob --all-namespaces'
+alias kgacm='kubectl get configmap --all-namespaces'
+alias kgacr='kubectl get clusterrole --all-namespaces'
+alias kgacrb='kubectl get clusterrolebinding --all-namespaces'
+alias kgacrd='kubectl get customresourcedefinitions'
+alias kgad='kubectl get deployment --all-namespaces'
+alias kgai='kubectl get ingress --all-namespaces'
+alias kgan='kgn'
+alias kgans='kubectl get namespace --all-namespaces'
+alias kgads='kubectl get daemonset --all-namespaces'
+alias kganp='kubectl get networkpolicy --all-namespaces'
+alias kgap='kubectl get pods --all-namespaces'
+alias kgas='kubectl get svc --all-namespaces'
+alias kgase='kubectl get secrets --all-namespaces'
+alias kgasa='kubectl get sa --all-namespaces'
+alias kgass='kubectl get statefulset --all-namespaces'
+alias kgav='kubectl get volumes --all-namespaces'
+
+alias kd='k describe'
+alias kdn='kd node'
+alias kdd='kd deployment'
+alias kdnp='kd networkpolicy'
+alias kdp='kd pod'
+alias kds='kd service'
+
+alias klog='k logs'

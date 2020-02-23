@@ -1,0 +1,17 @@
+
+# Add in additional env vars
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: splunk-kubernetes-metrics
+spec:
+  template:
+    spec:
+      containers:
+      - name: splunk-fluentd-k8s-metrics
+        env:
+        - name: SPLUNK_HEC_HOST
+          valueFrom:
+            secretKeyRef:
+              name: splunk-kubernetes-metrics
+              key: splunk_hec_host

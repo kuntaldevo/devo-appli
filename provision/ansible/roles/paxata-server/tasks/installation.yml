@@ -1,0 +1,33 @@
+---
+
+
+- name: create {{ paxata_home | mandatory }}
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ paxata_user | mandatory }}"
+    group: "{{ paxata_user }}"
+    mode: 0755
+  with_items:
+    - "{{ paxata_home }}"
+    - "{{ paxata_home }}/certs"
+    - "{{ paxata_home }}/drivers"
+    - "{{ paxata_home }}/config"
+    - "{{ paxata_home }}/paxata"
+    - "{{ paxata_home }}/paxata/tmp"
+
+- name: unzip jdbc-drivers.tar.gz to {{ paxata_home }}/drivers
+  unarchive:
+    src: jdbc-drivers.tar.gz
+    dest: "{{ paxata_home }}/drivers/"
+    copy: yes
+    owner: "{{ paxata_user }}"
+    group: "{{ paxata_user }}"
+
+- name: make sure everything under "{{ paxata_home }}" owner by "{{ paxata_user }}"
+  file:
+    path: "{{ paxata_home }}"
+    state: directory
+    owner: "{{ paxata_user }}"
+    group: "{{ paxata_user }}"
+    recurse: yes

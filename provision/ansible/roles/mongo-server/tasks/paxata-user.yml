@@ -1,0 +1,30 @@
+---
+
+- name: wait for mongo-db to be ready
+  wait_for:
+    port: "{{ mongodb_conf_port }}"
+    state: started
+
+- name: Install pymongo for Ansible's mongodb_user module
+  pip:
+    name: pymongo
+
+
+- name: Create a paxata admin user
+  mongodb_user:
+    database: admin
+    name: paxatadmin
+    password: password
+    state: present
+    roles: readWriteAnyDatabase,dbAdminAnyDatabase,userAdminAnyDatabase,root
+
+
+- name: Create a paxata user
+  mongodb_user:
+    login_user: paxatadmin
+    login_password: password
+    database: paxata
+    name: paxuser
+    password: password
+    state: present
+    roles: readWrite,dbAdmin,userAdmin

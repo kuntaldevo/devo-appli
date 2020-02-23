@@ -1,0 +1,7 @@
+#!/bin/bash
+set -o xtrace
+
+/etc/eks/bootstrap.sh '${env-key}' \
+    --kubelet-extra-args \
+    "--node-labels=\"paxata.com/role-id\"=devops-server,\"kubernetes.io/role\"=devops-server \
+     --register-with-taints=dedicated=devops-server:NoSchedule"

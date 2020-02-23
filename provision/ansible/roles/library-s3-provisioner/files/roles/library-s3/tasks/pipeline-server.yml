@@ -1,0 +1,19 @@
+
+- name: Install Core Site XML
+  copy:
+    src: core-site.xml
+    dest: /usr/local/paxata/pipeline/config/core-site.xml
+    owner: "paxata"
+    group: "paxata"
+    backup: yes
+    mode: 0644
+
+- name: Update the core-site.xml with the correct S3 bucket name
+  lineinfile:
+    path: /usr/local/paxata/pipeline/config/core-site.xml
+    regexp: '<value>fs.defaultFS</value>'
+    line: "<value>{{ library_name }}</value>"
+
+- lineinfile:
+    path: /usr/local/paxata/pipeline/config/paxata.properties
+    line: 'px.hadoop.config.files=/usr/local/paxata/pipeline/config/core-site.xml'

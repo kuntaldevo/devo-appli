@@ -1,0 +1,61 @@
+---
+
+- name: Overwrite PX.properties with blank file
+  copy:
+    src: "2.23/px.properties"
+    dest: "{{ paxata_home }}/config/px.properties"
+    owner: "{{ paxata_user }}"
+    group: "{{ paxata_user }}"
+    mode: 0644
+    backup: yes
+
+- name: Add Pipeline URL
+  lineinfile:
+    path: "{{ paxata_home }}/config/px.properties"
+    line: 'px.pipeline.url=http://pipeline-server:8090'
+
+- name: Add Library URL
+  lineinfile:
+    path: "{{ paxata_home }}/config/px.properties"
+    line: 'px.internal.server.url=http://paxata-server:9080/library'
+
+- name: Configure Websocket metrics for instana
+  blockinfile:
+    path: "{{ paxata_home }}/config/px.properties"
+    marker: "# {mark} Instana Websocket Monitoring"
+    block: |
+      px.websocket.trace=sdk
+
+- name: Configure StatsD for Instana
+  blockinfile:
+    path: "{{ paxata_home }}/config/px.properties"
+    marker: "# {mark} StatsD"
+    block: |
+      px.diagnostic.enabled=true
+      px.diagnostic.trace.enabled=true
+      px.diagnostic.statsd.enabled=true
+      px.diagnostic.statsd.hosts=localhost:8125
+      px.diagnostic.traces.websocket-trigger=all
+
+#TODO add ,telegraf-ext.paxtainer.com:8125 for prod
+
+
+- name: Add garbage collection settings to px defaults
+  blockinfile:
+    path: "{{ paxata_home }}/config/px-defaults.properties"
+    marker: "# {mark} Java Garbage Collection"
+    block: |
+      # Paxata Server Ansible
+      # To roll back GC changes, comment out the following lines
+      px.xx.+UseG1GC
+      px.xx.+UseStringDeduplication
+      px.xx.+UseCompressedOops
+      px.xx.+AlwaysPreTouch
+      px.xx.-OmitStackTraceInFastThrow
+      px.xx.InitiatingHeapOccupancyPercent=70
+      px.xx.MaxGCPauseMillis=200
+      #
+      # To roll back GC changes, comment out the previous px.xx properties, and leave these as-is
+      px.xx.MaxHeapSize=30g
+      px.xx.MetaspaceSize=256m
+      px.xx.MaxMetaspaceSize=512m

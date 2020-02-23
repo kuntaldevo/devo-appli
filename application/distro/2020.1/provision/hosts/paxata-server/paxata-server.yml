@@ -1,0 +1,13 @@
+---
+#No longer used as OpenJDK 8 comes from YUM on Centos 7
+#java_rpm: jdk-8u112-linux-x64.rpm
+
+### Get the Artifact via know URL
+#feature_source: url
+#rpm_url: http://tc.paxatadev.com/repository/download/Master_Assemble_ConnectorsAndPaxServer/329212:id/paxata-server-2019.1.pr.latest_plat~1519.noarch.rpm
+
+### Using the of the pax_server_ver use the Team City repo ( using the TC API )
+feature_source: teamcity
+build_id: id20201_Assemble_ConnectorsAndPaxServer
+tag_id: 2020.1_GA
+#branch_id: latest/perf

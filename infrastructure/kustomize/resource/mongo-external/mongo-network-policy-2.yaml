@@ -1,0 +1,13 @@
+### Allow the mongo-external-service to be accessible
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: mongo-network-policy-2
+  namespace: mongo
+spec:
+  podSelector: {}
+  ingress:
+  - from: []
+    ports:
+    - protocol: TCP
+      port: 27017

@@ -1,0 +1,14 @@
+
+---
+- hosts: all
+  become: yes
+  tasks:
+
+    - name: Parse the User Data into Facts
+      include_role:
+        name: load-user-data
+
+    - name: Wait for, format, and mount the cache
+      include_role:
+        name: library-s3
+      when: feature_library == "s3"

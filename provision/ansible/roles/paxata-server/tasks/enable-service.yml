@@ -1,0 +1,20 @@
+---
+
+- name: Add Updated Paxata Server dot sh
+  copy:
+    src: "2.23/paxata-server.sh"
+    dest: "{{paxata_home}}/paxata-server.sh"
+    mode: 0744
+    backup: true
+
+- name: Fix a bug in the build and override the init.d script
+  copy:
+    src: "2.23/paxata-server"
+    dest: "/etc/init.d/paxata-server"
+    mode: 0744
+    backup: true
+
+- name: Set Paxata UI Server to autostart
+  service:
+    name: paxata-server
+    enabled: yes

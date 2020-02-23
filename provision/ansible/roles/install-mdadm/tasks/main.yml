@@ -1,0 +1,5 @@
+---
+- name: Install 'mdadm' via Yum
+  yum:
+    name: mdadm
+    state: latest

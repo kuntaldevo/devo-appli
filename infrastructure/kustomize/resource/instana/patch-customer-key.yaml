@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: instana-agent-secret
+  namespace: instana-agent
+data:
+  key: MFYzQnFFZU5ReWFDTndqSnl4d29Mdw==

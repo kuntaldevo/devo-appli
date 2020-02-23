@@ -1,0 +1,18 @@
+
+#Currently locked the version because 1.8.26 no longer supports python 2.6
+- name: Get Botocore as a required pre-req
+  pip:
+    name: botocore
+    version: 1.8.25
+  when: ansible_distribution == 'CentOS' and ansible_distribution_major_version == "6"
+
+- name: Get Boto for AWS CLI support, and is a pre-req of the AWS-CLI
+  pip:
+    name: boto3
+
+# NOTE:  Boto3 Installed by default on centos 7
+
+- name: Install the AWS-CLI
+  pip:
+    name: awscli
+    extra_args: --upgrade --user

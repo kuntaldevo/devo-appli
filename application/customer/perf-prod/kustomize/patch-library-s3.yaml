@@ -1,0 +1,10 @@
+apiVersion: paxata.com/v1
+kind: PaxInstallation
+metadata:
+  name: pax-installation
+spec:
+  active: true
+  libraryStorage:
+    type: s3
+    coreSiteSecretName: core-site
+    rootPath: /library

@@ -1,0 +1,3813 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+  name: ingress-nginx
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: instana-agent
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: metacontroller
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: mongo
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: pax-operator
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: splunk
+---
+allowVolumeExpansion: true
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: mongo-storage-class
+parameters:
+  encrypted: "true"
+  fsType: xfs
+  kmsKeyId: arn:aws:kms:us-east-1:365762923425:key/4c74ee95-f151-40c6-9789-89fe91700500
+  type: gp2
+provisioner: kubernetes.io/aws-ebs
+reclaimPolicy: Retain
+volumeBindingMode: Immediate
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: bgpconfigurations.crd.projectcalico.org
+spec:
+  group: crd.projectcalico.org
+  names:
+    kind: BGPConfiguration
+    plural: bgpconfigurations
+    singular: bgpconfiguration
+  scope: Cluster
+  versions:
+  - name: v1
+    served: true
+    storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: bgppeers.crd.projectcalico.org
+spec:
+  group: crd.projectcalico.org
+  names:
+    kind: BGPPeer
+    plural: bgppeers
+    singular: bgppeer
+  scope: Cluster
+  versions:
+  - name: v1
+    served: true
+    storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: clusterinformations.crd.projectcalico.org
+spec:
+  group: crd.projectcalico.org
+  names:
+    kind: ClusterInformation
+    plural: clusterinformations
+    singular: clusterinformation
+  scope: Cluster
+  versions:
+  - name: v1
+    served: true
+    storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: compositecontrollers.metacontroller.k8s.io
+spec:
+  group: metacontroller.k8s.io
+  names:
+    kind: CompositeController
+    plural: compositecontrollers
+    shortNames:
+    - cc
+    - cctl
+    singular: compositecontroller
+  scope: Cluster
+  version: v1alpha1
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: controllerrevisions.metacontroller.k8s.io
+spec:
+  group: metacontroller.k8s.io
+  names:
+    kind: ControllerRevision
+    plural: controllerrevisions
+    singular: controllerrevision
+  scope: Namespaced
+  version: v1alpha1
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: decoratorcontrollers.metacontroller.k8s.io
+spec:
+  group: metacontroller.k8s.io
+  names:
+    kind: DecoratorController
+    plural: decoratorcontrollers
+    shortNames:
+    - dec
+    - decorators
+    singular: decoratorcontroller
+  scope: Cluster
+  version: v1alpha1
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: felixconfigurations.crd.projectcalico.org
+spec:
+  group: crd.projectcalico.org
+  names:
+    kind: FelixConfiguration
+    plural: felixconfigurations
+    singular: felixconfiguration
+  scope: Cluster
+  versions:
+  - name: v1
+    served: true
+    storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: globalnetworkpolicies.crd.projectcalico.org
+spec:
+  group: crd.projectcalico.org
+  names:
+    kind: GlobalNetworkPolicy
+    plural: globalnetworkpolicies
+    singular: globalnetworkpolicy
+  scope: Cluster
+  versions:
+  - name: v1
+    served: true
+    storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: globalnetworksets.crd.projectcalico.org
+spec:
+  group: crd.projectcalico.org
+  names:
+    kind: GlobalNetworkSet
+    plural: globalnetworksets
+    singular: globalnetworkset
+  scope: Cluster
+  versions:
+  - name: v1
+    served: true
+    storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: hostendpoints.crd.projectcalico.org
+spec:
+  group: crd.projectcalico.org
+  names:
+    kind: HostEndpoint
+    plural: hostendpoints
+    singular: hostendpoint
+  scope: Cluster
+  versions:
+  - name: v1
+    served: true
+    storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: ippools.crd.projectcalico.org
+spec:
+  group: crd.projectcalico.org
+  names:
+    kind: IPPool
+    plural: ippools
+    singular: ippool
+  scope: Cluster
+  versions:
+  - name: v1
+    served: true
+    storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: networkpolicies.crd.projectcalico.org
+spec:
+  group: crd.projectcalico.org
+  names:
+    kind: NetworkPolicy
+    plural: networkpolicies
+    singular: networkpolicy
+  scope: Namespaced
+  versions:
+  - name: v1
+    served: true
+    storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: paxinstallations.paxata.com
+spec:
+  additionalPrinterColumns:
+  - JSONPath: .spec.active
+    description: The desired state of whether the installation should be running or
+      not
+    name: Active
+    type: boolean
+  - JSONPath: .status.current.allRunning
+    description: Whether the installation is currently running and ready
+    name: Running
+    type: boolean
+  - JSONPath: .status.current.time
+    description: Timestamp of the last status update
+    name: Last Status Update
+    type: date
+  - JSONPath: .spec.paxserver.imageVersion
+    description: Version of the paxserver image
+    name: Pax Server Version
+    type: string
+  - JSONPath: .status.current.podStatuses
+    description: Summary of pod statuses
+    name: Pod Statuses
+    type: string
+  - JSONPath: .status.paxserverUrl
+    description: Paxserver http URL
+    name: URL
+    type: string
+  group: paxata.com
+  names:
+    categories:
+    - all
+    kind: PaxInstallation
+    listKind: PaxInstallationList
+    plural: paxinstallations
+    shortNames:
+    - pax
+    singular: paxinstallation
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        spec:
+          properties:
+            active:
+              description: |-
+                The desired state of the installation, whether it should be running or not. If
+                active is false, then the installation will be shut down immediately. If active is
+                true, then the operator will attempt to start it.
+              type: boolean
+            libraryStorage:
+              oneOf:
+              - properties:
+                  type:
+                    enum:
+                    - local
+                required:
+                - type
+                type: object
+              - properties:
+                  coreSiteSecretName:
+                    type: string
+                  rootPath:
+                    type: string
+                  type:
+                    enum:
+                    - s3
+                required:
+                - type
+                - coreSiteSecretName
+                - rootPath
+                type: object
+            mongo:
+              properties:
+                credentialSecretName:
+                  description: |-
+                    The name of a Kubernetes Secret that contains credentials for connecting to MongoDB. The secret
+                    must contain the following fields: MONGO_HOSTS, MONGO_USERNAME, MONGO_PASSWORD, MONGO_DB_NAME, MONGO_URI.
+                    This field allows you to opt out of automatic database management.
+                  type: string
+                databaseName:
+                  description: Deprecated, will be removed in a future version
+                  type: string
+              type: object
+            paxserver:
+              properties:
+                applicationProperties:
+                  additionalProperties: true
+                  type: object
+                imageName:
+                  type: string
+                imageVersion:
+                  type: string
+                jvmArgs:
+                  items:
+                    type: string
+                  type: array
+                memoryMB:
+                  type: integer
+                numCpus:
+                  type: number
+              required:
+              - imageName
+              - imageVersion
+              - numCpus
+              - memoryMB
+              type: object
+            pesKeySecretName:
+              description: |-
+                The name of a kubernetes Secret in the same namespace that contains the content of the pes.properties file for paxserver.
+                The controller does not generate pes keys automatically, but expects that one has already been created for each installation.
+              type: string
+            pipelineProxy:
+              properties:
+                applicationProperties:
+                  additionalProperties: true
+                  type: object
+                imageName:
+                  type: string
+                imageVersion:
+                  type: string
+                jvmArgs:
+                  items:
+                    type: string
+                  type: array
+                memoryMB:
+                  type: integer
+                numCpus:
+                  type: number
+              required:
+              - imageName
+              - imageVersion
+              - numCpus
+              - memoryMB
+              type: object
+          required:
+          - active
+          - paxserver
+          - pipelineProxy
+          - libraryStorage
+          - pesKeySecretName
+  versions:
+  - name: v1
+    served: true
+    storage: true
+  - name: v1beta1
+    served: true
+    storage: false
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+  name: nginx-ingress-serviceaccount
+  namespace: ingress-nginx
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: instana-agent
+  namespace: instana-agent
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: calico-node
+  namespace: kube-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    k8s-addon: cluster-autoscaler.addons.k8s.io
+    k8s-app: cluster-autoscaler
+  name: cluster-autoscaler
+  namespace: kube-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: eventrouter
+  namespace: kube-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: typha-cpha
+  namespace: kube-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: metacontroller
+  namespace: metacontroller
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: splunk-kubernetes-metrics
+    version: 1.2.0
+  name: splunk-kubernetes-metrics
+  namespace: splunk
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: splunk-kubernetes-objects
+    version: 1.2.0
+  name: splunk-kubernetes-objects
+  namespace: splunk
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: external-dns
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    k8s-addon: cluster-autoscaler.addons.k8s.io
+    k8s-app: cluster-autoscaler
+  name: cluster-autoscaler
+  namespace: kube-system
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - create
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resourceNames:
+  - cluster-autoscaler-status
+  - cluster-autoscaler-priority-expander
+  resources:
+  - configmaps
+  verbs:
+  - delete
+  - get
+  - update
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: typha-cpha
+  namespace: kube-system
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+- apiGroups:
+  - extensions
+  resources:
+  - deployments/scale
+  verbs:
+  - get
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+  name: nginx-ingress-role
+  namespace: ingress-nginx
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - pods
+  - secrets
+  - namespaces
+  verbs:
+  - get
+- apiGroups:
+  - ""
+  resourceNames:
+  - ingress-controller-leader-nginx
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  resources:
+  - endpoints
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: calico-node
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  - serviceaccounts
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - pods/status
+  verbs:
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - get
+- apiGroups:
+  - ""
+  resources:
+  - endpoints
+  verbs:
+  - get
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - get
+  - list
+  - update
+  - watch
+- apiGroups:
+  - extensions
+  resources:
+  - networkpolicies
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - networkpolicies
+  verbs:
+  - watch
+  - list
+- apiGroups:
+  - crd.projectcalico.org
+  resources:
+  - globalfelixconfigs
+  - felixconfigurations
+  - bgppeers
+  - globalbgpconfigs
+  - bgpconfigurations
+  - ippools
+  - globalnetworkpolicies
+  - globalnetworksets
+  - networkpolicies
+  - clusterinformations
+  - hostendpoints
+  verbs:
+  - create
+  - get
+  - list
+  - update
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    k8s-addon: cluster-autoscaler.addons.k8s.io
+    k8s-app: cluster-autoscaler
+  name: cluster-autoscaler
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - events
+  - endpoints
+  verbs:
+  - create
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - pods/eviction
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  resources:
+  - pods/status
+  verbs:
+  - update
+- apiGroups:
+  - ""
+  resourceNames:
+  - cluster-autoscaler
+  resources:
+  - endpoints
+  verbs:
+  - get
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - watch
+  - list
+  - get
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - services
+  - replicationcontrollers
+  - persistentvolumeclaims
+  - persistentvolumes
+  verbs:
+  - watch
+  - list
+  - get
+- apiGroups:
+  - extensions
+  resources:
+  - replicasets
+  - daemonsets
+  verbs:
+  - watch
+  - list
+  - get
+- apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
+  verbs:
+  - watch
+  - list
+- apiGroups:
+  - apps
+  resources:
+  - statefulsets
+  - replicasets
+  - daemonsets
+  verbs:
+  - watch
+  - list
+  - get
+- apiGroups:
+  - storage.k8s.io
+  resources:
+  - storageclasses
+  verbs:
+  - watch
+  - list
+  - get
+- apiGroups:
+  - batch
+  - extensions
+  resources:
+  - jobs
+  verbs:
+  - get
+  - list
+  - watch
+  - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: instana-agent-role
+rules:
+- nonResourceURLs:
+  - /version
+  - /healthz
+  verbs:
+  - get
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - extensions
+  resources:
+  - deployments
+  - replicasets
+  - ingresses
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - replicasets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  - events
+  - services
+  - endpoints
+  - nodes
+  - pods
+  - replicationcontrollers
+  - componentstatuses
+  - resourcequotas
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - endpoints
+  verbs:
+  - create
+  - update
+  - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: splunk-kubernetes-metrics
+    version: 1.2.0
+  name: kube-api-aggregator
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  - nodes/stats
+  - nodes/proxy
+  - pods
+  verbs:
+  - get
+  - list
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: splunk-kubernetes-metrics
+    version: 1.2.0
+  name: kubelet-summary-api-read
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  - nodes/stats
+  - nodes/metrics
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: metacontroller
+rules:
+- apiGroups:
+  - '*'
+  resources:
+  - '*'
+  verbs:
+  - '*'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: splunk-kubernetes-objects
+    version: 1.2.0
+  name: splunk-kubernetes-objects
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - namespaces
+  - nodes
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: typha-cpha
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - list
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: eventrouter
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - get
+  - watch
+  - list
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: external-dns
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - get
+  - watch
+  - list
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+  - watch
+  - list
+- apiGroups:
+  - extensions
+  resources:
+  - ingresses
+  verbs:
+  - get
+  - watch
+  - list
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+  name: nginx-ingress-clusterrole
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - endpoints
+  - nodes
+  - pods
+  - secrets
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - get
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - patch
+- apiGroups:
+  - extensions
+  - networking.k8s.io
+  resources:
+  - ingresses
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - extensions
+  - networking.k8s.io
+  resources:
+  - ingresses/status
+  verbs:
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    k8s-addon: cluster-autoscaler.addons.k8s.io
+    k8s-app: cluster-autoscaler
+  name: cluster-autoscaler
+  namespace: kube-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: cluster-autoscaler
+subjects:
+- kind: ServiceAccount
+  name: cluster-autoscaler
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: typha-cpha
+  namespace: kube-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: typha-cpha
+subjects:
+- kind: ServiceAccount
+  name: typha-cpha
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+  name: nginx-ingress-role-nisa-binding
+  namespace: ingress-nginx
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: nginx-ingress-role
+subjects:
+- kind: ServiceAccount
+  name: nginx-ingress-serviceaccount
+  namespace: ingress-nginx
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: instana-agent-role-binding
+  namespace: instana-agent
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: instana-agent-role
+subjects:
+- kind: ServiceAccount
+  name: instana-agent
+  namespace: instana-agent
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: calico-node
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: calico-node
+subjects:
+- kind: ServiceAccount
+  name: calico-node
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    k8s-addon: cluster-autoscaler.addons.k8s.io
+    k8s-app: cluster-autoscaler
+  name: cluster-autoscaler
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-autoscaler
+subjects:
+- kind: ServiceAccount
+  name: cluster-autoscaler
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: metacontroller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: metacontroller
+subjects:
+- kind: ServiceAccount
+  name: metacontroller
+  namespace: metacontroller
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: splunk-kubernetes-metrics
+    version: 1.2.0
+  name: splunk-kubernetes-metrics
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kubelet-summary-api-read
+subjects:
+- kind: ServiceAccount
+  name: splunk-kubernetes-metrics
+  namespace: splunk
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: splunk-kubernetes-metrics
+    version: 1.2.0
+  name: splunk-kubernetes-metrics-aggregator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kube-api-aggregator
+subjects:
+- kind: ServiceAccount
+  name: splunk-kubernetes-metrics
+  namespace: splunk
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: splunk-kubernetes-objects
+    version: 1.2.0
+  name: splunk-kubernetes-objects
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: splunk-kubernetes-objects
+subjects:
+- kind: ServiceAccount
+  name: splunk-kubernetes-objects
+  namespace: splunk
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: typha-cpha
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: typha-cpha
+subjects:
+- kind: ServiceAccount
+  name: typha-cpha
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: eventrouter
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: eventrouter
+subjects:
+- kind: ServiceAccount
+  name: eventrouter
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: external-dns-viewer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: external-dns
+subjects:
+- kind: ServiceAccount
+  name: external-dns
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+  name: nginx-ingress-clusterrole-nisa-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: nginx-ingress-clusterrole
+subjects:
+- kind: ServiceAccount
+  name: nginx-ingress-serviceaccount
+  namespace: ingress-nginx
+---
+apiVersion: v1
+data:
+  enable-access-log-for-default-backend: "true"
+  http-snippet: |
+    server {
+      listen 8080 proxy_protocol;
+      server_tokens off;
+      return 308 https://$host$request_uri;
+    }
+  proxy-body-size: "0"
+  proxy-read-timeout: "3600"
+  proxy-send-timeout: "3600"
+  use-proxy-protocol: "true"
+kind: ConfigMap
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+  name: nginx-configuration
+  namespace: ingress-nginx
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+  name: tcp-services
+  namespace: ingress-nginx
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+  name: udp-services
+  namespace: ingress-nginx
+---
+apiVersion: v1
+data:
+  configuration.yaml: |
+    com.instana.plugin.javatrace:
+      instrumentation:
+        enabled: true
+        opentracing: false
+        sdk:
+          packages:
+            - 'com.paxata.frontend.trace.instana'
+    com.instana.plugin.statsd:
+        enabled: true
+        ports:
+          udp: 8125
+          mgmt: 8126
+        flush-interval: 10 # seconds
+kind: ConfigMap
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: instana-configuration
+  namespace: instana-agent
+---
+apiVersion: v1
+data:
+  ladder: |-
+    {
+      "coresToReplicas": [],
+      "nodesToReplicas":
+      [
+        [1, 1],
+        [10, 2],
+        [100, 3],
+        [250, 4],
+        [500, 5],
+        [1000, 6],
+        [1500, 7],
+        [2000, 8]
+      ]
+    }
+kind: ConfigMap
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: calico-typha-horizontal-autoscaler
+  namespace: kube-system
+---
+apiVersion: v1
+data:
+  config.json: |-
+    {
+      "sink": "glog"
+    }
+kind: ConfigMap
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: eventrouter-cm
+  namespace: kube-system
+---
+apiVersion: v1
+binaryData:
+  init-mongo.sh: IyEvYmluL2Jhc2gKCnNldCAtZW0KCiMgbWFrZSBzdXJlIGFsbCB0aGUgcmVxdWlyZWQgdmFyaWFibGVzIGFyZSBzZXQKZm9yIHZhciBpbiBNT05HT19BRE1JTl9VU0VSTkFNRSBNT05HT19BRE1JTl9QQVNTV09SRCBTVEFURUZVTF9TRVRfTkFNRSBQT0RfTkFNRSBNT05HT19SRVBMSUNBX0NPVU5UOyBkbwogICAgaWYgW1sgLXogIiR7IXZhcn0iIF1dOyB0aGVuCiAgICAgICAgZWNobyAiTWlzc2luZyByZXF1aXJlZCB2YXJpYWJsZTogJHZhciIKICAgICAgICBleGl0IDEKICAgIGZpCmRvbmUKCiMgbWF0Y2hlcyB3aGF0J3MgaW4gbW9uZ28ueWFtbApLRVlGSUxFX0xPQ0FUSU9OPS9tb25nby1jZXJ0aWZpY2F0ZXMva2V5ZmlsZQoKU1RBUlRfVElNRT0iJChkYXRlICsiJXMiKSIKClJFUExJQ0FfU0VUX05BTUU9cnMwCgojIFRoZSBob3N0bmFtZXMgdGhhdCBhcmUgdXNlZCBoZXJlIG5lZWQgdG8gbWF0Y2ggdGhlIGhvc3RuYW1lcyB0aGF0IGEgY2xpZW50IHdvdWxkIHVzZSB0byBjb25uZWN0LCBvdGhlcndpc2UgdGhlIGNsaWVudAojIGNvbm5lY3Rpb24gd2lsbCBub3Qgd29yawpNWV9IT1NUTkFNRT0iJChob3N0bmFtZSkubW9uZ28ubW9uZ28iCmVjaG8gIjEyNy4wLjAuMSAke01ZX0hPU1ROQU1FfSIgPj4gL2V0Yy9ob3N0cwoKc2V0X3BvZF9yZWFkeSgpIHsKICAgIGxvZyAiU2V0dGluZyBwb2QgdG8gUkVBRFkgc3RhdHVzIgogICAgIyBUaGlzIGZpbGUgaXMgd2hhdCB0aGUgazhzIHJlYWRpbmVzc1Byb2JlIGxvb2tzIGZvci4gQ3JlYXRpbmcgdGhpcyB3aWxsIHRlbGwgazhzIHRoYXQgdGhlIGNvbnRhaW5lciBpcyByZWFkeQogICAgdG91Y2ggL3RtcC9tb25nby1yZWFkeQp9Cgpwb2RfaXNfcmVhZHkoKSB7CiAgICBjYXQgL3RtcC9tb25nby1yZWFkeSA+PiAvZGV2L251bGwKfQoKbG9nKCkgewogICAgbG9jYWwgbXNnPSIkMSIKICAgIGxvY2FsIHRpbWVzdGFtcAogICAgdGltZXN0YW1wPSQoZGF0ZSkKICAgIGVjaG8gIlskMF0gWyR0aW1lc3RhbXBdICRtc2ciIDI+JjEKfQoKCnNodXRkb3duX21vbmdvKCkgewogICAgbG9nICJTaHV0dGluZyBkb3duIG1vbmdvIgogICAgaWYgKCEgbW9uZ28gYWRtaW4gLS1ldmFsICJkYi5zaHV0ZG93blNlcnZlcih7Zm9yY2U6IHRydWV9KSIpOyB0aGVuCiAgICAgIGxvZyAiZGIuc2h1dGRvd25TZXJ2ZXIoKSBmYWlsZWQsIHNlbmRpbmcgdGhlIHRlcm1pbmF0ZSBzaWduYWwiCiAgICAgIGtpbGwgJTEKICAgIGZpCn0KCmxvZyAiU3RhcnRpbmcgbW9uZ29kIHByb2Nlc3Mgd2l0aCBhcmd1bWVudHM6ICRAIgojIFN0YXJ0IG1vbmdvZCBpbiB0aGUgYmFja2dyb3VuZCBhdCBmaXJzdCBzbyB0aGF0IHdlIGNhbiBjb250aW51ZSB0byBleGVjdXRlIHNvbWUgb3RoZXIgY29tbWFuZHMKIyB0byBpbml0aWFsaXplIHRoZSByZXBsaWNhIHNldC4gV2UnbGwgbW92ZSB0aGlzIG1vbmdvZCBwcm9jZXNzIGJhY2sgdG8gdGhlIGZvcmVncm91bmQgYWZ0ZXIgd2UncmUgZG9uZQojIGFzIGxvbmcgYXMgZXZlcnl0aGluZyBpcyBzdWNjZXNzZnVsCm1vbmdvZCAtLWJpbmRfaXAgMC4wLjAuMCAtLXJlcGxTZXQgIiRSRVBMSUNBX1NFVF9OQU1FIiAtLWF1dGggLS1jbHVzdGVyQXV0aE1vZGUga2V5RmlsZSAtLWtleUZpbGUgJEtFWUZJTEVfTE9DQVRJT04gLS1zZXRQYXJhbWV0ZXIgYXV0aGVudGljYXRpb25NZWNoYW5pc21zPVNDUkFNLVNIQS0xICRAICYKTU9OR09fUElEPSIkISIKCiMgc3RvcCBtb25nb2RiIHdoZW4gdGhlIHNoZWxsIGV4aXRzLiBUaGlzIG1pZ2h0IGhhcHBlbiBhbnl3YXksIGJ1dCB0aGUgcGFydGljdWxhcnMgb2YgYmFzaCBqb2IgbWFuYWdlbWVudCBpbiB3ZWlyZCBzY2VuYXJpb3MgaXMgYSBteXN0ZXJ5IHRvIG1lCnRyYXAgc2h1dGRvd25fbW9uZ28gRVhJVAojIGp1c3QgdG8gZ2l2ZSBtb25nb2QgdGltZSB0byBnZXQgcmVhZHkKc2xlZXAgMTAKCmV2YWxfanMoKSB7CiAgICBsb2NhbCBob3N0PSQxCiAgICBsb2NhbCBqcz0kMgoKICAgIGxvY2FsIGNyZWRlbnRpYWxzPSItdSAkTU9OR09fQURNSU5fVVNFUk5BTUUgLXAgJE1PTkdPX0FETUlOX1BBU1NXT1JEIgogICAgbW9uZ28gLS1xdWlldCAtLWhvc3QgJGhvc3QgJGNyZWRlbnRpYWxzIGFkbWluIC0tZXZhbCAiJHtqc30iIHx8IGVjaG8gIkV2YWx1YXRpb24gb2YgSlMgZmFpbGVkIgp9CgpyZXRyeV9sb2NhbF91bnRpbCgpIHsKICAgIGxvY2FsIGNvbW1hbmQ9IiR7MX0iCiAgICBsb2NhbCBleHBlY3RlZD0iJHsyfSIKCiAgICAjIExlYWRlciBlbGVjdGlvbiBjb3VsZCB0YWtlIGEgd2hpbGUsIGFuZCB3ZSBkb24ndCByZWFsbHkgaGF2ZSBhIGdvb2Qgd2F5IHRvIHJlY292ZXIgaWYgaXQKICAgIGxvY2FsIHRpbWVvdXRfc2Vjb25kcz0zMDAKICAgIGxvY2FsIHN0YXJ0X3RpbWU9IiQoZGF0ZSArIiVzIikiCiAgICBsb2NhbCBlbGFwc2VkPTAKCiAgICAjIHJlbHkgb24gdGhlIGxvY2FsaG9zdCBleGNlcHRpb24gdG8gYWxsb3cgdGhpcyB0byB3b3JrCiAgICBsb2NhbCByZXN1bHQ9JChtb25nbyAtLXF1aWV0IGFkbWluIC0tZXZhbCAiJHtjb21tYW5kfSIpCiAgICB1bnRpbCBbWyAiJHJlc3VsdCIgPT0gIiR7ZXhwZWN0ZWR9IiBdXTsgZG8KICAgICAgICBsb2cgIldhaXRpbmcgZm9yICcke2NvbW1hbmR9JyB0byByZXR1cm4gJyR7ZXhwZWN0ZWR9JywgZ290OiAnJHtyZXN1bHR9JyIKICAgICAgICBzbGVlcCAxCgogICAgICAgIGlmICghIHBzICIke01PTkdPX1BJRH0iICY+L2Rldi9udWxsKTsgdGhlbgogICAgICAgICAgICBsb2cgIm1vbmdvZCBzaHV0ZG93biB1bmV4cGVjdGVkbHkiCiAgICAgICAgICAgIGV4aXQgMQogICAgICAgIGZpCgogICAgICAgIGVsYXBzZWQ9JCgoICQoZGF0ZSArIiVzIikgLSAkc3RhcnRfdGltZSApKQoKICAgICAgICBpZiBbWyAiJHtlbGFwc2VkfSIgLWdlICIke3RpbWVvdXRfc2Vjb25kc30iIF1dOyB0aGVuCiAgICAgICAgICAgIGxvZyAiVGltZWQgb3V0IGFmdGVyICR7dGltZW91dF9zZWNvbmRzfXMgYXR0ZW1wdGluZyB0byBib290c3RyYXAgbW9uZ29kIgogICAgICAgICAgICBleGl0IDEKICAgICAgICBmaQoKICAgICAgICBsb2cgIlJldHJ5aW5nICR7Y29tbWFuZH0gb24gbG9jYWwgbW9uZ28gaW5zdGFuY2UiCiAgICBkb25lCn0KCgp3YWl0X3V0aWxfaG9zdG5hbWVfcmVzb2x2ZXMoKSB7CiAgICBsb2NhbCBob3N0PSQxCgogICAgbG9jYWwgc3RhcnRfdGltZT0iJChkYXRlICsiJXMiKSIKICAgIGxvY2FsIGVsYXBzZWQ9MAogICAgbG9jYWwgdGltZW91dF9zZWNvbmRzPTEyMAoKICAgIHdoaWxlIFtbICIke2VsYXBzZWR9IiAtbHQgIiR7dGltZW91dF9zZWNvbmRzfSIgXV07IGRvCgogICAgICAgIGlmIG1vbmdvIC0tcXVpZXQgLS1ob3N0ICRob3N0IC0tZXZhbCB0cnVlOyB0aGVuCiAgICAgICAgICAgIGxvZyAiSG9zdDogJHtob3N0fSByZXNvbHZlZCBzdWNjZXNzZnVsbHkiCiAgICAgICAgICAgIHJldHVybiAwCiAgICAgICAgZWxzZQogICAgICAgICAgICBsb2cgIkhvc3Q6ICR7aG9zdH0gd2FzIG5vdCByZWFjaGFibGUgeWV0LiBXaWxsIHJldHJ5IgogICAgICAgICAgICBzbGVlcCAxMAogICAgICAgICAgICBlbGFwc2VkPSQoKCAkKGRhdGUgKyIlcyIpIC0gJHN0YXJ0X3RpbWUgKSkKICAgICAgICBmaQogICAgZG9uZQoKICAgICMgaWYgd2UgbWFrZSBpdCBoZXJlIHRoZW4gdGhlIGhvc3Qgd2FzIG5vdCByZWFjaGFibGUgYmVmb3JlIHRoZSB0aW1lb3V0CiAgICByZXR1cm4gMQp9CgpQUklNQVJZX0hPU1Q9IiIKCmZvciBpIGluICQoc2VxIDAgJCgoJE1PTkdPX1JFUExJQ0FfQ09VTlQgLSAxKSkgKTsgZG8KICAgIHBlZXJfaG9zdD0iJHtTVEFURUZVTF9TRVRfTkFNRX0tJHtpfS5tb25nby5tb25nbyI7CiAgICBsb2cgInRlc3RpbmcgcGVlciBob3N0OiAke3BlZXJfaG9zdH0iCgogICAgaWYgW1sgIiRwZWVyX2hvc3QiID09ICIkTVlfSE9TVE5BTUUiIF1dIHx8IHdhaXRfdXRpbF9ob3N0bmFtZV9yZXNvbHZlcyAiJHBlZXJfaG9zdCI7IHRoZW4KCiAgICAgICAgcGVlcl9yZXN1bHQ9IiQoZXZhbF9qcyAke3BlZXJfaG9zdH0gJ3JzLnN0YXR1cygpLm9rJykiCiAgICAgICAgaWYgW1sgIiRwZWVyX3Jlc3VsdCIgPT0gIjEiIF1dOyB0aGVuCgogICAgICAgICAgICBpZiBbWyAiJChldmFsX2pzICR7cGVlcl9ob3N0fSAnZGIuaXNNYXN0ZXIoKS5pc21hc3RlcicpIiA9PSAidHJ1ZSIgXV07IHRoZW4KICAgICAgICAgICAgICAgIFBSSU1BUllfSE9TVD0ke3BlZXJfaG9zdH0KICAgICAgICAgICAgICAgIGJyZWFrCiAgICAgICAgICAgIGZpCiAgICAgICAgZWxzZQogICAgICAgICAgICBsb2cgIlVuYWJsZSB0byBkZXRlcm1pbmUgaWYgaG9zdDogJHtwZWVyX2hvc3R9IGhhcyBpbml0aWFsaXplZCB0aGUgcmVwbGljYSBzZXQsIHJlc3VsdDogJHtwZWVyX3Jlc3VsdH0iCiAgICAgICAgZmkKICAgIGVsc2UKICAgICAgICBsb2cgImhvc3Q6ICR7cGVlcl9ob3N0fSBkaWQgbm90IHJlc29sdmUgYmVmb3JlIHRpbWVvdXQgcGVyaW9kIgogICAgZmkKCmRvbmUKCgppbml0X3JlcGxpY2Ffc2V0KCkgewogICAgbG9nICJJbml0aWFsaXppbmcgbmV3IFJlcGxpY2FTZXQiCiAgICBtb25nbyBhZG1pbiAtLWV2YWwgInJzLmluaXRpYXRlKHsnX2lkJzogJyR7UkVQTElDQV9TRVRfTkFNRX0nLCAnbWVtYmVycyc6IFt7J19pZCc6IDAsICdob3N0JzogJyR7TVlfSE9TVE5BTUV9J31dIH0gKSIKICAgIGxvZyAiV2FpdGluZyB0byBiZWNvbWUgcHJpbWFyeSIKICAgIHNsZWVwIDMKICAgIHJldHJ5X2xvY2FsX3VudGlsICdkYi5pc01hc3RlcigpLmlzbWFzdGVyJyAndHJ1ZScKICAgIGxvZyAiJHtNWV9IT1NUTkFNRX0gaXMgbm93IHByaW1hcnkiCgogICAgbG9nICJjcmVhdGluZyBhZG1pbiB1c2VyIgogICAgbW9uZ28gYWRtaW4gLS1ldmFsICJkYi5jcmVhdGVVc2VyKCB7IHVzZXI6ICcke01PTkdPX0FETUlOX1VTRVJOQU1FfScsIHB3ZDogJyR7TU9OR09fQURNSU5fUEFTU1dPUkR9Jywgcm9sZXM6IFsgeyByb2xlOiAncm9vdCcsIGRiOiAnYWRtaW4nIH0gXSB9ICkiCn0KCnNob3VsZF9pbml0aWFsaXplX3JlcGxpY2Ffc2V0KCkgewogICAgbG9jYWwganM9J3JzLnN0YXR1cygpLmVycm1zZycKICAgIGxvZyAiRXZhbHVhdGluZyBqcyBsb2NhbGx5OiAke2pzfSIKICAgIGxvY2FsIHJlc3VsdD0kKG1vbmdvIC0tcXVpZXQgLS1ldmFsICRqcykKICAgIGlmIFtbICIkcmVzdWx0IiA9PSAibm8gcmVwbHNldCBjb25maWcgaGFzIGJlZW4gcmVjZWl2ZWQiIF1dOyB0aGVuCiAgICAgICAgZWNobyAidHJ1ZSIKICAgIGVsc2UKICAgICAgICBlY2hvICJmYWxzZSIKICAgIGZpCn0KCgphZGRfdGhpc19pbnN0YW5jZV90b19yZXBsaWNhX3NldCgpIHsKICAgIGV2YWxfanMgJHtQUklNQVJZX0hPU1R9ICJycy5hZGQoJyR7TVlfSE9TVE5BTUV9JykiCn0KCgppZiBbWyAiJE1ZX0hPU1ROQU1FIiA9PSAiJHtQUklNQVJZX0hPU1R9IiBdXTsgdGhlbgogICAgIyBUaGlzIHN1cmUgc2VlbXMgdW5saWtlbHksIGJ1dCBpdCBjb3VsZCBiZSBwb3NzaWJsZSBpZiBhbiBlbGVjdGlvbiB3YXMgdHJpZ2dlcmVkIGF0IGp1c3QgdGhlIHJpZ2h0IHRpbWUKICAgIGxvZyAiVGhpcyBtZW1iZXIgaXMgYWxyZWFkeSBQUklNQVJZLCBzbyBub3RoaW5nIGVsc2UgdG8gZG8iCiAgICBzZXRfcG9kX3JlYWR5CgplbGlmIFtbIC1uICIke1BSSU1BUllfSE9TVH0iIF1dOyB0aGVuCiAgICBsb2cgIkRldGVybWluZWQgdGhhdCBob3N0ICcke1BSSU1BUllfSE9TVH0nIGlzIHByaW1hcnksIHdpbGwgYWRkIHRoaXMgaW5zdGFuY2UgdG8gdGhlIHJlcGxpY2FzZXQiCiAgICBzZXRfcG9kX3JlYWR5CiAgICBzbGVlcCAxMAogICAgYWRkX3RoaXNfaW5zdGFuY2VfdG9fcmVwbGljYV9zZXQKCmVsc2UKICAgIGxvZyAiQ2hlY2tpbmcgdG8gc2VlIGlmIHJlcGxpY2FzZXQgbmVlZHMgaW5pdGlhbGl6ZWQgc2luY2Ugbm8gcHJpbWFyeSBjb3VsZCBiZSBkZXRlcm1pbmVkIgogICAgcmVzdWx0PSQobW9uZ28gLS1xdWlldCAtLWV2YWwgJ3JzLnN0YXR1cygpLmVycm1zZycpCgogICAgaWYgW1sgIiRyZXN1bHQiID09ICJubyByZXBsc2V0IGNvbmZpZyBoYXMgYmVlbiByZWNlaXZlZCIgXV07IHRoZW4KICAgICAgICAjIHRoaXMgcmVwbGljYXNldCBoYXMgbm90IGJlZW4gaW5pdGlhbGl6ZWQgeWV0CiAgICAgICAgaW5pdF9yZXBsaWNhX3NldCAmJiBzZXRfcG9kX3JlYWR5CiAgICBlbHNlCiAgICAgICAgbG9nICJXYXJuaW5nOiByZXBsaWNhc2V0IGhhcyBiZWVuIGluaXRpYWxpemVkLCBidXQgbm8gcHJpbWFyeSBub2RlIGNvdWxkIGJlIGRldGVjdGVkLgpUaGlzIGlzIHBvc3NpYmx5IGluZGljYXRpdmUgb2YgYW4gaW5pdGlhbGl6YXRpb24gZXJyb3IsIGJ1dCBpdCBjb3VsZCBhbHNvIGJlIGNhdXNlZCBieSBhbGwgb2YgdGhlIHBvZHMgaW4gdGhlCnJlcGxpY2Egc2V0IGJlaW5nIHVucmVhY2hhYmxlIGF0IHRoZSBzYW1lIHRpbWUuIgoKICAgICAgICAjIFdlIHdpbGwgd2FudCB0byBjb25zaWRlciB0aGlzIHBvZCBSRUFEWSwgZXZlbiB0aG91Z2ggdGhpbmdzIG1pZ2h0IG5vdCBiZSBxdWl0ZSByaWdodC4KICAgICAgICAjIFRoaXMgaXMgdG8gYWNjb3VudCBmb3IgdGhlIHBvc3NpYmlsaXR5IHRoYXQgYSBtYWpvcml0eSBvZiBtb25nbyBwb2RzIGhhdmUgY3Jhc2hlZCBhdCBhcm91bmQgdGhlIHNhbWUgdGltZS4KICAgICAgICAjIElmIHRoYXQgaGFwcGVuZWQsIHRoZW4gd2UgbXVzdCBicmluZyB0aGlzIHBvZCB1cCBpbiBhICdSRUFEWScgc3RhdGUgYmVmb3JlIGEgbmV3IGxlYWRlciBjYW4gYmUgZWxlY3RlZC4KICAgICAgICBwb2RfaXNfcmVhZHkKICAgIGZpCmZpCgppZiBbWyBwb2RfaXNfcmVhZHkgXV07IHRoZW4KICAgIGxvZyAiU3RhcnR1cCBsb29rcyBzdWNjZXNzZnVsLCBtb3ZpbmcgbW9uZ29kIHByb2Nlc3MgaW50byB0aGUgZm9yZWdyb3VuZCIKICAgICMgQnJpbmcgdGhlIGJhY2tncm91bmQgbW9uZ28gcHJvY2VzcyBiYWNrIGludG8gdGhlIGZvcmVncm91bmQKICAgIGZnICUxCmVsc2UKICAgICMgSXQncyB2ZXJ5IHVubGlrZWx5IHRoYXQgd2UnbGwgZW5kIHVwIGluIHRoaXMgYnJhbmNoLCBidXQgaXQgY291bGQgaGFwcGVuIGlmIGluaXRfcmVwbGljYV9zZXQgZmFpbHMKICAgIGxvZyAiUG9kIGlzIHN0aWxsIG5vdCByZWFkeSwgZXhpdGluZyIKICAgIGV4aXQgMQpmaQo=
+kind: ConfigMap
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: mongo-init-script
+  namespace: mongo
+---
+apiVersion: v1
+data:
+  AWS_TLS_CERTIFICATE_ARN: arn:aws:acm:us-east-1:365762923425:certificate/aabe96cb-8f94-46e7-971c-5a66cd82b788
+  AWS_ZONE_TYPE: public
+  DNS_DOMAIN_SUFFIX: paxata.com
+  DTR_AUTH_TOKEN: eyJhdXRocyI6eyJkdHIucGF4YXRhZGV2LmNvbSI6eyJ1c2VybmFtZSI6Ims4cyIsInBhc3N3b3JkIjoibm94cW85LWphd2p5dy1HYWdzYWIiLCJlbWFpbCI6ImRsZXZpbmdlckBwYXhhdGEuY29tIiwiYXV0aCI6ImF6aHpPbTV2ZUhGdk9TMXFZWGRxZVhjdFIyRm5jMkZpIn19fQ==
+  IS_AWS_PUBLIC_ZONE: "true"
+  MONGO_AUTHENTICATION_DATABASE: admin
+  MONGO_HOSTS: mongo-deployment-0.mongo.mongo,mongo-deployment-1.mongo.mongo,mongo-deployment-2.mongo.mongo
+  MONGO_PASSWORD: <IN_LASTPASS>
+  MONGO_REPLICA_COUNT: "3"
+  MONGO_USERNAME: admin
+  PIPELINE_PROXY_READINESS_INITIAL_DELAY: "5"
+  SHORTEN_PAX_HOSTNAME_COMPARE_VALUE: paxata
+  SPARK_DRIVER_CORES: "7"
+  SPARK_DRIVER_MEMORY: 30g
+  SPARK_EXECUTOR_CORES: "6"
+  SPARK_EXECUTOR_MEMORY: 22500m
+  SPARK_NODE_SELECTOR: spark-server
+kind: ConfigMap
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: pax-operator-env
+  namespace: pax-operator
+---
+apiVersion: v1
+data:
+  fluent.conf: |-
+    @include system.conf
+    @include source.containers.conf
+    @include source.files.conf
+    @include source.journald.conf
+    @include monit.conf
+    @include output.conf
+  monit.conf: |-
+    <source>
+      @id fluentd-monitor-agent
+      @type monitor_agent
+      @label @SPLUNK
+      tag monitor_agent
+    </source>
+  output.conf: |-
+    <label @SPLUNK>
+      # = filters for container logs =
+      <filter tail.containers.var.log.containers.dns-controller*dns-controller*.log>
+        @type concat
+        key log
+        timeout_label @SPLUNK
+        stream_identity_key stream
+        multiline_start_regexp /^\w[0-1]\d[0-3]\d/
+        flush_interval 5s
+      </filter>
+      <filter tail.containers.var.log.containers.kube-dns*sidecar*.log>
+        @type concat
+        key log
+        timeout_label @SPLUNK
+        stream_identity_key stream
+        multiline_start_regexp /^\w[0-1]\d[0-3]\d/
+        flush_interval 5s
+      </filter>
+      <filter tail.containers.var.log.containers.kube-dns*dnsmasq*.log>
+        @type concat
+        key log
+        timeout_label @SPLUNK
+        stream_identity_key stream
+        multiline_start_regexp /^\w[0-1]\d[0-3]\d/
+        flush_interval 5s
+      </filter>
+      <filter tail.containers.var.log.containers.kube-apiserver*kube-apiserver*.log>
+        @type concat
+        key log
+        timeout_label @SPLUNK
+        stream_identity_key stream
+        multiline_start_regexp /^\w[0-1]\d[0-3]\d/
+        flush_interval 5s
+      </filter>
+      <filter tail.containers.var.log.containers.kube-controller-manager*kube-controller-manager*.log>
+        @type concat
+        key log
+        timeout_label @SPLUNK
+        stream_identity_key stream
+        multiline_start_regexp /^\w[0-1]\d[0-3]\d/
+        flush_interval 5s
+      </filter>
+      <filter tail.containers.var.log.containers.kube-dns-autoscaler*autoscaler*.log>
+        @type concat
+        key log
+        timeout_label @SPLUNK
+        stream_identity_key stream
+        multiline_start_regexp /^\w[0-1]\d[0-3]\d/
+        flush_interval 5s
+      </filter>
+      <filter tail.containers.var.log.containers.kube-proxy*kube-proxy*.log>
+        @type concat
+        key log
+        timeout_label @SPLUNK
+        stream_identity_key stream
+        multiline_start_regexp /^\w[0-1]\d[0-3]\d/
+        flush_interval 5s
+      </filter>
+      <filter tail.containers.var.log.containers.kube-scheduler*kube-scheduler*.log>
+        @type concat
+        key log
+        timeout_label @SPLUNK
+        stream_identity_key stream
+        multiline_start_regexp /^\w[0-1]\d[0-3]\d/
+        flush_interval 5s
+      </filter>
+      <filter tail.containers.var.log.containers.kube-dns*kubedns*.log>
+        @type concat
+        key log
+        timeout_label @SPLUNK
+        stream_identity_key stream
+        multiline_start_regexp /^\w[0-1]\d[0-3]\d/
+        flush_interval 5s
+      </filter>
+
+      # extract index fields and sourcetype for container logs
+      <filter tail.containers.**>
+        @type jq_transformer
+        jq "def find_sourcetype(pod; container_name): container_name + \"/\" + pod | if startswith(\"dns-controller/dns-controller\") then \"kube:dns-controller\" elif startswith(\"sidecar/kube-dns\") then \"kube:kubedns-sidecar\" elif startswith(\"dnsmasq/kube-dns\") then \"kube:dnsmasq\" elif startswith(\"etcd-container/etcd-server\") then \"kube:etcd\" elif startswith(\"etcd-container/etcd-server-events\") then \"kube:etcd-events\" elif startswith(\"kube-apiserver/kube-apiserver\") then \"kube:kube-apiserver\" elif startswith(\"kube-controller-manager/kube-controller-manager\") then \"kube:kube-controller-manager\" elif startswith(\"autoscaler/kube-dns-autoscaler\") then \"kube:kube-dns-autoscaler\" elif startswith(\"kube-proxy/kube-proxy\") then \"kube:kube-proxy\" elif startswith(\"kube-scheduler/kube-scheduler\") then \"kube:kube-scheduler\" elif startswith(\"kubedns/kube-dns\") then \"kube:kubedns\" else empty end;  def set_namespace(value): if value == \"default\" then \"main\"else value end;  def extract_container_info:   (.source | ltrimstr(\"/var/log/containers/\") | split(\"_\")) as $parts   | ($parts[-1] | split(\"-\")) as $cparts   | .pod = $parts[0]   | .namespace = set_namespace($parts[1])   | .container_name = ($cparts[:-1] | join(\"-\"))   | .container_id = ($cparts[-1] | rtrimstr(\".log\"))   | .cluster_name = \"cluster_name\"   | .;  .record | extract_container_info | .sourcetype = (find_sourcetype(.pod; .container_name) // \"kube:container:\\(.container_name)\")"
+      </filter>
+
+      # = filters for journald logs =
+      <filter journald.kube:kubelet>
+        @type concat
+        key log
+        timeout_label @SPLUNK
+        multiline_start_regexp /^\w[0-1]\d[0-3]\d/
+        flush_interval 5s
+      </filter>
+
+      # create source and sourcetype
+      <filter journald.**>
+        @type jq_transformer
+        jq '.record.source = "/run/log/journal/" + .record.source | .record.sourcetype = (.tag | ltrimstr("journald.")) | .record'
+      </filter>
+
+      # = filters for non-container log files =
+
+      # = filters for monitor agent =
+      <filter monitor_agent>
+        @type jq_transformer
+        jq ".record.source = \"namespace:#{ENV['MY_NAMESPACE']}/pod:#{ENV['MY_POD_NAME']}\" | .record.sourcetype = \"fluentd:monitor-agent\" | .record"
+      </filter>
+
+      # = output =
+      <match **>
+        @type splunk_hec
+        protocol https
+        hec_host MY-SPLUNK-HOST
+        hec_port 8088
+        hec_token "#{ENV['SPLUNK_HEC_TOKEN']}"
+        host "#{ENV['SPLUNK_HEC_HOST']}"
+        source_key source
+        sourcetype_key sourcetype
+        insecure_ssl true
+        <fields>
+          pod
+          namespace
+          container_name
+          container_id
+          cluster_name
+        </fields>
+        <buffer>
+          @type memory
+          chunk_limit_records 100000
+          chunk_limit_size 200m
+          flush_interval 5s
+          flush_thread_count 1
+          overflow_action block
+          retry_max_times 3
+          total_limit_size 600m
+        </buffer>
+        <format monitor_agent>
+          @type json
+        </format>
+        <format>
+          # we just want to keep the raw logs, not the structure created by docker or journald
+          @type single_value
+          message_key log
+          add_newline false
+        </format>
+      </match>
+    </label>
+  source.containers.conf: |-
+    # This configuration file for Fluentd / td-agent is used
+    # to watch changes to Docker log files. The kubelet creates symlinks that
+    # capture the pod name, namespace, container name & Docker container ID
+    # to the docker logs for pods in the /var/log/containers directory on the host.
+    # If running this fluentd configuration in a Docker container, the /var/log
+    # directory should be mounted in the container.
+    # reading kubelet logs from journal
+    #
+    # Reference:
+    # https://github.com/kubernetes/community/blob/20d2f6f5498a5668bae2aea9dcaf4875b9c06ccb/contributors/design-proposals/node/kubelet-cri-logging.md
+    #
+    # Json Log Example:
+    # {"log":"[info:2016-02-16T16:04:05.930-08:00] Some log text here\n","stream":"stdout","time":"2016-02-17T00:04:05.931087621Z"}
+    # CRI Log Example (not supported):
+    # 2016-02-17T00:04:05.931087621Z stdout [info:2016-02-16T16:04:05.930-08:00] Some log text here
+    <source>
+      @id containers.log
+      @type tail
+      @label @SPLUNK
+      tag tail.containers.*
+      path /var/log/containers/*.log
+      pos_file /var/log/splunk-fluentd-containers.log.pos
+      path_key source
+      read_from_head true
+      <parse>
+        @type json
+        time_key time
+        time_type string
+        time_format %Y-%m-%dT%H:%M:%S.%NZ
+        localtime false
+      </parse>
+    </source>
+  source.files.conf: '# This fluentd conf file contains sources for log files other
+    than container logs.'
+  source.journald.conf: |-
+    # This fluentd conf file contains configurations for reading logs from systemd journal.
+    <source>
+      @id journald-docker
+      @type systemd
+      @label @SPLUNK
+      tag journald.kube:docker
+      path "/run/log/journal"
+      filters [{ "_SYSTEMD_UNIT": "docker.service" }]
+      read_from_head true
+      <storage>
+        @type local
+        persistent true
+        path /var/log/splunkd-fluentd-journald-docker.pos.json
+      </storage>
+      <entry>
+        field_map {"MESSAGE": "log", "_SYSTEMD_UNIT": "source"}
+        field_map_strict true
+      </entry>
+    </source>
+    <source>
+      @id journald-kubelet
+      @type systemd
+      @label @SPLUNK
+      tag journald.kube:kubelet
+      path "/run/log/journal"
+      filters [{ "_SYSTEMD_UNIT": "kubelet.service" }]
+      read_from_head true
+      <storage>
+        @type local
+        persistent true
+        path /var/log/splunkd-fluentd-journald-kubelet.pos.json
+      </storage>
+      <entry>
+        field_map {"MESSAGE": "log", "_SYSTEMD_UNIT": "source"}
+        field_map_strict true
+      </entry>
+    </source>
+  system.conf: |-
+    # system wide configurations
+    <system>
+      log_level info
+      root_dir /tmp/fluentd
+    </system>
+kind: ConfigMap
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: splunk-kubernetes-logging
+    version: 1.2.0
+  name: splunk-kubernetes-logging
+  namespace: splunk
+---
+apiVersion: v1
+data:
+  fluent.conf: |
+    # system wide configurations
+    <system>
+      log_level info
+    </system>
+    <source>
+      @type kubernetes_metrics
+      tag kube.*
+      node_name "#{ENV['NODE_NAME']}"
+      use_rest_client_ssl true
+      cluster_name cluster_name
+      interval 15s
+    </source>
+    <filter kube.**>
+      @type record_modifier
+      <record>
+        metric_name ${tag}
+        cluster_name cluster_name
+      </record>
+    </filter>
+    <filter kube.node.**>
+      @type record_modifier
+      <record>
+        source ${record['node']}
+      </record>
+    </filter>
+    <filter kube.pod.**>
+      @type record_modifier
+      <record>
+        source ${record['node']}/${record['pod-name']}
+      </record>
+    </filter>
+    <filter kube.sys-container.**>
+      @type record_modifier
+      <record>
+        source ${record['node']}/${record['pod-name']}/${record['name']}
+      </record>
+    </filter>
+    <filter kube.container.**>
+      @type record_modifier
+      <record>
+        source ${record['node']}/${record['pod-name']}/${record['container-name']}
+      </record>
+    </filter>
+
+    #https://github.com/splunk/fluent-plugin-splunk-hec
+    <match kube.**>
+      @type splunk_hec
+      data_type metric
+      metric_name_key metric_name
+      metric_value_key value
+      protocol https
+      hec_host "#{ENV['SPLUNK_HEC_HOST']}"
+      hec_port 8088
+      hec_token "#{ENV['SPLUNK_HEC_TOKEN']}"
+      host "#{ENV['NODE_NAME']}"
+      source ${tag}
+      insecure_ssl true
+      <buffer>
+        @type memory
+        chunk_limit_records 100000
+        chunk_limit_size 100m
+        flush_interval 5s
+        flush_thread_count 1
+        overflow_action block
+        retry_max_times 3
+        total_limit_size 400m
+      </buffer>
+    </match>
+kind: ConfigMap
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: splunk-kubernetes-metrics
+    version: 1.2.0
+  name: splunk-kubernetes-metrics
+  namespace: splunk
+---
+apiVersion: v1
+data:
+  fluent.conf: |
+    # system wide configurations
+    <system>
+      log_level info
+    </system>
+    <source>
+      @type kubernetes_metrics_aggregator
+      tag kube.*
+      cluster_name cluster_name
+      interval 15s
+    </source>
+    <filter kube.**>
+      @type record_modifier
+      <record>
+        metric_name ${tag}
+        cluster_name cluster_name
+      </record>
+    </filter>
+    <filter kube.cluster.**>
+      @type record_modifier
+      <record>
+        source ${record['name']}
+      </record>
+    </filter>
+    <filter kube.namespace.**>
+      @type record_modifier
+      <record>
+        source ${record['name']}
+      </record>
+    </filter>
+    <filter kube.node.**>
+      @type record_modifier
+      <record>
+        source ${record['node']}
+      </record>
+    </filter>
+    <filter kube.pod.**>
+      @type record_modifier
+      <record>
+        source ${record['node']}/${record['pod-name']}
+      </record>
+    </filter>
+    <filter kube.sys-container.**>
+      @type record_modifier
+      <record>
+        source ${record['node']}/${record['pod-name']}/${record['name']}
+      </record>
+    </filter>
+    <filter kube.container.**>
+      @type record_modifier
+      <record>
+        source ${record['node']}/${record['pod-name']}/${record['container-name']}
+      </record>
+    </filter>
+    <match kube.**>
+      @type splunk_hec
+      data_type metric
+      metric_name_key metric_name
+      metric_value_key value
+      protocol https
+      hec_host "#{ENV['SPLUNK_HEC_HOST']}"
+      hec_port 8088
+      hec_token "#{ENV['SPLUNK_HEC_TOKEN']}"
+      host "#{ENV['MY_NODE_NAME']}"
+      source source
+      insecure_ssl true
+      <buffer>
+        @type memory
+        chunk_limit_records 1e+06
+        chunk_limit_size 100m
+        flush_interval 5s
+        flush_thread_count 1
+        overflow_action block
+        retry_max_times 3
+        total_limit_size 400m
+      </buffer>
+    </match>
+kind: ConfigMap
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: splunk-kubernetes-metrics
+    version: 1.2.0
+  name: splunk-kubernetes-metrics-aggregator
+  namespace: splunk
+---
+apiVersion: v1
+data:
+  fluent.conf: |
+    <system>
+      log_level info
+    </system>
+    <source>
+      @type kubernetes_objects
+      tag kube.objects.*
+      api_version "v1"
+      insecure_ssl true
+    #  <pull>
+    #    resource_name pods
+    #  </pull>
+    #  <pull>
+    #    resource_name namespaces
+    #  </pull>
+      <pull>
+        resource_name nodes
+      </pull>
+      <watch>
+        resource_name events
+      </watch>
+    </source>
+
+    <filter kube.**>
+      @type jq_transformer
+      # in ruby '\\' will escape and become just '\', since we need two '\' in the `gsub` jq filter, it becomes '\\\\'.
+      jq '.record.source = "namespace:\(env.MY_NAMESPACE)/pod:\(env.MY_POD_NAME)" | .record.sourcetype = (.tag | gsub("\\\\."; ":")) | .record'
+    </filter>
+
+    <filter kube.**>
+      @type jq_transformer
+      jq '.record.cluster_name = "\(env.MY_CLUSTER_NAME)" | .record'
+    </filter>
+
+    <match kube.**>
+      @type splunk_hec
+      protocol https
+      hec_host "#{ENV['SPLUNK_HEC_HOST']}"
+      hec_port 8088
+      hec_token "#{ENV['SPLUNK_HEC_TOKEN']}"
+      host "#{ENV['SPLUNK_HEC_HOST']}"
+      source_key source
+      sourcetype_key sourcetype
+      insecure_ssl true
+      <fields>
+            cluster_name
+      </fields>
+      <buffer>
+        @type memory
+        chunk_limit_size 200m
+        chunk_limit_records 10000
+        flush_interval 3s
+        retry_max_times 3
+      </buffer>
+    </match>
+kind: ConfigMap
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: splunk-kubernetes-objects
+    version: 1.2.0
+  name: splunk-kubernetes-objects
+  namespace: splunk
+---
+apiVersion: v1
+data:
+  SPLUNK-HEC-HOST: aW5wdXQtcHJkLXAtZHAyNmo0NzlubXhnLmNsb3VkLnNwbHVuay5jb20=
+  SPLUNK-HEC-TOKEN: RDBEOEYzOTYtMThBMi00NkQ1LTk1NzctRUEzNDJDNzA2MTMy
+kind: ConfigMap
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: splunk-properties-d24kd55fkk
+  namespace: splunk
+---
+apiVersion: v1
+data:
+  CLUSTER-NAME: paxata-test
+  REGION-ID: us-east-1
+kind: ConfigMap
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: source-vars-t62t5bfbf8
+---
+apiVersion: v1
+data:
+  key: MFYzQnFFZU5ReWFDTndqSnl4d29Mdw==
+kind: Secret
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: instana-agent-secret
+  namespace: instana-agent
+type: Opaque
+---
+apiVersion: v1
+data:
+  keyfile: TmU3YXh1WG9EaXJmZ1RWUkZEUTZLZ2p0ZEdlZjlTbGtoOFg2dWJtSWFTM0M0TGhPbm1xUTlhNEU4bm5FUDJMTApuWlZZL0hhbHBuWkh0K0IvWkZzSStFREh0dThBR2EzZHpRUEh6YXFjcENmWUhzS3pZcXpQbmxIaWpMWUpCYzdECmNVK2dyMlpNU0dDTkNqcXZ3TlBMWC9OdnBkOVQvYjZvdlQ5bGd5Mmp3VDhWZ1RIRUI0My92WHFjL0c5ZktzdU0KNlJSWjBXR1crb1VvRjZYdjVFN0lRWDNFNlV2WWVzN3d5UkxXUm92N2ZaNVZnaW5pcENqbkFKdWVNNEhuOTBGOApxOFFod09TUzg0RkdLdzBGLzNxY0Qwd05Zb2VsMVI0bjJWbEhjUTlnQTNvL0RBOTA1bFc3dWFmTEFUbmljMXFuClUwU2hhNHVMWTVOZmE1L2huVXBrNUZ4ZDNLTmxvSVovQ0VJdmJsYWpQYmdaaGxDYWxtbUhBOGJhY3d5U1JXeVIKeWNHMmpERmM0UjlINGpTcDZIQjZQNVpiWmQ3QjlDeU1YMzVud2tRcWJGU2tPMFIybGZrYnNIOXVBWVdNOGltbApWVXlxSFR5aHhGT3luTXlrYjVBSGZscFlvMGtwanNFc1ZOUlBveGtaZkxrVHFISkp4WEh2VnVVVW9wUHN5d1gwCjlLamw4Ny93a1hudnNSWksyMTBDVFJIcVJkTU0wZEJGV2lRUWtXOFNYMHZvaDUrdGZUZmE0NU9QQmdmU2FEVVAKYlM2UGF3NDlLTXNjcm1Ka2pCZkdSeExvb0lNYk1TTmJPdzdkZlNSUENKYW9aSmlXRW52d1Axb21lNGRydUtiSQpDbXlYSVArYWpYVVJyZGpSV0NEZ1lKRzFWRTdJY0xOVjErR0xSbU51blB3aDRhb0JXeFhVVEtTRS84aElKZWMwCnVJUlExdk1nd2ExZSt3VnpVNU1TMldBQUcxUnU4bVEwODd2aVRmQW9ic3k0RjNxS2FzNXk3Q3hjWWk5YTk5ZVgKc1psZCs5MUwvR3hGOFRPTDNrNTY2VE1nYUg1am9zRDJMNUVYT0FRNVZDekhGTVZFc0Z1cnlrWmNQYXNhSGZUbwp2RUtFT1c5VW9DMUE1T3NsYVp6UHFTRmFtUnhYMkNwMTlaQVNZOW1JcERZUmowTnpJWFVCSTBhRjFNa3RmWjhhCkpWSlRJVmtNdVpFZHYzeVYzV0FCR1lRSWNDSm1jSk5HeDJPZ0d4aEl1bVA5akdKK29ObXpKei9QQnJTNml4WFYKMjI0ZXg4Z2RhaDlLdlhCOWJ4YWg2OER0Rm1Xcwo=
+kind: Secret
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: mongo-certificates
+  namespace: mongo
+type: Opaque
+---
+apiVersion: v1
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJkdHIucGF4YXRhZGV2LmNvbSI6eyJ1c2VybmFtZSI6Ims4cyIsInBhc3N3b3JkIjoibm94cW85LWphd2p5dy1HYWdzYWIiLCJlbWFpbCI6ImRsZXZpbmdlckBwYXhhdGEuY29tIiwiYXV0aCI6ImF6aHpPbTV2ZUhGdk9TMXFZWGRxZVhjdFIyRm5jMkZpIn19fQ==
+kind: Secret
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: pax-operator-dtr
+  namespace: pax-operator
+type: kubernetes.io/dockerconfigjson
+---
+apiVersion: v1
+data:
+  samlKeystoreFile: L3UzKzdRQUFBQUlBQUFBQ0FBQUFBUUFHWVhCdmJHeHZBQUFCTy9YZVZxVUFBQVVDTUlJRS9qQU9CZ29yQmdFRUFTb0NFUUVCQlFBRWdnVHFQS1hXNWFwTE9pUkVmMngzbGpxZ2htVkV3L0daUDV1UWFmSEhRSVJJMjV3S3pBL01sZ1k5bmxpaEJLODFGNDU3YnRtRVh0dHI5dlBnc29FNTllc3NIUkhaRUx6Y1hSY3dBTmJrQjBROUVtQTZocGNoVWt6MHhuUXJpY0EyWDhNbmlycFFGU1VtNm5OL3VMdlZTV3lkQzZBWndBTDBHeis2dmthNXdXcjRsdVlvb0RtdDRPZkNHMktPZWRIcGFRTVoyVml0WFBtVHY3MS9oUHQ2ajdpRmE5cUxBYlZTMDhmMzRqZVI3UEV4RGRWY3B5aENHV05DRzdQekdEOFFBYjR4WGFBbVFScGtCb29FbW9LNm1MN244d1RyTW5MeGlLS3k4aEI1NzJNdEs0K3pBeUczMHhDL0lEOVBZY0RjbEI2VjFPRjR4MlhaQUpsbnppV2w0Y2Z3MUd4VlZXcDB1cVVCcDd3TjBQMnlFbVFlVjhGaHlpY2NjVmplWnVUMkIxV0kwbmdqWTRjRTJ5VmowS1BHSGt1aFFvVHNGT1BjOFpuWm91VUt5KytQRHhucm9vcUV5RmRaYU9pT2lzNUs2NnVBNGV6MWk5K3hGcGgzUVU0STVCZlVsWGlqZmdDb0txOFRxS1kyaFNJY1JKZzRoR3RmejdQWk15ZlgyTkNlVDRXTTU4dUs3MkRSZno5bGpIMkxWQ29xaTJQT2gvNFIwbWVnRGZpTEMzM0pZYzV0ckE2L1VrUkk5V1lkRDNLdWpYNm5ndXpCdXdzQlZSU2NNMXFEY2pBY2ZWeW9FOWppVEVXYTlnMFBnR2lRanFXalpRRGJNOE9uUVNRY2U1WGRpZzJzckhQcjVEVUNSSk9JMWIvUy85Q2kxSU1EcGNQQnBRb0NYc2k0dWxYUFJ6cGY2RWo5ZDFJQzBheXRkMmozTUk2S003SklRUms2di9LNGg5VnQyVW9HODBqRXB4N1ArMnJYQkNwTkxXUGdjUmpaUVRrUU05alR6R0ZJbDBDSDVLclZhdkNqbmdIdURncHMzTEpxRjJLQm5Tb0NPTUE5MDVXZUZuTTJ0YjhFRW1ZVEcvOG5ueG5NSGN3anlhZW9RcFJxeCtoeTBBUzRCUDVwMDNkUklIRDlUc0YvZG8vMVAzYjMrZ2Z5WUdmRmFYSHVObXdEUFExMGxQeDV2b3p4Q1I1S2xrM3NKbS9uQU1vWEFyejZrQVk0ZXloSWx1NFpaSkVJUGlXb0gwM3EvOWl5MUlFRDg5VGpWVWpiUnJ4UVdSL2VHbGZTM1g2WitQbzFLcERqZmtNSGcweUp4aDEzR3k4OHQ2djNhaEpURzRET01wa0UxRzZLY04vZGN1YU5IVUVSa3hQQzl5Q1FEZC9oYXUzMnlkRE5tellwbGxDMnBQb204Wm5hcklzUEVFZ1NMY3MzMlJ3NjdkdlUvSEZpUmVicEo3bDNwUndYNkpDTkYrOGxoYWpzOW41ZSs0eTBZd0M0dFRFZjhhZ0Q3OXFSQUdXS3daVDhPdHhPajNUZzBNcHJhNzVaMVJzeXJiMG5jWHo3LzBpZ1RPNEJha0w1WHBuMDNhS2NjZVFBVVV4cGQ5cDNLMTJldS9DTk9yQTR6eEZVVEVCMmFtTVZ3U1E3M0owZlk1Tmpka2pjbGRQaXdxZzZQZW1aN2NEME5OZE9CQXRldDNWQzNXNUxVU0tSRERWdUpscTdLczRkbjB3bDRxR2srTVZOZEg0akpRRVF1WTI4UHpraXd3azNWZXBYMWxsZ01tV0pnS2E3VmFLZlJ4KzA3VlNhaHlndXlHTW1pbHNHc1doaHZpL0xzUFhHT1ZpVUd5WEU0T3dUbUpES0tKejNLOTB1R3k5SWdrUGRkd0ltanpXSjNodTVLK0htYzBxMTI0NGQrb2ltQlN2R04xMUdQdTZ4TkUwTmJKbGczU0I4VFg3Ylllem91VmRyWHZPNDBpM2krUFZGRCsvbWQrTXpMelNNZ1RLR2NJTGJTa3JOZTV4R0NlZzJLTnE3Y2pDL3ZwV0oxQjFEcUxiTkNzRjRFSDZVQTRrY1N3Z2k0c0ZzenBibUJFcEhseW1DSEI1dnNIZS82aFluaWdvTnQ4ZEFVU3FOa01lZmpSTXVISnFJQU1vUjczQTMzQUhicnZtbExiS2hyUnZzZzBjQ1lGU2I5QkcyTmJ5eFVSRXVFdTFnVHJ4aHVyWm56aEd5Y0txSlBHVkg4Y2RZWUE4N2dBQUFBQUVBQlZndU5UQTVBQUFEVmpDQ0ExSXdnZ0k2b0FNQ0FRSUNCRkRpeUVFd0RRWUpLb1pJaHZjTkFRRUZCUUF3YXpFTE1Ba0dBMVVFQmhNQ1Jra3hFREFPQmdOVkJBZ1RCMVYxYzJsdFlXRXhFVEFQQmdOVkJBY1RDRWhsYkhOcGJtdHBNUmd3RmdZRFZRUUtFdzlTVFRVZ1UyOW1kSGRoY21VZ1Qza3hEREFLQmdOVkJBc01BMUltUkRFUE1BMEdBMVVFQXhNR1lYQnZiR3h2TUI0WERURXpNREV3TVRFeE1qZ3dNVm9YRFRJeU1USXpNREV4TWpnd01Wb3dhekVMTUFrR0ExVUVCaE1DUmtreEVEQU9CZ05WQkFnVEIxVjFjMmx0WVdFeEVUQVBCZ05WQkFjVENFaGxiSE5wYm10cE1SZ3dGZ1lEVlFRS0V3OVNUVFVnVTI5bWRIZGhjbVVnVDNreEREQUtCZ05WQkFzTUExSW1SREVQTUEwR0ExVUVBeE1HWVhCdmJHeHZNSUlCSWpBTkJna3Foa2lHOXcwQkFRRUZBQU9DQVE4QU1JSUJDZ0tDQVFFQWw2ajlNS2k5Z0l0WVduazQ5R3BjTEMybjRhdzdWTGROQk9jWE81SFErenlFa1FOdTlHWnFXREFlRnR1RkpOa0pMc0dnYWVuU1A4a1hWTHozemsrT1dHYTZpTVRIdHVPZFR3RUZyUkNsaGVXZGR4ZENlUDVRZTlVN2E4OGgvZUVaNmtoMXhYNzBUZkJHUDY4N2hNNjZXYXgzYlRiUFMwY2k2bkVVMXpERHVNKzBJSVFic1lkeXVZTHV5cXNhUjhlamFQTjFqV1krQWQ0TDFpMFZyOU9aMjE0ZnhmV0RIa0FwVTE5WWdUUUlTME1Wb2NGekNnZUx0WWowUHlrbW1wZDBkdXFUalZGSnJ0YWxiVk5hcmtLTTBrencvQjc3QTZoaHRmYjl2dnpkN24rWFVXTGJ4RDM4RnpkOENHUHYwZmQ3d1FPcFo1ZVowM0xXU0ViTW9OQnIrUUlEQVFBQk1BMEdDU3FHU0liM0RRRUJCUVVBQTRJQkFRQlVNQUFHRkk3S05WY0l3M05wTXFTdjBVWEFmR3pBRkZDQnRJU3hpL05pTDV5cUxob3NScWdIRkM4RUNpTDA3T3JocHBZRzBodWhwK1VUbTlwcFFjN1Y2a09QYzBiNHVhbGpVYmJZcStuc3FzRVJSampPZ1BLOFk5eVljWXRsVy96Q1orMTgzbFJ4eTh3TmJGZVljSmY5ank1Mmk5b2ZWc2h2VU1BVzhMWnBEQktsTGYzWUlzU205VWIyOHY3UWJrYUlGb0R6alRVZ0FvbHZtZWFQRkhRRHFqVEdVS013LzR0WURvd1Y2QmRCZVRwTEkwRGU4YUVHUzQvY1YzbjhRaFVPdlJUM0JRM2hGbXg4RXFBY3VZU3p6UUMyaEZLR3Vjenc4SllzY0VZeFVFM09WMTJrYVlDSTh2OW9MQy9QbU9VRVljbDV5Nm9EdXV3WlMyRnZ4cmh4QUFBQUFnQUljM1JoY25SamIyMEFBQUU3N0RQNWRRQUZXQzQxTURrQUFBZk5NSUlIeVRDQ0JiR2dBd0lCQWdJQkFUQU5CZ2txaGtpRzl3MEJBUVVGQURCOU1Rc3dDUVlEVlFRR0V3SkpUREVXTUJRR0ExVUVDaE1OVTNSaGNuUkRiMjBnVEhSa0xqRXJNQ2tHQTFVRUN4TWlVMlZqZFhKbElFUnBaMmwwWVd3Z1EyVnlkR2xtYVdOaGRHVWdVMmxuYm1sdVp6RXBNQ2NHQTFVRUF4TWdVM1JoY25SRGIyMGdRMlZ5ZEdsbWFXTmhkR2x2YmlCQmRYUm9iM0pwZEhrd0hoY05NRFl3T1RFM01UazBOak0yV2hjTk16WXdPVEUzTVRrME5qTTJXakI5TVFzd0NRWURWUVFHRXdKSlRERVdNQlFHQTFVRUNoTU5VM1JoY25SRGIyMGdUSFJrTGpFck1Da0dBMVVFQ3hNaVUyVmpkWEpsSUVScFoybDBZV3dnUTJWeWRHbG1hV05oZEdVZ1UybG5ibWx1WnpFcE1DY0dBMVVFQXhNZ1UzUmhjblJEYjIwZ1EyVnlkR2xtYVdOaGRHbHZiaUJCZFhSb2IzSnBkSGt3Z2dJaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQ0R3QXdnZ0lLQW9JQ0FRREJpTnNKdkd4R2ZIaWZsWHUxTTVEeWNtTFd3VFlnSWlSZXp1bDM4a01Lb2daa3BNeU9Odmc0NWlQd2JtMnhQTjF5bzRVY29kTTl0RE1yMHkrdi91cXdRVmxudHNRR2ZRcWVkSVhXZVV5QU4zcmZPUVZTV2ZmMEcwWkRwTktGaGRMRGNmTjFZalM2TElwL0hvL3U3VFRRRWNlV3pWSTl1alBXM1UzZUN6dEtTNS9DSmkvNnRSWWNjalYzeWp4ZDVzcmhKb3NhTm5aY0FkdDBGQ1grN2JXZ2lBL2RlTW90SHdlWE1BRXRjbm42UnRZVEtxaTVwcXVEU1IzbDh1L2Q1QUdPR0FxUFkxTVdoV0twRGhrNnpMVm1wc0pyZEFma0srRjJQclJ0MlBaRTRYTmlIenZFdnFCVFZpVnNVUW4zcXF2S3YzYjliWnZ6bmR1L1BXYThERmFxcjVoSWxUcEwzNmRZVU5rNGRhbGI2a01NQXYrWjYraHNUWEJiS1dXYzNhcGR6SzhCTWV3TTY5S042T3FjZStadTl5ZG1EQnBJMTI1QzR6L2VJVDU3NFExdysyT3FxR3dhVkxSY0pYckpvc21MRnFhN0xINFhYZ1ZOV0c0U0hRSHVFaEFOeGpKL0dQLzg5UHJOYnBIb05rbStHa2hwaThLV1RSb1NzbWtYd1FxUTF2cDVJa2kvdW50cCtIREgrbm8zMk5nTjBuWlBWLytRdCtPUjB0M3Z3bUMzWnpyZC9xcWM4TlNMZjNJaXpzYWZsN2I0cjRxZ0VLaloreGpHdHJWY1VqeUp0aGtxY3dFS0R3T3pFbUR5ZWkrQjI2TnUveVl3bC9XTDNZbFh0cTA5czY4cnhiZDJBdkNsMWl1YWhoUXFjdmJqTTR4ZENVc1QzN3VNZEJOU1N3SURBUUFCbzRJQ1VqQ0NBazR3REFZRFZSMFRCQVV3QXdFQi96QUxCZ05WSFE4RUJBTUNBYTR3SFFZRFZSME9CQllFRkU0TDd4cWtRRnVsRjJtSE1NbzBhRVBRUWE3eU1HUUdBMVVkSHdSZE1Gc3dMS0Fxb0NpR0ptaDBkSEE2THk5alpYSjBMbk4wWVhKMFkyOXRMbTl5Wnk5elpuTmpZUzFqY213dVkzSnNNQ3VnS2FBbmhpVm9kSFJ3T2k4dlkzSnNMbk4wWVhKMFkyOXRMbTl5Wnk5elpuTmpZUzFqY213dVkzSnNNSUlCWFFZRFZSMGdCSUlCVkRDQ0FWQXdnZ0ZNQmdzckJnRUVBWUcxTndFQkFUQ0NBVHN3THdZSUt3WUJCUVVIQWdFV0kyaDBkSEE2THk5alpYSjBMbk4wWVhKMFkyOXRMbTl5Wnk5d2IyeHBZM2t1Y0dSbU1EVUdDQ3NHQVFVRkJ3SUJGaWxvZEhSd09pOHZZMlZ5ZEM1emRHRnlkR052YlM1dmNtY3ZhVzUwWlhKdFpXUnBZWFJsTG5Ca1pqQ0IwQVlJS3dZQkJRVUhBZ0l3Z2NNd0p4WWdVM1JoY25RZ1EyOXRiV1Z5WTJsaGJDQW9VM1JoY25SRGIyMHBJRXgwWkM0d0F3SUJBUnFCbDB4cGJXbDBaV1FnVEdsaFltbHNhWFI1TENCeVpXRmtJSFJvWlNCelpXTjBhVzl1SUNwTVpXZGhiQ0JNYVcxcGRHRjBhVzl1Y3lvZ2IyWWdkR2hsSUZOMFlYSjBRMjl0SUVObGNuUnBabWxqWVhScGIyNGdRWFYwYUc5eWFYUjVJRkJ2YkdsamVTQmhkbUZwYkdGaWJHVWdZWFFnYUhSMGNEb3ZMMk5sY25RdWMzUmhjblJqYjIwdWIzSm5MM0J2YkdsamVTNXdaR1l3RVFZSllJWklBWWI0UWdFQkJBUURBZ0FITURnR0NXQ0dTQUdHK0VJQkRRUXJGaWxUZEdGeWRFTnZiU0JHY21WbElGTlRUQ0JEWlhKMGFXWnBZMkYwYVc5dUlFRjFkR2h2Y21sMGVUQU5CZ2txaGtpRzl3MEJBUVVGQUFPQ0FnRUFGbXlaOUdZTU5QWFFoVjU5Q3V6YUVFNDRIRjdmcGlVRlM1RXl3ZWc3OFQzZFJBbGJCMG1LS2N0bUFyZXhtdmNsbUFrOGpodmgzVGFISzB1N2FOTTVaajJnSnNmeU9aRWRVYXVDZTM3Vnpscms0Z05YY0dtWENQbGVXS1lLMzR3R21rVVdGamdLWGxmMllzZDZBZ1htdkI2MThwNzBxU21EK0xJVTQyNG9oMFREa0JyZU9LazhyRU5OWkVYTzNTaXBYUEp6ZXdUNEYraXJzZk11WEdSdWN6RTZFcmk4c3hIa2ZZK0JVWm83alluMFRaTm1lendEN2RPYUhacnpaVkQxb05CMW55K3Y4T3FDUTVqNGFaeUplY1JEamtaeTQyUTJFcS8zSlI0NGlaQjNmc05yYXJuRHkwUkxySGlRaStmSExCNUxFVVRJTkZJbnpRcGRuNFhCaWRVYWVQS1ZFRk15M1lDRVpuWFp0V2dvKzJFdXZvU29PTUNaRW9hbEhtZGtyUVl1TDZsd2hjZVdEM3lKWmZXT1ExUU9xOTJsZ0RtVVlNQTB5Wlp3TEtNUzlSOUllNzBjZm11M25aRDBJanV1K1B3cXl2cUNVcUR2cjB0VmsrdkJ0ZkFpaTZ3MFRpWWlCS0dITEhWS3QrVjlFOWU0REdUQU50TEpMNFlTakNNSndSdUNPM05KbzJwWGg1VGwxbmpGbVVOajQwM2dkeTNoWlpseWFRUWFSd25tRHdGV0pQc2Z2dzU1cVZndXVjUUpBWDZWdW0wQUJqNnk2a29RT2RqUUsvVy83SFcvbHdMRkNSc0kzRlUzNG9IN040UkRZaURLNTFaTFplcitiTUVra3lTaE5Pc0YvNW9pcnB0OVAvRmxVUXFtTUdxejlJZ2NnQTM4Y29yb2cxNFRES1poU0I2UGRUSHZhMnpCVzc4N0JwVWUyQT09
+  samlKeystoreKey: YXBvbGxv
+  samlKeystorePass: bmFsbGUxMjM=
+kind: Secret
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: saml-keystore
+  namespace: pax-operator
+type: Opaque
+---
+apiVersion: v1
+data:
+  splunk_hec_host: aW5wdXQtcHJkLXAtZHAyNmo0NzlubXhnLmNsb3VkLnNwbHVuay5jb20=
+  splunk_hec_token: RDBEOEYzOTYtMThBMi00NkQ1LTk1NzctRUEzNDJDNzA2MTMy
+kind: Secret
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: splunk-kubernetes-logging
+    version: 1.2.0
+  name: splunk-kubernetes-logging
+  namespace: splunk
+type: Opaque
+---
+apiVersion: v1
+data:
+  splunk_hec_host: aW5wdXQtcHJkLXAtZHAyNmo0NzlubXhnLmNsb3VkLnNwbHVuay5jb20=
+  splunk_hec_token: RDBEOEYzOTYtMThBMi00NkQ1LTk1NzctRUEzNDJDNzA2MTMy
+kind: Secret
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: splunk-kubernetes-metrics
+    version: 1.2.0
+  name: splunk-kubernetes-metrics
+  namespace: splunk
+type: Opaque
+---
+apiVersion: v1
+data:
+  splunk_hec_host: aW5wdXQtcHJkLXAtZHAyNmo0NzlubXhnLmNsb3VkLnNwbHVuay5jb20=
+  splunk_hec_token: RDBEOEYzOTYtMThBMi00NkQ1LTk1NzctRUEzNDJDNzA2MTMy
+kind: Secret
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: splunk-kubernetes-objects
+    version: 1.2.0
+  name: splunk-kubernetes-objects
+  namespace: splunk
+type: Opaque
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "3600"
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+    service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-west-2:XXXXXXXX:certificate/XXXXXX-XXXXXXX-XXXXXXX-XXXXXXXX
+    service.beta.kubernetes.io/aws-load-balancer-ssl-negotiation-policy: ELBSecurityPolicy-TLS-1-2-2017-01
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+  name: ingress-nginx
+  namespace: ingress-nginx
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+  - name: https
+    port: 443
+    targetPort: http
+  selector:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    k8s-app: calico-typha
+  name: calico-typha
+  namespace: kube-system
+spec:
+  ports:
+  - name: calico-typha
+    port: 5473
+    protocol: TCP
+    targetPort: calico-typha
+  selector:
+    k8s-app: calico-typha
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: mongo
+  name: mongo
+  namespace: mongo
+spec:
+  clusterIP: None
+  ports:
+  - name: "27017"
+    port: 27017
+  selector:
+    app: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: pax-operator
+  namespace: pax-operator
+spec:
+  ports:
+  - port: 80
+  selector:
+    app.kubernetes.io/name: pax-operator
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+  name: nginx-ingress-controller
+  namespace: ingress-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ingress-nginx
+      app.kubernetes.io/part-of: ingress-nginx
+  template:
+    metadata:
+      annotations:
+        cluster-id: test
+        create-host: Gregorys-MacBook-Pro-2.local
+        env-key: paxata-test
+        prometheus.io/port: "10254"
+        prometheus.io/scrape: "true"
+        scm-branch: DEVOPSS-939.KustomizeInfra
+      labels:
+        app.kubernetes.io/name: ingress-nginx
+        app.kubernetes.io/part-of: ingress-nginx
+    spec:
+      containers:
+      - args:
+        - /nginx-ingress-controller
+        - --configmap=$(POD_NAMESPACE)/nginx-configuration
+        - --tcp-services-configmap=$(POD_NAMESPACE)/tcp-services
+        - --udp-services-configmap=$(POD_NAMESPACE)/udp-services
+        - --publish-service=$(POD_NAMESPACE)/ingress-nginx
+        - --annotations-prefix=nginx.ingress.kubernetes.io
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.25.1
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: 10254
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 10
+        name: nginx-ingress-controller
+        ports:
+        - containerPort: 80
+          name: http
+        - containerPort: 443
+          name: https
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: 10254
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 10
+        securityContext:
+          allowPrivilegeEscalation: true
+          capabilities:
+            add:
+            - NET_BIND_SERVICE
+            drop:
+            - ALL
+          runAsUser: 33
+      nodeSelector:
+        paxata.com/role-id: general-server
+      serviceAccountName: nginx-ingress-serviceaccount
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    k8s-app: calico-typha
+  name: calico-typha
+  namespace: kube-system
+spec:
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      k8s-app: calico-typha
+  template:
+    metadata:
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+        cluster-id: test
+        create-host: Gregorys-MacBook-Pro-2.local
+        env-key: paxata-test
+        scm-branch: DEVOPSS-939.KustomizeInfra
+      labels:
+        k8s-app: calico-typha
+    spec:
+      containers:
+      - env:
+        - name: FELIX_INTERFACEPREFIX
+          value: eni
+        - name: TYPHA_LOGFILEPATH
+          value: none
+        - name: TYPHA_LOGSEVERITYSYS
+          value: none
+        - name: TYPHA_LOGSEVERITYSCREEN
+          value: info
+        - name: TYPHA_PROMETHEUSMETRICSENABLED
+          value: "true"
+        - name: TYPHA_CONNECTIONREBALANCINGMODE
+          value: kubernetes
+        - name: TYPHA_PROMETHEUSMETRICSPORT
+          value: "9093"
+        - name: TYPHA_DATASTORETYPE
+          value: kubernetes
+        - name: TYPHA_MAXCONNECTIONSLOWERLIMIT
+          value: "1"
+        - name: TYPHA_HEALTHENABLED
+          value: "true"
+        - name: FELIX_IPTABLESMANGLEALLOWACTION
+          value: Return
+        image: quay.io/calico/typha:v3.3.6
+        livenessProbe:
+          exec:
+            command:
+            - calico-typha
+            - check
+            - liveness
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        name: calico-typha
+        ports:
+        - containerPort: 5473
+          name: calico-typha
+          protocol: TCP
+        readinessProbe:
+          exec:
+            command:
+            - calico-typha
+            - check
+            - readiness
+          periodSeconds: 10
+      hostNetwork: true
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+      priorityClassName: system-cluster-critical
+      serviceAccountName: calico-node
+      tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    k8s-app: calico-typha-autoscaler
+  name: calico-typha-horizontal-autoscaler
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: calico-typha-autoscaler
+  template:
+    metadata:
+      annotations:
+        cluster-id: test
+        create-host: Gregorys-MacBook-Pro-2.local
+        env-key: paxata-test
+        scm-branch: DEVOPSS-939.KustomizeInfra
+      labels:
+        k8s-app: calico-typha-autoscaler
+    spec:
+      containers:
+      - command:
+        - /cluster-proportional-autoscaler
+        - --namespace=kube-system
+        - --configmap=calico-typha-horizontal-autoscaler
+        - --target=deployment/calico-typha
+        - --logtostderr=true
+        - --v=2
+        image: k8s.gcr.io/cluster-proportional-autoscaler-amd64:1.1.2
+        name: autoscaler
+        resources:
+          limits:
+            cpu: 10m
+          requests:
+            cpu: 10m
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+      priorityClassName: system-cluster-critical
+      serviceAccountName: typha-cpha
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: cluster-autoscaler
+  name: cluster-autoscaler
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cluster-autoscaler
+  template:
+    metadata:
+      annotations:
+        cluster-id: test
+        create-host: Gregorys-MacBook-Pro-2.local
+        env-key: paxata-test
+        scm-branch: DEVOPSS-939.KustomizeInfra
+      labels:
+        app: cluster-autoscaler
+    spec:
+      containers:
+      - command:
+        - ./cluster-autoscaler
+        - --v=4
+        - --stderrthreshold=info
+        - --cloud-provider=aws
+        - --skip-nodes-with-local-storage=false
+        - --expander=least-waste
+        - --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/paxata-test
+        image: k8s.gcr.io/cluster-autoscaler:v1.12.7
+        imagePullPolicy: Always
+        name: cluster-autoscaler
+        resources:
+          limits:
+            cpu: 100m
+            memory: 300Mi
+          requests:
+            cpu: 100m
+            memory: 300Mi
+        volumeMounts:
+        - mountPath: /etc/ssl/certs/ca-certificates.crt
+          name: ssl-certs
+          readOnly: true
+      serviceAccountName: cluster-autoscaler
+      volumes:
+      - hostPath:
+          path: /etc/ssl/certs/ca-bundle.crt
+        name: ssl-certs
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: pax-operator
+  namespace: pax-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pax-operator
+  template:
+    metadata:
+      annotations:
+        cluster-id: test
+        create-host: Gregorys-MacBook-Pro-2.local
+        env-key: paxata-test
+        scm-branch: DEVOPSS-939.KustomizeInfra
+      labels:
+        app.kubernetes.io/name: pax-operator
+        paxata.com/requiresMongo: "true"
+    spec:
+      containers:
+      - env:
+        - name: PAX_SAML_KEYSTORE_KEY
+          valueFrom:
+            secretKeyRef:
+              key: samlKeystoreKey
+              name: saml-keystore
+        - name: PAX_SAML_KEYSTORE_PASS
+          valueFrom:
+            secretKeyRef:
+              key: samlKeystorePass
+              name: saml-keystore
+        - name: DEFAULT_PAXSERVER_JVM_ARGS
+          value: -DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector
+            -Dsun.jnu.encoding=UTF8 -Dfile.encoding=UTF8 -XX:+UseG1GC -XX:-OmitStackTraceInFastThrow
+            -XX:+AlwaysPreTouch -XX:InitiatingHeapOccupancyPercent=70 -XX:MaxGCPauseMillis=200
+            -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=256m -Dsun.reflect.noInflation=true
+            -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/usr/local/paxata/server/logs
+        - name: DEFAULT_PIPELINE_PROXY_JVM_ARGS
+          value: -Dsun.jnu.encoding=UTF8 -Dfile.encoding=UTF8 -XX:+UseG1GC -XX:-OmitStackTraceInFastThrow
+            -XX:+AlwaysPreTouch
+        - name: DEFAULT_PIPELINE_DRIVER_JVM_ARGS
+          value: -XX:-OmitStackTraceInFastThrow -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m
+        - name: DEFAULT_PIPELINE_EXECUTOR_JVM_ARGS
+          value: -XX:-OmitStackTraceInFastThrow -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m
+        envFrom:
+        - configMapRef:
+            name: pax-operator-env
+        image: dtr.paxatadev.com/paxata/release_pax_operator:2019.1.3.0.12452
+        imagePullPolicy: Always
+        name: pax-operator
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /etc/pax-operator/saml-keystore
+          name: saml-keystore-file
+          readOnly: true
+      imagePullSecrets:
+      - name: pax-operator-dtr
+      volumes:
+      - name: saml-keystore-file
+        secret:
+          items:
+          - key: samlKeystoreFile
+            path: saml-keystore.jks
+          secretName: saml-keystore
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: splunk-kubernetes-metrics
+    version: 1.2.0
+  name: splunk-kubernetes-metrics-agg
+  namespace: splunk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: splunk-kubernetes-metrics
+      version: 1.2.0
+  template:
+    metadata:
+      annotations:
+        cluster-id: test
+        create-host: Gregorys-MacBook-Pro-2.local
+        env-key: paxata-test
+        scheduler.alpha.kubernetes.io/critical-pod: ""
+        scm-branch: DEVOPSS-939.KustomizeInfra
+      labels:
+        app: splunk-kubernetes-metrics
+        version: 1.2.0
+    spec:
+      containers:
+      - env:
+        - name: SPLUNK_HEC_HOST
+          valueFrom:
+            secretKeyRef:
+              key: splunk_hec_host
+              name: splunk-kubernetes-metrics
+        - name: SPLUNK_HEC_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: splunk_hec_token
+              name: splunk-kubernetes-metrics
+        image: splunk/k8s-metrics-aggr:1.1.0
+        imagePullPolicy: Always
+        name: splunk-fluentd-k8s-metrics-agg
+        resources:
+          limits:
+            cpu: 200m
+            memory: 300Mi
+          requests:
+            cpu: 200m
+            memory: 300Mi
+        volumeMounts:
+        - mountPath: /fluentd/etc
+          name: conf-configmap
+        - mountPath: /fluentd/etc/splunk
+          name: secrets
+          readOnly: true
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+        paxata.com/role-id: general-server
+      serviceAccountName: splunk-kubernetes-metrics
+      volumes:
+      - configMap:
+          name: splunk-kubernetes-metrics-aggregator
+        name: conf-configmap
+      - name: secrets
+        secret:
+          secretName: splunk-kubernetes-metrics
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: splunk-kubernetes-objects
+    version: 1.2.0
+  name: splunk-kubernetes-objects
+  namespace: splunk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: splunk-kubernetes-objects
+      engine: fluentd
+      version: 1.2.0
+  template:
+    metadata:
+      annotations:
+        cluster-id: test
+        create-host: Gregorys-MacBook-Pro-2.local
+        env-key: paxata-test
+        scm-branch: DEVOPSS-939.KustomizeInfra
+      labels:
+        app: splunk-kubernetes-objects
+        engine: fluentd
+        version: 1.2.0
+    spec:
+      containers:
+      - args:
+        - -c
+        - /fluentd/etc/fluent.conf
+        env:
+        - name: SPLUNK_HEC_HOST
+          valueFrom:
+            secretKeyRef:
+              key: splunk_hec_host
+              name: splunk-kubernetes-objects
+        - name: MY_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: SPLUNK_HEC_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: splunk_hec_token
+              name: splunk-kubernetes-objects
+        image: splunk/kube-objects:1.1.0
+        imagePullPolicy: IfNotPresent
+        name: splunk-fluentd-k8s-objects
+        resources:
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+        - mountPath: /fluentd/etc
+          name: conf-configmap
+        - mountPath: /fluentd/etc/splunk
+          name: secrets
+          readOnly: true
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+        paxata.com/role-id: general-server
+      serviceAccountName: splunk-kubernetes-objects
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          name: splunk-kubernetes-objects
+        name: conf-configmap
+      - name: secrets
+        secret:
+          secretName: splunk-kubernetes-objects
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: eventrouter
+  name: eventrouter
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eventrouter
+  template:
+    metadata:
+      annotations:
+        cluster-id: test
+        create-host: Gregorys-MacBook-Pro-2.local
+        env-key: paxata-test
+        scm-branch: DEVOPSS-939.KustomizeInfra
+      labels:
+        app: eventrouter
+        tier: control-plane-addons
+    spec:
+      containers:
+      - image: gcr.io/heptio-images/eventrouter:latest
+        imagePullPolicy: IfNotPresent
+        name: kube-eventrouter
+        volumeMounts:
+        - mountPath: /etc/eventrouter
+          name: config-volume
+      nodeSelector:
+        paxata.com/role-id: general-server
+      serviceAccount: eventrouter
+      volumes:
+      - configMap:
+          name: eventrouter-cm
+        name: config-volume
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: external-dns
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        cluster-id: test
+        create-host: Gregorys-MacBook-Pro-2.local
+        env-key: paxata-test
+        scm-branch: DEVOPSS-939.KustomizeInfra
+      labels:
+        app: external-dns
+    spec:
+      containers:
+      - args:
+        - --source=service
+        - --source=ingress
+        - --domain-filter=paxata.com
+        - --provider=aws
+        - --aws-zone-type=$(AWS-ZONE-TYPE)
+        - --registry=txt
+        - --txt-owner-id=eks-cluster-paxata-test
+        - --log-level=debug
+        image: registry.opensource.zalan.do/teapot/external-dns:v0.5.16
+        name: external-dns
+      serviceAccountName: external-dns
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: metacontroller
+  name: metacontroller
+  namespace: metacontroller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metacontroller
+  serviceName: ""
+  template:
+    metadata:
+      annotations:
+        cluster-id: test
+        create-host: Gregorys-MacBook-Pro-2.local
+        env-key: paxata-test
+        scm-branch: DEVOPSS-939.KustomizeInfra
+      labels:
+        app: metacontroller
+    spec:
+      containers:
+      - args:
+        - --logtostderr
+        - -v=5
+        - --discovery-interval=20s
+        command:
+        - /usr/bin/metacontroller
+        image: metacontroller/metacontroller:v0.4.0
+        name: metacontroller
+      serviceAccountName: metacontroller
+  volumeClaimTemplates: []
+---
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: mongo
+  name: mongo-deployment
+  namespace: mongo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mongo
+  serviceName: mongo
+  template:
+    metadata:
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+        cluster-id: test
+        create-host: Gregorys-MacBook-Pro-2.local
+        env-key: paxata-test
+        scm-branch: DEVOPSS-939.KustomizeInfra
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - command:
+        - bash
+        - -c
+        - /mongo-init/init-mongo.sh
+        - --
+        - --storageEngine
+        - wiredTiger
+        - --directoryperdb
+        - --wiredTigerCollectionBlockCompressor
+        - snappy
+        - --oplogSize
+        - "10240"
+        env:
+        - name: MONGO_REPLICA_COUNT
+          value: "3"
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: STATEFUL_SET_NAME
+          value: mongo-deployment
+        - name: MONGO_ADMIN_USERNAME
+          value: admin
+        - name: MONGO_ADMIN_PASSWORD
+          value: <IN_LASTPASS>
+        image: mongo:3.6.9
+        name: mongo
+        ports:
+        - containerPort: 27017
+        readinessProbe:
+          exec:
+            command:
+            - cat
+            - /tmp/mongo-ready
+          initialDelaySeconds: 3
+          periodSeconds: 2
+        resources:
+          requests:
+            cpu: 2
+            memory: 14Gi
+        volumeMounts:
+        - mountPath: /data/db
+          name: mongodb-persistent-storage
+        - mountPath: /mongo-certificates
+          name: certificates-volume
+        - mountPath: /mongo-init
+          name: init-script-volume
+      nodeSelector:
+        paxata.com/role-id: mongo-server
+      tolerations:
+      - effect: NoSchedule
+        key: dedicated
+        operator: Equal
+        value: mongo-server
+      volumes:
+      - configMap:
+          items:
+          - key: init-mongo.sh
+            mode: 360
+            path: init-mongo.sh
+          name: mongo-init-script
+        name: init-script-volume
+      - name: certificates-volume
+        secret:
+          items:
+          - key: keyfile
+            mode: 256
+            path: keyfile
+          secretName: mongo-certificates
+  volumeClaimTemplates:
+  - metadata:
+      annotations:
+        volume.beta.kubernetes.io/storage-class: mongo-storage-class
+      name: mongodb-persistent-storage
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 60Gi
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    k8s-app: calico-typha
+  name: calico-typha
+  namespace: kube-system
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      k8s-app: calico-typha
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    k8s-app: calico-node
+  name: calico-node
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      k8s-app: calico-node
+  template:
+    metadata:
+      annotations:
+        cluster-id: test
+        create-host: Gregorys-MacBook-Pro-2.local
+        env-key: paxata-test
+        scm-branch: DEVOPSS-939.KustomizeInfra
+      labels:
+        k8s-app: calico-node
+    spec:
+      containers:
+      - env:
+        - name: DATASTORE_TYPE
+          value: kubernetes
+        - name: FELIX_INTERFACEPREFIX
+          value: eni
+        - name: FELIX_LOGSEVERITYSCREEN
+          value: info
+        - name: CALICO_NETWORKING_BACKEND
+          value: none
+        - name: CLUSTER_TYPE
+          value: k8s,ecs
+        - name: CALICO_DISABLE_FILE_LOGGING
+          value: "true"
+        - name: FELIX_TYPHAK8SSERVICENAME
+          value: calico-typha
+        - name: FELIX_DEFAULTENDPOINTTOHOSTACTION
+          value: ACCEPT
+        - name: FELIX_IPTABLESMANGLEALLOWACTION
+          value: Return
+        - name: FELIX_IPV6SUPPORT
+          value: "false"
+        - name: WAIT_FOR_DATASTORE
+          value: "true"
+        - name: FELIX_LOGSEVERITYSYS
+          value: none
+        - name: FELIX_PROMETHEUSMETRICSENABLED
+          value: "true"
+        - name: NO_DEFAULT_POOLS
+          value: "true"
+        - name: NODENAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: IP
+          value: ""
+        - name: FELIX_HEALTHENABLED
+          value: "true"
+        image: quay.io/calico/node:v3.3.6
+        livenessProbe:
+          failureThreshold: 6
+          httpGet:
+            host: localhost
+            path: /liveness
+            port: 9099
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        name: calico-node
+        readinessProbe:
+          exec:
+            command:
+            - /bin/calico-node
+            - -felix-ready
+          periodSeconds: 10
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: lib-modules
+          readOnly: true
+        - mountPath: /run/xtables.lock
+          name: xtables-lock
+          readOnly: false
+        - mountPath: /var/run/calico
+          name: var-run-calico
+          readOnly: false
+        - mountPath: /var/lib/calico
+          name: var-lib-calico
+          readOnly: false
+      hostNetwork: true
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+      priorityClassName: system-node-critical
+      serviceAccountName: calico-node
+      terminationGracePeriodSeconds: 0
+      tolerations:
+      - effect: NoSchedule
+        operator: Exists
+      - key: CriticalAddonsOnly
+        operator: Exists
+      - effect: NoExecute
+        operator: Exists
+      volumes:
+      - hostPath:
+          path: /lib/modules
+        name: lib-modules
+      - hostPath:
+          path: /var/run/calico
+        name: var-run-calico
+      - hostPath:
+          path: /var/lib/calico
+        name: var-lib-calico
+      - hostPath:
+          path: /run/xtables.lock
+          type: FileOrCreate
+        name: xtables-lock
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: splunk-kubernetes-logging
+    engine: fluentd
+    version: 1.2.0
+  name: splunk-kubernetes-logging
+  namespace: splunk
+spec:
+  selector:
+    matchLabels:
+      app: splunk-kubernetes-logging
+      version: 1.2.0
+  template:
+    metadata:
+      annotations:
+        cluster-id: test
+        create-host: Gregorys-MacBook-Pro-2.local
+        env-key: paxata-test
+        scm-branch: DEVOPSS-939.KustomizeInfra
+      labels:
+        app: splunk-kubernetes-logging
+        version: 1.2.0
+    spec:
+      containers:
+      - args:
+        - -c
+        - /fluentd/etc/fluent.conf
+        env:
+        - name: SPLUNK_HEC_HOST
+          valueFrom:
+            secretKeyRef:
+              key: splunk_hec_host
+              name: splunk-kubernetes-logging
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: MY_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: SPLUNK_HEC_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: splunk_hec_token
+              name: splunk-kubernetes-logging
+        image: splunk/fluentd-hec:1.1.1
+        imagePullPolicy: Always
+        name: splunk-fluentd-k8s-logs
+        resources:
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+        - mountPath: /var/log
+          name: varlog
+        - mountPath: /var/lib/docker/containers
+          name: varlibdockercontainers
+          readOnly: true
+        - mountPath: /run/log/journal
+          name: journallogpath
+          readOnly: true
+        - mountPath: /fluentd/etc
+          name: conf-configmap
+        - mountPath: /fluentd/etc/splunk
+          name: secrets
+          readOnly: true
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        operator: Exists
+      volumes:
+      - hostPath:
+          path: /var/log
+        name: varlog
+      - hostPath:
+          path: /var/lib/docker/containers
+        name: varlibdockercontainers
+      - hostPath:
+          path: /run/log/journal
+        name: journallogpath
+      - configMap:
+          name: splunk-kubernetes-logging
+        name: conf-configmap
+      - name: secrets
+        secret:
+          secretName: splunk-kubernetes-logging
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  labels:
+    app: splunk-kubernetes-metrics
+    engine: fluentd
+    version: 1.2.0
+  name: splunk-kubernetes-metrics
+  namespace: splunk
+spec:
+  selector:
+    matchLabels:
+      name: splunk-kubernetes-metrics
+      version: 1.2.0
+  template:
+    metadata:
+      annotations:
+        cluster-id: test
+        create-host: Gregorys-MacBook-Pro-2.local
+        env-key: paxata-test
+        scheduler.alpha.kubernetes.io/critical-pod: ""
+        scm-branch: DEVOPSS-939.KustomizeInfra
+      labels:
+        app: splunk-kubernetes-metrics
+        engine: fluentd
+        name: splunk-kubernetes-metrics
+        version: 1.2.0
+      name: splunk-kubernetes-metrics
+    spec:
+      containers:
+      - env:
+        - name: SPLUNK_HEC_HOST
+          valueFrom:
+            secretKeyRef:
+              key: splunk_hec_host
+              name: splunk-kubernetes-metrics
+        - name: KUBERNETES_NODE_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: SPLUNK_HEC_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: splunk_hec_token
+              name: splunk-kubernetes-metrics
+        image: splunk/k8s-metrics:1.1.1
+        imagePullPolicy: Always
+        name: splunk-fluentd-k8s-metrics
+        resources:
+          limits:
+            cpu: 200m
+            memory: 300Mi
+          requests:
+            cpu: 200m
+            memory: 300Mi
+        volumeMounts:
+        - mountPath: /fluentd/etc
+          name: conf-configmap
+        - mountPath: /fluentd/etc/splunk
+          name: secrets
+          readOnly: true
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+      serviceAccountName: splunk-kubernetes-metrics
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master
+      - effect: NoSchedule
+        operator: Exists
+      volumes:
+      - configMap:
+          name: splunk-kubernetes-metrics
+        name: conf-configmap
+      - name: secrets
+        secret:
+          secretName: splunk-kubernetes-metrics
+---
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: instana-agent
+  namespace: instana-agent
+spec:
+  template:
+    metadata:
+      annotations:
+        cluster-id: test
+        create-host: Gregorys-MacBook-Pro-2.local
+        env-key: paxata-test
+        scm-branch: DEVOPSS-939.KustomizeInfra
+      labels:
+        app: instana-agent
+    spec:
+      containers:
+      - env:
+        - name: INSTANA_AGENT_LEADER_ELECTOR_PORT
+          value: "42655"
+        - name: INSTANA_ZONE
+          value: k8s-cluster-name
+        - name: INSTANA_AGENT_ENDPOINT
+          value: Enter the host your agent will connect to.
+        - name: INSTANA_AGENT_ENDPOINT_PORT
+          value: "443"
+        - name: INSTANA_AGENT_KEY
+          valueFrom:
+            secretKeyRef:
+              key: key
+              name: instana-agent-secret
+        - name: JAVA_OPTS
+          value: -Xmx170M -XX:+ExitOnOutOfMemoryError
+        - name: INSTANA_AGENT_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        image: instana/agent
+        imagePullPolicy: Always
+        livenessProbe:
+          httpGet:
+            path: /status
+            port: 42699
+          initialDelaySeconds: 75
+          periodSeconds: 5
+        name: instana-agent
+        ports:
+        - containerPort: 42699
+        resources:
+          limits:
+            cpu: "1.5"
+            memory: 512Mi
+          requests:
+            cpu: "0.5"
+            memory: 512Mi
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /dev
+          name: dev
+        - mountPath: /run
+          name: run
+        - mountPath: /var/run
+          name: var-run
+        - mountPath: /sys
+          name: sys
+        - mountPath: /var/log
+          name: log
+        - mountPath: /etc/machine-id
+          name: machine-id
+        - mountPath: /root/configuration.yaml
+          name: configuration
+          subPath: configuration.yaml
+      - command:
+        - /app/server
+        - --election=instana
+        - --http=localhost:42655
+        - --id=$(INSTANA_AGENT_POD_NAME)
+        env:
+        - name: INSTANA_AGENT_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        image: instana/leader-elector:0.5.4
+        livenessProbe:
+          httpGet:
+            path: /status
+            port: 42699
+          initialDelaySeconds: 75
+          periodSeconds: 5
+        name: instana-agent-leader-elector
+        ports:
+        - containerPort: 42655
+        resources:
+          requests:
+            cpu: "0.1"
+            memory: 64Mi
+      hostIPC: true
+      hostNetwork: true
+      hostPID: true
+      serviceAccount: instana-agent
+      tolerations:
+      - effect: NoSchedule
+        operator: Exists
+      volumes:
+      - hostPath:
+          path: /dev
+        name: dev
+      - hostPath:
+          path: /run
+        name: run
+      - hostPath:
+          path: /var/run
+        name: var-run
+      - hostPath:
+          path: /sys
+        name: sys
+      - hostPath:
+          path: /var/log
+        name: log
+      - hostPath:
+          path: /etc/machine-id
+        name: machine-id
+      - configMap:
+          name: instana-configuration
+        name: configuration
+---
+apiVersion: metacontroller.k8s.io/v1alpha1
+kind: CompositeController
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: pax-operator
+  namespace: pax-operator
+spec:
+  childResources:
+  - apiVersion: v1
+    resource: serviceaccounts
+    updateStrategy:
+      method: InPlace
+  - apiVersion: rbac.authorization.k8s.io/v1
+    resource: roles
+    updateStrategy:
+      method: InPlace
+  - apiVersion: rbac.authorization.k8s.io/v1
+    resource: rolebindings
+    updateStrategy:
+      method: InPlace
+  - apiVersion: networking.k8s.io/v1
+    resource: networkpolicies
+    updateStrategy:
+      method: InPlace
+  - apiVersion: v1
+    resource: secrets
+    updateStrategy:
+      method: InPlace
+  - apiVersion: v1
+    resource: configmaps
+    updateStrategy:
+      method: Recreate
+  - apiVersion: v1
+    resource: pods
+    updateStrategy:
+      method: Recreate
+  - apiVersion: v1
+    resource: services
+    updateStrategy:
+      method: InPlace
+  - apiVersion: extensions/v1beta1
+    resource: ingresses
+    updateStrategy:
+      method: InPlace
+  generateSelector: true
+  hooks:
+    finalize:
+      webhook:
+        path: /paxata.com/v1/paxinstallations/finalize
+        service:
+          name: pax-operator
+          namespace: pax-operator
+          port: 80
+    sync:
+      webhook:
+        path: /paxata.com/v1/paxinstallations/sync
+        service:
+          name: pax-operator
+          namespace: pax-operator
+          port: 80
+  parentResource:
+    apiVersion: paxata.com/v1
+    resource: paxinstallations
+  resyncPeriodSeconds: 21600
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: mongo-network-policy
+  namespace: mongo
+spec:
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: mongo
+  - from:
+    - namespaceSelector: {}
+    - podSelector:
+        matchLabels:
+          paxata.com/requiresMongo: "true"
+    ports:
+    - port: 27017
+      protocol: TCP
+  podSelector:
+    matchLabels:
+      app: mongo
+  policyTypes:
+  - Ingress
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: mongo-volume-0
+spec:
+  accessModes:
+  - ReadWriteOnce
+  awsElasticBlockStore:
+    volumeID: vol-033de8ba53f80116a
+  capacity:
+    storage: 60Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: mongodb-persistent-storage-mongo-deployment-0
+    namespace: mongo
+    resourceVersion: "1211"
+    uid: f1f2aeed-aba2-11e9-afe6-0af7f509537e
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: mongo-storage-class
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: mongo-volume-1
+spec:
+  accessModes:
+  - ReadWriteOnce
+  awsElasticBlockStore:
+    volumeID: vol-08eb8476335a6ef24
+  capacity:
+    storage: 60Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: mongodb-persistent-storage-mongo-deployment-1
+    namespace: mongo
+    resourceVersion: "1197"
+    uid: f1b59b68-aba2-11e9-afe6-0af7f509537e
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: mongo-storage-class
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: mongo-volume-2
+spec:
+  accessModes:
+  - ReadWriteOnce
+  awsElasticBlockStore:
+    volumeID: vol-045f2657a95a9055c
+  capacity:
+    storage: 60Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: mongodb-persistent-storage-mongo-deployment-2
+    namespace: mongo
+    resourceVersion: "1205"
+    uid: f1d3b7ee-aba2-11e9-afe6-0af7f509537e
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: mongo-storage-class
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: mongodb-persistent-storage-mongo-deployment-0
+  namespace: mongo
+spec:
+  accessModes:
+  - ReadWriteOnce
+  dataSource: null
+  resources:
+    requests:
+      storage: 60Gi
+  storageClassName: mongo-storage-class
+  volumeName: mongo-volume-0
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: mongodb-persistent-storage-mongo-deployment-1
+  namespace: mongo
+spec:
+  accessModes:
+  - ReadWriteOnce
+  dataSource: null
+  resources:
+    requests:
+      storage: 60Gi
+  storageClassName: mongo-storage-class
+  volumeName: mongo-volume-1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+    cluster-id: test
+    create-host: Gregorys-MacBook-Pro-2.local
+    env-key: paxata-test
+    scm-branch: DEVOPSS-939.KustomizeInfra
+  name: mongodb-persistent-storage-mongo-deployment-2
+  namespace: mongo
+spec:
+  accessModes:
+  - ReadWriteOnce
+  dataSource: null
+  resources:
+    requests:
+      storage: 60Gi
+  storageClassName: mongo-storage-class
+  volumeName: mongo-volume-2

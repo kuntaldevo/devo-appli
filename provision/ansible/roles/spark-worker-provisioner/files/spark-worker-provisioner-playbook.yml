@@ -1,0 +1,19 @@
+
+---
+- hosts: all
+  become: yes
+  tasks:
+
+    - name: Parse the User Data into Facts
+      include_role:
+        name: load-user-data
+
+    - name: Setup some items after the cache is provisioned
+      include_role:
+        name: wait-and-start-spark
+
+# Decided to load the jars required for DDL to be installed when the AMI is built.
+#    - name: If the DDL feature is set then install the libs
+#      include_role:
+#        name: ddl-libs
+#      when: feature_ddl == true

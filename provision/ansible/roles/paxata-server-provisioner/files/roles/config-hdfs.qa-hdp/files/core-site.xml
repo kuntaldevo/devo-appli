@@ -1,0 +1,192 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+  <!-- the default path prefix used by the Hadoop FS client when none is given -->
+  <property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://hdfspax/</value>
+  </property>
+
+
+  <property>
+    <name>ha.zookeeper.quorum</name>
+    <value>cdh-qa-rm1.paxatadev.com:2181,cdh-qa-rm2.paxatadev.com:2181,cdh-qa-hive1.paxatadev.com:2181</value>
+  </property>
+
+  <property>
+     <name>io.file.buffer.size</name>
+     <value>131072</value>
+  </property>
+
+  <!-- enable trash -->
+  <property>
+    <name>fs.trash.interval</name>
+    <value>1440</value>
+  </property>
+<!--
+  <property>
+    <name>ipc.server.tcpnodelay</name>
+    <value>true</value>
+    <description>Turn on/off Nagle's algorithm for the TCP socket connection on the server. Setting to true disables the algorithm and may decrease latency with a cost of more/smaller packets. </description>
+  </property>
+-->
+
+  <!-- lzo setting -->
+<!--
+  <property>
+    <name>io.compression.codecs</name>
+    <value>org.apache.hadoop.io.compress.DefaultCodec,org.apache.hadoop.io.compress.GzipCodec,
+org.apache.hadoop.io.compress.BZip2Codec,com.hadoop.compression.lzo.LzoCodec,
+com.hadoop.compression.lzo.LzopCodec,org.apache.hadoop.io.compress.SnappyCodec</value>
+  </property>
+  <property>
+    <name>io.compression.codec.lzo.class</name>
+    <value>com.hadoop.compression.lzo.LzoCodec</value>
+  </property>
+-->
+<!--
+  <property>
+    <name>hadoop.security.group.mapping</name>
+    <value>org.apache.hadoop.security.ShellBasedUnixGroupsMapping</value>
+  </property>
+-->
+
+  <property>
+    <name>hadoop.proxyuser.paxata.hosts</name>
+    <value>*</value> 
+  </property>
+
+  <property>
+    <name>hadoop.proxyuser.paxata.groups</name>
+    <value>teamcity,utest-library,utest-1,utest-2,datalibrary,fixeduser,hdfs,hive,mappinguserread,mappinguserrw,mmatthews,passthroughuser,rtirumala,struong</value>
+  </property>
+
+  <property>
+    <name>hadoop.proxyuser.utest-library.hosts</name>
+    <value>*</value>                                                            
+  </property>
+  <property>
+    <name>hadoop.proxyuser.utest-library.groups</name>
+    <value>*</value>
+  </property>
+
+  <property>
+    <name>hadoop.proxyuser.teamcity.hosts</name>
+    <value>*</value>                                                            
+  </property>
+  <property>
+    <name>hadoop.proxyuser.teamcity.groups</name>
+    <value>*</value>
+  </property>
+  <property>
+    <name>hadoop.proxyuser.teamcity.users</name>
+    <value>teamcity,utest-library,utest-1,utest-2,paxata</value>
+  </property>
+
+  <!-- hdfs -->
+  <property>
+    <name>hadoop.proxyuser.hdfs.groups</name>
+    <value>*</value>
+  </property>
+  <property>
+    <name>hadoop.proxyuser.hdfs.hosts</name>
+    <value>*</value>
+  </property>
+
+  <!-- yarn -->
+  <property>
+    <name>hadoop.proxyuser.yarn.hosts</name>
+    <value>*</value>
+  </property>
+  <property>
+    <name>hadoop.proxyuser.yarn.groups</name>
+    <value>*</value>
+  </property>
+
+  <!-- mapred -->
+  <property>
+    <name>hadoop.proxyuser.mapred.hosts</name>
+    <value>*</value>
+  </property>
+  <property>
+    <name>hadoop.proxyuser.mapred.groups</name>
+    <value>*</value>
+  </property>
+
+  <!-- oozie user setting -->
+  <property>
+    <name>hadoop.proxyuser.oozie.hosts</name>
+    <value>*</value>
+  </property>
+  <property>
+    <name>hadoop.proxyuser.oozie.groups</name>
+    <value>*</value>
+  </property>
+
+  <!-- HTTP proxy user setting -->
+  <property>
+    <name>hadoop.proxyuser.HTTP.hosts</name>
+    <value>*</value>
+  </property>
+  <property>
+    <name>hadoop.proxyuser.HTTP.groups</name>
+    <value>*</value>
+  </property>
+
+  <!-- HTTPFS proxy user setting -->
+  <property>
+    <name>hadoop.proxyuser.httpfs.hosts</name>
+    <value>*</value>
+  </property>
+  <property>
+    <name>hadoop.proxyuser.httpfs.groups</name>
+    <value>*</value>
+  </property>
+
+  <!-- Hive proxy user setting -->
+  <property>
+    <name>hadoop.proxyuser.hive.hosts</name>
+    <value>*</value>
+  </property>
+  <property>
+    <name>hadoop.proxyuser.hive.groups</name>
+    <value>*</value>
+  </property>
+<!--
+  <property>
+    <name>hadoop.proxyuser.hive.users</name>
+    <value>steven,steven2</value>
+  </property>
+-->
+<!-- kerberos with ldap backend -->
+<!-- ldap specific -->
+
+
+  <property>
+    <name>hadoop.security.authentication</name>
+    <value>kerberos</value> <!-- A value of "simple" would disable security. -->
+  </property>
+  
+  <property>
+    <name>hadoop.security.authorization</name>
+    <value>true</value>
+  </property>
+
+</configuration>

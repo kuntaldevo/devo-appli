@@ -1,0 +1,9 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: splunk-kubernetes-objects
+spec:
+  template:
+    spec:
+      nodeSelector:
+        paxata.com/role-id: "general-server"

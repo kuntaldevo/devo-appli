@@ -1,0 +1,25 @@
+apiVersion: paxata.com/v1
+kind: PaxInstallation
+metadata:
+  name: pax-installation
+spec:
+  paxserver:
+    applicationProperties:
+      guardrail.project.row.limit: "1500000"
+      guardrail.batch.row.limit: "10000000"
+      guardrail.interactive.buffer.limit: "1500000"
+      guardrail.file.size.limit: "1000000"
+      guardrail.interactive.row.warning: "1000000"
+      guardrail.library.row.limit: "1000000"
+      guardrail.px.pipeline.inactivity.timeout: "10"
+      guardrail.px.pipeline.executors: "1"
+    numCpus: 1
+    memoryMB: 4096
+  pipelineProxy:
+    applicationProperties:
+      px_pps_spark_conf_spark_driver_memory: "4g"
+      px_pps_spark_conf_spark_driver_cores: "1"
+      px_pps_spark_conf_spark_driver_extraJavaOptions: "-XX:+UseG1GC -XX:+UseCompressedOops -XX:-OmitStackTraceInFastThrow -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m -Dpx.total.cache.capacity=1000000"
+      px_pps_spark_conf_spark_executor_cores: "4"
+      px_pps_spark_conf_spark_executor_memory: "16g"
+      px_pps_spark_conf_spark_executor_extraJavaOptions: "-XX:+UseCompressedOops -XX:-OmitStackTraceInFastThrow -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m"

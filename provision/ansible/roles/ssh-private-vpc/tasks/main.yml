@@ -1,0 +1,44 @@
+---
+
+# change file ownership, group and mode. When specifying mode using octal numbers, first digit should always be 0.
+- file:
+    path: /home/centos/.ssh
+    state: directory
+    owner: centos
+    group: centos
+    mode: 0700
+
+- copy:
+    src: id_rsa
+    dest: /home/centos/.ssh/id_rsa
+    owner: centos
+    group: centos
+    mode: 0600
+    backup: true
+
+# Some tools like packer's debug will generate an ssh key and add it to the auth key File
+# I want to have my own key in the auth key as well, so I will create the file then
+# add the VPC's shared ssh key so the centos user can ssh to all machines
+- name: Create SSH's Auth Key File
+  file:
+    path: /home/centos/.ssh/authorized_keys
+    state: file # ie. Present
+    owner: centos
+    group: centos
+    mode: 0600
+
+- name: Add an auth key that all instances will have to allow free access between instances in a VPC
+  lineinfile:
+    line: "{{devops_ssh}}"
+    dest: /home/centos/.ssh/authorized_keys
+    owner: centos
+    group: centos
+    mode: 0600
+
+- copy:
+    src: config
+    dest: /home/centos/.ssh/config
+    owner: centos
+    group: centos
+    mode: 0600
+    backup: true

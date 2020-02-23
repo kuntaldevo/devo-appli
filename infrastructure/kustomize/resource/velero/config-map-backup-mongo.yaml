@@ -1,0 +1,15 @@
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backup-mongo-script
+  labels:
+    component: velero
+  namespace: velero
+data:
+  backup.sh: |
+    #!/bin/sh
+    export INCLUDE_NAMESPACE="mongo"
+    /velero create backup paxata-backup-mongo-`date +%Ft%H%M%Sz` \
+         --include-namespaces ${INCLUDE_NAMESPACE} --snapshot-volumes=false  \
+         --ttl 336h

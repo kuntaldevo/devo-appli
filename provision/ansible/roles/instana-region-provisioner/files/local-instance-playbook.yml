@@ -1,0 +1,13 @@
+
+---
+- hosts: all
+  become: yes
+  tasks:
+
+    - name: Parse the User Data into Facts
+      include_role:
+        name: load-user-data
+
+    - name: Set variables for the instana agent
+      include_role:
+        name: instana-region

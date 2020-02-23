@@ -1,0 +1,16 @@
+---
+- name: Download the plugin
+  aws_s3:
+    mode: get
+    bucket: "{{ paxata_file_repo_s3 }}"
+    object: /binary/{{yum_s3_archive}}
+    dest: /tmp/{{yum_s3_archive}}
+    aws_access_key: "{{pfr_aws_access_key}}"
+    aws_secret_key: "{{pfr_aws_secret_key}}"
+    overwrite: false # Don't redownload if already there to save time
+
+
+- name: Install the yum-s3 plugin via yum
+  yum:
+    name: /tmp/{{yum_s3_archive}}
+    state: present

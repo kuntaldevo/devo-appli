@@ -1,0 +1,22 @@
+---
+
+
+- name: Validate
+  assert:
+      that:
+        - "rpm_url != '' "
+      msg: Please define rpm_url in the group vars
+
+- name: Download {{rpm_url}}
+  get_url:
+    url: "{{rpm_url}}"
+    dest: /tmp/to-install.rpm
+    mode: 0440
+    url_username: devops
+    url_password: l6hKW1CzRULbuLQQgEIs
+
+
+- name: Install RPM File
+  yum:
+    name:  /tmp/to-install.rpm
+    state: present

@@ -1,0 +1,14 @@
+
+- name: Create Log directory
+  file:
+    path: "{{ paxata_home }}/logs"
+    state: directory
+    owner: "{{ paxata_user }}"
+    group: "{{ paxata_user }}"
+
+- name: Create Link for Pipeline Logs
+  file:
+    src: "{{ paxata_home }}/logs"
+    dest: "/var/log/paxata"
+    state: link
+    mode: 0777

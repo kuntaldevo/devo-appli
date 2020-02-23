@@ -1,0 +1,36 @@
+---
+
+- name: Is Nginx Installed ?
+  stat:
+      path: /etc/nginx/conf.d/default.conf
+  register: has_nginx
+
+- name: Is Openresty Installed ?
+  stat:
+      path: /usr/local/openresty/nginx/conf/nginx.conf
+  register: has_openresty
+
+- name: Set the Path if Nginx exists
+  set_fact:
+    config_path: /etc/nginx/conf.d/default.conf
+  when: has_nginx.stat.exists == true
+
+- name: Set the Path if OpenResty exists
+  set_fact:
+    config_path: /usr/local/openresty/nginx/conf/nginx.conf
+  when: has_openresty.stat.exists == true
+
+
+- name:
+  replace:
+    path: "{{config_path}}"
+    regexp: '({certificate})'
+    replace: "/usr/local/paxata/ssl-cert/star.{{public_domain}}.crt"
+    backup: yes
+
+- name:
+  replace:
+    path: "{{config_path}}"
+    regexp: '({key})'
+    replace: "/usr/local/paxata/ssl-cert/star.{{public_domain}}.key"
+    backup: yes

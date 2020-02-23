@@ -1,0 +1,23 @@
+---
+
+- name: Download Paxata Server rpm and check md5sum with md5 file.
+  get_url:
+    url: "{{ pax_server_rpm_url }}"
+    dest: "{{ pax_server_rpm_local }}"
+    url_username: "{{ flash_username }}"
+    url_password: "{{ flash_password }}"
+    checksum: "md5:{{ pax_server_rpm_md5 }}"
+
+- name: Install Paxata Server rpm
+  yum:
+    name: "{{ pax_server_rpm_local }}"
+    disablerepo: "*"
+    state: present
+
+- name:  Convenience symlink for paxata-server
+  file:
+    src: /usr/local/paxata/server
+    dest: /usr/local/paxata-server
+    state: link
+    owner: root
+    group: root

@@ -1,0 +1,17 @@
+
+# Add in additional env vars
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: splunk-kubernetes-objects
+spec:
+  template:
+    spec:
+      containers:
+      - name: splunk-fluentd-k8s-objects
+        env:
+        - name: SPLUNK_HEC_HOST
+          valueFrom:
+            secretKeyRef:
+              name: splunk-kubernetes-objects
+              key: splunk_hec_host

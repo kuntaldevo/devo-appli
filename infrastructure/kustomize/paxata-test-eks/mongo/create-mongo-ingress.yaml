@@ -1,0 +1,19 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-external
+  namespace: mongo
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: mongo-external.paxata-test-eks.paxata.ninja
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "3600"
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+spec:
+  ports:
+  - name: "27017"
+    port: 27017
+  type: LoadBalancer
+  selector:
+    app: mongo

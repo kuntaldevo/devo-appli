@@ -1,0 +1,20 @@
+#- name: Install Filesystem properties with a locally stored connector library
+#  copy:
+#    src: "filesystem.properties.local"
+#    dest: "{{ paxata_home }}/config/filesystem.properties"
+#    owner: "{{ paxata_user }}"
+#    group: "{{ paxata_user }}"
+#    backup: yes
+#    mode: 0644
+#  when:
+#    - "major_version|int <= 2 "
+#    - "minor_version|int <= 22 "
+
+
+- name: Create /library
+  file:
+    path: "/library"
+    state: directory
+    owner: "root"
+    group: "root"
+    mode: 0777

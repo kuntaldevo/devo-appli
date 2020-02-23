@@ -1,0 +1,5 @@
+---
+
+agent_installer_path: /tmp/instana-agent-installer.sh
+
+instana_config:  /opt/instana/agent/etc/instana/configuration.yaml

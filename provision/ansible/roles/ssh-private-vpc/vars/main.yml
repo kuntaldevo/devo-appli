@@ -1,0 +1,3 @@
+---
+
+devops_ssh: "{{ lookup('file', 'authorized_keys') }}"

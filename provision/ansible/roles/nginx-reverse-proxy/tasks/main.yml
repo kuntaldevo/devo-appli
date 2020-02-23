@@ -1,0 +1,18 @@
+---
+
+- name: Install Prequisite Libraries for compiling Nginx
+  import_tasks: install-pre-reqs.yml
+
+- name: Add the current Nginx repo
+  import_tasks: add-nginx-repo.yml
+
+- name: Install Nginx OSS
+  import_tasks: install-nginx-oss.yml
+
+- name: Install Nginx OSS Source
+  import_tasks: install-nginx-source.yml
+
+- name: Set Nginx Server to Autostart
+  service:
+    name: nginx
+    enabled: yes

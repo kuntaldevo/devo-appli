@@ -1,0 +1,16 @@
+# Personally added this Kustomization File so the parent doesnt need to explicitly mention every file
+
+
+resources:
+  - clusterRole.yaml
+  - clusterRoleBinding.yaml
+  - configMap.yaml
+  - deployment.yaml
+  - secret.yaml
+  - serviceAccount.yaml
+
+patchesStrategicMerge:
+- patch-secret.yaml
+- patch-deployment.yaml
+- patch-configmap.yaml
+- patch-deployment-select-general-nodes.yaml

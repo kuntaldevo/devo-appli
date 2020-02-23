@@ -1,0 +1,4 @@
+
+
+#Set by default that this agent will monitor the entire AWS region it is installed in
+export INSTANA_AWS_REGION_CONFIG=true

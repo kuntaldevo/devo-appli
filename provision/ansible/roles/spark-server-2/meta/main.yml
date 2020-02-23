@@ -1,0 +1,10 @@
+---
+dependencies:
+  - { role: provider-os-specific }
+
+  - { role: install-openjdk-8 }
+  - { role: ssh-private-vpc }
+
+  - { role: apm-instana }
+
+  - { role: host-name-provisioner }

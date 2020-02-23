@@ -1,0 +1,11 @@
+
+- name: Copy PES Key to encrypt Mongo data
+  copy:
+    src: "{{ item }}"
+    dest: "{{ paxata_home }}/config/{{ item }}"
+    owner: "{{ paxata_user }}"
+    group: "{{ paxata_user }}"
+    mode: 0644
+    backup: yes
+  with_items:
+    - pes.properties

@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# B A S H ! ! !
+
+# This should be a var that is passed in at some point
+TARGET="${WHAT}"
+
+WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Sets the following ENV Vars for Packer
+#BASH_HISTORY
+#SOURCE_AMI
+#CUSTOM_NAME
+#CUSTOM_ROLE
+
+# These should be passed in or a lookup or something
+export SOURCE_AMI="ami-37d9eb52"
+export CUSTOM_NAME="Automation Server"
+export CUSTOM_ROLE="automation-server"
+
+# At the moment, assume we are in the same dir
+
+export BASH_HISTORY="${WORKING_DIR}/bash_history/default.bash"
+
+OPTIONAL_HISTORY="${WORKING_DIR}/bash_history/${TARGET}.bash"
+
+if [[ -e "${OPTIONAL_HISTORY}" ]]; then
+
+export BASH_HISTORY="${OPTIONAL_HISTORY}"
+
+else
+
+ echo -e "${FYI}: No history file found."
+
+fi

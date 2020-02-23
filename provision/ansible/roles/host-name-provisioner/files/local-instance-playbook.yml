@@ -1,0 +1,19 @@
+
+---
+- hosts: all
+  become: yes
+  tasks:
+
+    - name: Parse the User Data into Facts
+      include_role:
+        name: load-user-data
+
+    - name: Set the host name for Centos-6
+      include_role:
+        name: set-hostname-6
+      when: ansible_distribution == 'CentOS' and ansible_distribution_major_version == "6"
+
+    - name: Set the host name for Centos-7
+      include_role:
+        name: set-hostname-7
+      when: ansible_distribution == 'CentOS' and ansible_distribution_major_version == "7"

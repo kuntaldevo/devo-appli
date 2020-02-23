@@ -1,0 +1,17 @@
+---
+
+# Install libselinux-python support so we can add Paxata Release Repo
+- name: Install libselinux-python for repo "paxata-release"
+  yum:
+    name: libselinux-python
+    state: present
+
+
+# tasks file for roles/paxata.application-repos
+- name: create /etc/yum.repos.d/paxata-release.repo
+  template:
+    src: paxata-release.repo
+    dest: /etc/yum.repos.d/paxata-release.repo
+    owner: root
+    group: root
+    mode: 0644

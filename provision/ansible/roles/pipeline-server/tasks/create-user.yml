@@ -1,0 +1,4 @@
+
+# Create the Paxata user that the service will run as
+- user:
+    name: "{{ pipeline_user }}"

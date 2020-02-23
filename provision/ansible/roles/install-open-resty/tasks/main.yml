@@ -1,0 +1,26 @@
+---
+
+- name: Install Yum Utils
+  yum:
+    name: yum-utils
+
+- name: Add Repo File
+  copy:
+    src: "openresty.repo"
+    dest: "/etc/yum.repos.d/openresty.repo"
+    owner: root
+    group: root
+    mode: 0644
+    backup: true
+
+- name: Install Open Resty
+  yum:
+    name: openresty-resty
+
+- name: Create link for finding the logs
+  file:
+    src: "/usr/local/openresty/nginx/logs/"
+    dest: "/var/log/nginx"
+    state: link
+    mode: 0777
+    force: yes

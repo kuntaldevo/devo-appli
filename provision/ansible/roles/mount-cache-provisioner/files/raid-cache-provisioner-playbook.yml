@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+
+    - name: Parse the User Data into Facts
+      include_role:
+        name: load-user-data
+
+    - name: Check for any other attached volumes other than Root.  Mount them if there are any
+      include_role:
+        name: mount-cache

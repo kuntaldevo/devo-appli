@@ -1,0 +1,15 @@
+---
+
+- name: Copy spark-worker startup script
+  copy:
+    src: spark-worker.service
+    dest: /etc/systemd/system/spark-worker.service
+    owner: root
+    group: root
+    mode: 0655
+    backup: true
+
+- name: Set the Spark worker to Start on boot
+  service:
+    name: spark-worker.service
+    enabled: true

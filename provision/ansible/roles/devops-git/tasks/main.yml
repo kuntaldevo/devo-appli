@@ -1,0 +1,11 @@
+---
+
+- name: Install Git Repo
+  yum:
+    name: http://opensource.wandisco.com/centos/6/git/x86_64/wandisco-git-release-6-1.noarch.rpm
+    state: present
+
+- name: Install Git
+  yum:
+    name: git-all
+    state: present

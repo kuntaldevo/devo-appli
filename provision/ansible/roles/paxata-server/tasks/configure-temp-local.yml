@@ -1,0 +1,9 @@
+---
+
+- name: Add Temp Storage px.properties
+  blockinfile:
+    path: "{{ paxata_home }}/config/px.properties"
+    marker: "# {mark} Temp Store"
+    block: |
+      px.temp.storage.fs.type=local
+      px.temp.storage.fs.rootDirectory={{tmp_dir}}

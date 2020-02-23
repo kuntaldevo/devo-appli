@@ -1,0 +1,18 @@
+
+- name: Create Link to installed spark
+  file:
+    src: "/usr/lib/{{ spark_version }}"
+    dest: "/usr/lib/spark"
+    state: link
+
+- name: Creates User Local Paxata dir
+  file:
+    path: /usr/local/paxata/
+    state: directory
+    recurse: yes
+
+- name: Create Link to make it easy to find Spark
+  file:
+    src: "/usr/lib/{{ spark_version }}"
+    dest: "/usr/local/paxata/spark"
+    state: link

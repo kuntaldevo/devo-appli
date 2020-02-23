@@ -1,0 +1,9 @@
+---
+dependencies:
+  - { role: provider-os-specific }
+
+  - { role: ssh-private-vpc }
+
+  - { role: apm-instana }
+
+  - { role: host-name-provisioner }

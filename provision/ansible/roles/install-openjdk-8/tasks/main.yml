@@ -1,0 +1,6 @@
+
+#For use on a Centos 7 system
+- name: Install Open JDK 8
+  yum:
+    name: java-1.8.0-openjdk
+    state: present

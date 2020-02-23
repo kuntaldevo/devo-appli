@@ -1,0 +1,3 @@
+---
+# vars file for roles/paxata.application-repos
+repo_server: nexus.paxatadev.com

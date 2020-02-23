@@ -1,0 +1,7 @@
+#
+# Provider Configuration
+#
+
+provider "kubernetes" {
+
+}

@@ -1,0 +1,160 @@
+
+# Greg Added this
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pax-operator
+
+
+---
+# Below this are hand written resources for paxata's PaxInstallation operator
+
+apiVersion: v1
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJkdHIucGF4YXRhZGV2LmNvbSI6eyJ1c2VybmFtZSI6Ims4cyIsInBhc3N3b3JkIjoibm94cW85LWphd2p5dy1HYWdzYWIiLCJlbWFpbCI6ImRsZXZpbmdlckBwYXhhdGEuY29tIiwiYXV0aCI6ImF6aHpPbTV2ZUhGdk9TMXFZWGRxZVhjdFIyRm5jMkZpIn19fQ==
+kind: Secret
+metadata:
+  name: pax-operator-dtr
+  namespace: pax-operator
+type: kubernetes.io/dockerconfigjson
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: pax-operator
+  namespace: pax-operator
+spec:
+  selector:
+    app.kubernetes.io/name: pax-operator
+  ports:
+    - port: 80
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pax-operator
+  namespace: pax-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pax-operator
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pax-operator
+        paxata.com/requiresMongo: "true"
+    spec:
+      imagePullSecrets:
+        - name: pax-operator-dtr
+      containers:
+        - image: dtr.paxatadev.com/paxata/release_pax_operator:2019.2.0.1.2167
+          name: pax-operator
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: saml-keystore-file
+              mountPath: '/etc/pax-operator/saml-keystore'
+              readOnly: true
+          envFrom:
+            - configMapRef:
+                name: pax-operator-env
+          env:
+            - name: PAX_SAML_KEYSTORE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: saml-keystore
+                  key: samlKeystoreKey
+            - name: PAX_SAML_KEYSTORE_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: saml-keystore
+                  key: samlKeystorePass
+            - name: DEFAULT_PAXSERVER_JVM_ARGS
+              value: "-DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector -Dsun.jnu.encoding=UTF8 -Dfile.encoding=UTF8 -XX:+UseG1GC -XX:-OmitStackTraceInFastThrow -XX:+AlwaysPreTouch -XX:InitiatingHeapOccupancyPercent=70 -XX:MaxGCPauseMillis=200 -XX:MaxMetaspaceSize=512m -XX:MetaspaceSize=256m -Dsun.reflect.noInflation=true -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/usr/local/paxata/server/logs"
+            - name: DEFAULT_PIPELINE_PROXY_JVM_ARGS
+              value: "-Dsun.jnu.encoding=UTF8 -Dfile.encoding=UTF8 -XX:+UseG1GC -XX:-OmitStackTraceInFastThrow -XX:+AlwaysPreTouch"
+            - name: DEFAULT_PIPELINE_DRIVER_JVM_ARGS
+              value: "-XX:-OmitStackTraceInFastThrow -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m"
+            - name: DEFAULT_PIPELINE_EXECUTOR_JVM_ARGS
+              value: "-XX:-OmitStackTraceInFastThrow -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m"
+          ports:
+            - containerPort: 80
+      volumes:
+        - name: saml-keystore-file
+          secret:
+            secretName: saml-keystore
+            items:
+              - key: samlKeystoreFile
+                path: saml-keystore.jks
+
+---
+
+apiVersion: metacontroller.k8s.io/v1alpha1
+kind: CompositeController
+metadata:
+  name: pax-operator
+  namespace: pax-operator
+spec:
+  generateSelector: true
+  parentResource:
+    apiVersion: paxata.com/v1
+    resource: paxinstallations
+  childResources:
+    - apiVersion: v1
+      resource: serviceaccounts
+      updateStrategy:
+        method: InPlace
+    - apiVersion: rbac.authorization.k8s.io/v1
+      resource: roles
+      updateStrategy:
+        method: InPlace
+    - apiVersion: rbac.authorization.k8s.io/v1
+      resource: rolebindings
+      updateStrategy:
+        method: InPlace
+    - apiVersion: networking.k8s.io/v1
+      resource: networkpolicies
+      updateStrategy:
+        method: InPlace
+    - apiVersion: v1
+      resource: secrets
+      updateStrategy:
+        method: InPlace
+    - apiVersion: v1
+      resource: configmaps
+      updateStrategy:
+        method: Recreate
+    - apiVersion: v1
+      resource: pods
+      updateStrategy:
+        method: Recreate
+    - apiVersion: v1
+      resource: services
+      updateStrategy:
+        method: InPlace
+    - apiVersion: extensions/v1beta1
+      resource: ingresses
+      updateStrategy:
+        method: InPlace
+  # resyncPeriodSeconds is how often the metacontroller will call over to our handler, even when nothing changes
+  # This will be set to 6 hours for now, just since 2 minutes got to be really chatty in the logs
+  resyncPeriodSeconds: 21600
+  hooks:
+    sync:
+      webhook:
+        service:
+          name: pax-operator
+          namespace: pax-operator
+          port: 80
+        path: '/paxata.com/v1/paxinstallations/sync'
+    finalize:
+      webhook:
+        service:
+          name: pax-operator
+          namespace: pax-operator
+          port: 80
+        path: '/paxata.com/v1/paxinstallations/finalize'

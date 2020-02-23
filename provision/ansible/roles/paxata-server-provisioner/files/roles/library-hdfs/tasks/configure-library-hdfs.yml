@@ -1,0 +1,14 @@
+---
+
+- name: Configure HDFS Library for Kerberos
+  import_tasks: configure-library-hdfs-kerberos.yml
+  when:
+    - "library_auth == 'kerberos' "
+
+- name: Configure HDFS Library for Simple
+  import_tasks: configure-library-hdfs-simple.yml
+  when:
+    - "library_auth == 'simple' "
+
+#feature_library: hdfs
+#library_auth: kerberos

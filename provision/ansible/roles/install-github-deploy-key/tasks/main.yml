@@ -1,0 +1,4 @@
+---
+
+- name: Get the Github Deploy Key from Github
+  import_tasks: install-github-deploy-key.yml

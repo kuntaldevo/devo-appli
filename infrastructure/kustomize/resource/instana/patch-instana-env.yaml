@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: instana-agent
+  namespace: instana-agent
+spec:
+  template:
+    spec:
+      containers:
+        - name: instana-agent
+          env:
+            - name: INSTANA_AGENT_ENDPOINT
+              value: saas-us-west-2.instana.io

@@ -1,0 +1,44 @@
+
+configurations:
+- varconfig.yaml
+
+resources:
+- ../../resource/calico/
+- ../../resource/cluster-autoscaler/
+- ../../resource/event-router/
+- ../../resource/ingress/
+- ../../resource/mongo-ephemeral/
+- ../../resource/mongo-external/
+- ../../resource/route53/
+- ../../resource/pax-operator/
+
+
+patchesStrategicMerge:
+- pax-operator/config-map.pax-operator-env.yaml
+- mongo/patch-stateful-set.yaml
+
+vars:
+- name: MONGO-REPLICA-COUNT
+  objref:
+    kind: ConfigMap
+    name: pax-operator-env
+    namespace: pax-operator
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.MONGO-REPLICA-COUNT
+- name: MONGO-PASSWORD
+  objref:
+    kind: ConfigMap
+    name: pax-operator-env
+    namespace: pax-operator
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.MONGO_PASSWORD
+- name: MONGO-USERNAME
+  objref:
+    kind: ConfigMap
+    name: pax-operator-env
+    namespace: pax-operator
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.MONGO_USERNAME

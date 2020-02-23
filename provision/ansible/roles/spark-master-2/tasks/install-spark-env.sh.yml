@@ -1,0 +1,9 @@
+---
+- name: Copy the Spark Env .sh
+  copy:
+    src: spark-env.sh
+    dest: /usr/lib/spark/conf/spark-env.sh
+    owner: root
+    group: root
+    mode: 0755
+    backup: true

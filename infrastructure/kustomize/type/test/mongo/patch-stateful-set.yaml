@@ -1,0 +1,15 @@
+# At the moment this is obnoxious. I think I might be able to elimiate this with the current version of Kustomize
+#BUt the problem is that ComfigMap for a number like 1 must be quoted.  Kustomize will use those quotes even if we don't want a string
+# Replicas requires a number to be used.  Maybe use the replica's Kustomization instead, but trying to get this to work with only one location value has been a challenge
+# The env var for MONGO_REPLICA_COUNT requires a quoted value.
+#I had previously deleted this but put it back for now
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  namespace: mongo
+  name: mongo-deployment
+  labels:
+    app: mongo
+spec:
+  serviceName: "mongo"
+  replicas: 1

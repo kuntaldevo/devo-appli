@@ -1,0 +1,6 @@
+---
+  
+- name: Add the Nginx Repo
+  template:
+    src: nginx.repo
+    dest: /etc/yum.repos.d/nginx.repo

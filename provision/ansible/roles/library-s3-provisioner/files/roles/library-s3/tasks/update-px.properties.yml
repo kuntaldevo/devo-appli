@@ -1,0 +1,26 @@
+---
+
+- lineinfile:
+    path: /usr/local/paxata/server/config/px.properties
+    regexp: '^[#]?px.library.storage.fs.type=.*$'
+    line: 'px.library.storage.fs.type=simple'
+
+- lineinfile:
+    path: /usr/local/paxata/server/config/px.properties
+    regexp: '^[#]?px.library.storage.fs.distribution=.*$'
+    line: 'px.library.storage.fs.distribution=aws'
+
+- lineinfile:
+    path: /usr/local/paxata/server/config/px.properties
+    regexp: '^[#]?px.library.storage.fs.rootDirectory=.*$'
+    line: 'px.library.storage.fs.rootDirectory=/library'
+
+- lineinfile:
+    path: /usr/local/paxata/server/config/px.properties
+    regexp: '^[#]?px.library.storage.fs.resources=.*$'
+    line: 'px.library.storage.fs.resources=/usr/local/paxata/server/config/core-site.xml'
+
+- lineinfile:
+    path: /usr/local/paxata/server/config/px.properties
+    regexp: '^[#]?px.library.storage.fs.user=.*$'
+    line: 'px.library.storage.fs.user=paxata'

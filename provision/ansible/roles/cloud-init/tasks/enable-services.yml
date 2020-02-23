@@ -1,0 +1,13 @@
+---
+
+- name: Enable Service cloud-config
+  shell: chkconfig cloud-config on
+
+- name: Enable Service cloud-final
+  shell: chkconfig cloud-final on
+
+- name: Enable Service cloud-init
+  shell: chkconfig cloud-init on
+
+- name: Enable Service cloud-init-local
+  shell: chkconfig cloud-init-local on

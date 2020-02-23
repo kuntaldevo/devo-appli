@@ -1,0 +1,5 @@
+
+#Not directly for any app but I can use it to test some connections and ports etc before services start up
+- name: Install Lsof
+  yum:
+    name: lsof

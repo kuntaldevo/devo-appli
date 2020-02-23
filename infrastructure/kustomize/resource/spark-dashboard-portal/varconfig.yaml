@@ -1,0 +1,5 @@
+varReference:
+- path: data
+  kind: ConfigMap
+- path: metadata/annotations
+  kind: Service

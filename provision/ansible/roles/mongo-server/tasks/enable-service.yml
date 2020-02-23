@@ -1,0 +1,5 @@
+
+- name: enable mongod service auto start
+  service:
+    name: mongod
+    enabled: yes

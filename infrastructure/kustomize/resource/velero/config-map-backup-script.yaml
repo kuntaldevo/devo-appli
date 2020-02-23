@@ -1,0 +1,15 @@
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backup-kubernetes-script
+  labels:
+    component: velero
+  namespace: velero
+data:
+  backup.sh: |
+    #!/bin/sh
+    export INCLUDE_RESOURCES="paxinstallations.paxata.com,secrets"
+    /velero create backup paxata-backup-kubernetes-`date +%Ft%H%M%Sz` \
+         --include-resources ${INCLUDE_RESOURCES}   \
+         --ttl 336h

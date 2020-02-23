@@ -1,0 +1,11 @@
+---
+
+pipeline_user: paxata
+
+spark_home: /usr/lib/spark
+
+pipeline_home: /usr/local/paxata/pipeline
+pid_file: "{{ pipeline_home }}/logs/paxata-pipeline.pid"
+
+#Not required so set default to empty
+rpm_url: ""

@@ -1,0 +1,10 @@
+- name: Collect the EC2 Facts, especially the user-data
+  ec2_metadata_facts:
+
+#Get Standard Default Vars etc
+# Use this syntax because of the '-' ( dash ) in the names
+- name: Get the Hostname
+  set_fact:
+    host_name: '{{ansible_ec2_user_data|from_json|json_query( query ) }}'
+  vars:
+    query: '"host-name"'

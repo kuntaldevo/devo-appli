@@ -1,0 +1,5 @@
+---
+# The version of spark to install but without the suffix
+# This is also used to assume the name of the directory in /usr/lib where spark is installed
+spark_version: spark-2.4.4-bin-hadoop2.6
+#java_rpm: jdk-8u112-linux-x64.rpm

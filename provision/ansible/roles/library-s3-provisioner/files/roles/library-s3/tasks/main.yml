@@ -1,0 +1,15 @@
+---
+
+- name: Validate server_role is set
+  assert:
+      that:
+        - "server_role != '' "
+      msg: "server-role in user-data is required"
+
+- name: If a Paxata Server
+  import_tasks: paxata-server.yml
+  when: server_role == "paxata-server"
+
+- name: If a Pipeline Server
+  import_tasks: pipeline-server.yml
+  when: server_role == "pipeline-server"

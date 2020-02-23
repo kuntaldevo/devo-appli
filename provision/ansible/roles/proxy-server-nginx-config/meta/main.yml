@@ -1,0 +1,5 @@
+---
+dependencies:
+  - { role: devops-git }
+  - { role: nginx-reverse-proxy }
+# Duplicate with install paxata certs  - { role: nginx-install-certificates }

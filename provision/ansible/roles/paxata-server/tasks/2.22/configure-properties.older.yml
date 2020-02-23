@@ -1,0 +1,25 @@
+---
+
+- name: Install static property files
+  copy:
+    src: "{{ item }}"
+    dest: "{{ paxata_home }}/config/{{ item }}"
+    owner: "{{ paxata_user }}"
+    group: "{{ paxata_user }}"
+    mode: 0644
+    backup: yes
+  with_items:
+    - px.properties
+    - database.properties
+    - log4j.properties
+    - distributions.properties
+    - jdbc-driver.properties
+
+
+- name: create {{ paxata_home | mandatory }}/config/site-config.xml
+  template:
+    src: site-config.xml.j2
+    dest: "{{ paxata_home | mandatory }}/config/site-config.xml"
+    owner: "{{ paxata_user }}"
+    group: "{{ paxata_user }}"
+    mode: 0644

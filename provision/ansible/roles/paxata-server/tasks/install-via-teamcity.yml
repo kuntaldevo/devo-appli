@@ -1,0 +1,8 @@
+---
+- name: Get Paxata Server from TeamCity
+  import_role:
+    name: repo-teamcity
+
+#- name: Make HDFS
+#  import_role:
+#    name: library-hdfs

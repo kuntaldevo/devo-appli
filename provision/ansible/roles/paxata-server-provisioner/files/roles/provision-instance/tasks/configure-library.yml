@@ -1,0 +1,6 @@
+---
+
+- name: Configure HDFS Library
+  include_role:
+    name: library-hdfs
+  when: "feature_library == 'hdfs' "

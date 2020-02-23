@@ -1,0 +1,4 @@
+---
+dependencies:
+# NOTE: See Spark-Server for additional dependencies
+  - { role: spark-server-2 }

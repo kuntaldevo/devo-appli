@@ -1,0 +1,10 @@
+---
+
+- name: Install Homebrew and Packages
+  import_tasks: install-homebrew.yml
+
+- name: Configure Get Opt
+  import_tasks: configure-getopt.yml
+
+- name: Install the AWS IAM Authenticator
+  import_tasks: install-authenticator.yml

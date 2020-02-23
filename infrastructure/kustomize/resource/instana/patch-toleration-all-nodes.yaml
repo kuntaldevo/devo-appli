@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: instana-agent
+  namespace: instana-agent
+spec:
+  selector:
+    matchLabels:
+      app: instana-agent      
+  template:
+    spec:
+      tolerations:
+      - effect: "NoSchedule"
+        operator: "Exists"

@@ -1,0 +1,8 @@
+---
+dependencies:
+  - { role: provider-os-specific }
+  - { role: apm-instana }
+  - { role: host-name-provisioner }
+  - { role: install-open-resty }
+  - { role: install-paxata-certificates }
+  - { role: proxy-ssl-provisioner }

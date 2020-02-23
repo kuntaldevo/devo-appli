@@ -1,0 +1,111 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  namespace: mongo
+  name: mongo-deployment
+  labels:
+    app: mongo
+spec:
+  serviceName: "mongo"
+  replicas: $(MONGO-REPLICA-COUNT)
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+      annotations:
+        "cluster-autoscaler.kubernetes.io/safe-to-evict": "false"
+        "backup.velero.io/backup-volumes": "mongodb-persistent-storage"
+    spec:
+      tolerations:
+      - key: "dedicated"
+        operator: "Equal"
+        value: "mongo-server"
+        effect: "NoSchedule"
+      nodeSelector:
+        "paxata.com/role-id" : "mongo-server"
+      containers:
+      - name: mongo
+        image: mongo:3.6.9
+        env:
+          - name: MONGO_REPLICA_COUNT
+            value: $(MONGO-REPLICA-COUNT)
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: STATEFUL_SET_NAME
+            value: mongo-deployment
+          - name: MONGO_ADMIN_USERNAME
+            value: $(MONGO-USERNAME)
+          - name: MONGO_ADMIN_PASSWORD
+            value: $(MONGO-PASSWORD)
+        command:
+          - bash
+          - "-c"
+          - /mongo-init/init-mongo.sh
+          - --
+          - --storageEngine
+          - wiredTiger
+          - --directoryperdb
+          - --wiredTigerCollectionBlockCompressor
+          - snappy
+          - --oplogSize
+          - "10240"
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+          - name: mongodb-persistent-storage
+            mountPath: /data/db
+          - name: certificates-volume
+            mountPath: /mongo-certificates
+          - name: init-script-volume
+            mountPath: /mongo-init
+          - name: lt-config
+            mountPath: /etc/localtime
+          - name: tz-config
+            mountPath: /etc/timezone
+        readinessProbe:
+          exec:
+            command:
+            - cat
+            - /tmp/mongo-ready
+          initialDelaySeconds: 3
+          periodSeconds: 2
+        resources:
+          requests:
+            memory: "10Gi"
+            cpu: 2
+      volumes:
+      - name: init-script-volume
+        configMap:
+          name: mongo-init-script
+          items:
+          - key: init-mongo.sh
+            path: init-mongo.sh
+            mode: 0550
+      - name: certificates-volume
+        secret:
+          secretName: mongo-certificates
+          items:
+          - key: keyfile
+            path: keyfile
+            mode: 0400
+      - name: lt-config
+        hostPath:
+          path: /etc/localtime
+      - name: tz-config
+        hostPath:
+          path: /etc/sysconfig/clock
+  volumeClaimTemplates:
+  - metadata:
+      name: mongodb-persistent-storage
+      annotations:
+        volume.beta.kubernetes.io/storage-class: mongo-storage-class
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 60Gi

@@ -1,0 +1,43 @@
+---
+- name: Create packer directory
+  file:
+    path: "{{packer_dir}}"
+    state: directory
+    owner: "{{devops_user}}"
+    group: "{{devops_user}}"
+  register: packer_directory
+
+- name: Check packer version
+  shell: "packer --version 2>&1 | grep {{packer_version}}"
+  failed_when: false
+  changed_when: false
+  register: packer_versions_match
+
+- include: download.yml
+  when: packer_versions_match.rc != 0
+
+- name: Install unzip to unarchive packer
+  yum:
+    name: unzip
+    state: present
+
+- name: Unarchive packer archive
+  unarchive:
+    src: /tmp/packer-{{packer_version}}.zip
+    dest: "{{packer_dir}}"
+    copy: no
+  when: packer_versions_match.rc != 0 or packer_directory.changed
+
+- name: Make devops_user packer directory owner
+  file:
+    path: "{{packer_dir}}"
+    state: directory
+    owner: "{{devops_user}}"
+    group: "{{devops_user}}"
+    recurse: yes
+
+- name: Adding packer command to user path
+  file:
+    src: "{{packer_dir}}/packer"
+    dest: /usr/bin/packer
+    state: link

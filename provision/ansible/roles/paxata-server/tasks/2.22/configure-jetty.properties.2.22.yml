@@ -1,0 +1,51 @@
+---
+# New Method, instead of wholesale overwrite, just update the properties we want to
+
+
+- name: Enable SSL
+  lineinfile:
+    path: "{{ paxata_home }}/config/jetty.properties"
+    regexp: '^[#]?px.use.ssl=.*$'
+    line: 'px.use.ssl=true'
+
+- name: Set Cert Alias
+  lineinfile:
+    path: "{{ paxata_home }}/config/jetty.properties"
+    regexp: '^[#]?px.ssl.cert.alias=.*$'
+    line: 'px.ssl.cert.alias=server'
+
+- name: Set Keystore Location
+  lineinfile:
+    path: "{{ paxata_home }}/config/jetty.properties"
+    regexp: '^[#]?px.ssl.keystore=.*$'
+    line: 'px.ssl.keystore=/usr/local/paxata/server/certs/star_paxatadev_com.jks'
+
+- name: Set Truststore Location
+  lineinfile:
+    path: "{{ paxata_home }}/config/jetty.properties"
+    regexp: '^[#]?px.ssl.truststore=.*$'
+    line: 'px.ssl.truststore=/usr/local/paxata/server/certs/star_paxatadev_com.jks'
+
+- name: Set Exclude unsecure SSL
+  lineinfile:
+    path: "{{ paxata_home }}/config/jetty.properties"
+    regexp: '^[#]?px.ssl.exclude.protocols=.*$'
+    line: 'px.ssl.exclude.protocols=SSLv3'
+
+- name: Set supported SSL
+  lineinfile:
+    path: "{{ paxata_home }}/config/jetty.properties"
+    regexp: '^[#]?px.ssl.include.ciphers=.*$'
+    line: 'px.ssl.include.ciphers=TLS_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,TLS_EMPTY_RENEGOTIATION_INFO_SCSV'
+
+- name: Set keystore password
+  lineinfile:
+    path: "{{ paxata_home }}/config/jetty.properties"
+    regexp: '^[#]?px.ssl.keystore.password=.*$'
+    line: 'px.ssl.keystore.password=OBF:1lfg1i9a1mme1ri71z0f1ri71mig1i6o1lc2'
+
+- name: Set truststore password
+  lineinfile:
+    path: "{{ paxata_home }}/config/jetty.properties"
+    regexp: '^[#]?px.ssl.truststore.password=.*$'
+    line: 'px.ssl.keystore.truststore=OBF:1lfg1i9a1mme1ri71z0f1ri71mig1i6o1lc2'

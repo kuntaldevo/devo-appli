@@ -1,0 +1,6 @@
+---
+
+- name: Remove existing Cloud-Init
+  yum:
+    name: cloud-init
+    state: absent

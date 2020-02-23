@@ -1,0 +1,7 @@
+---
+
+- name: Allow Reverse Proxy to connect to proper ports
+  import_tasks: configure-ports.yml
+
+- name: Update the nginx.service file to add a wait for
+  import_tasks: wait-for-spark.yml

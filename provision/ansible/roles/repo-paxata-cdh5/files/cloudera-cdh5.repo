@@ -1,0 +1,8 @@
+[paxata-s3-cdh5.7]
+name=paxata-s3-cdh5.7
+baseurl=http://paxata-deployment.s3-website-us-west-2.amazonaws.com/repos/cloudera-cdh5.7.4/
+gpgcheck=0
+priority=1
+s3_enabled=1
+key_id=AKIAJQEAL7FJ7ISD6B2A
+secret_key=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

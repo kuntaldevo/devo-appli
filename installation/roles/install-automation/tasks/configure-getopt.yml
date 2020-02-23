@@ -1,0 +1,8 @@
+---
+
+
+- name:  Set the client ID
+  lineinfile:
+    path: ~/.bash_profile
+    line: 'export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"'
+    create: yes

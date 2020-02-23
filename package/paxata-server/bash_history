@@ -1,0 +1,4 @@
+cd /usr/local/paxata/server/config/
+sudo service paxata-server stop ; sudo rm -rf /var/log/paxata/*.* ; sudo service paxata-server start ; tailf /var/log/paxata/frontend.log
+sudo tailf -1000 /var/log/paxata/frontend.log
+sudo service paxata-server status

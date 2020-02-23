@@ -1,0 +1,8 @@
+
+
+px.library.storage.fs.type=simple
+px.library.storage.fs.distribution=cdh4
+px.library.storage.fs.rootDirectory=/user/datalibrary/wa/paxata
+px.library.storage.fs.fs=hdfs://wa-nn1.paxatadev.com:8020
+px.library.storage.fs.user=datalibrary
+px.library.storage.fs.resources=/etc/hadoop/conf/hdfs-site.xml:/etc/hadoop/conf/core-site.xml

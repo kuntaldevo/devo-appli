@@ -1,0 +1,16 @@
+---
+
+# Install libselinux-python support so we can add the cloudera repo
+- name: Install libselinux-python for Paxata Repos
+  yum: name=libselinux-python state=present
+
+# tasks file for roles/paxata.application-repos
+- name: Add Public Nexus repo
+  template:
+    src: "{{ item }}.repo.j2"
+    dest: "/etc/yum.repos.d/{{ item }}.repo"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - nexus-repo

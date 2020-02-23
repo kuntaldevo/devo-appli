@@ -1,0 +1,16 @@
+---
+
+- name: Install C
+  yum:
+    name:  gcc-c++
+    state: latest
+
+- name: Install C++
+  yum:
+    name:  gcc-c++
+    state: latest
+
+- name: Install Python Regex libs 'pcre'
+  yum:
+    name:  pcre
+    state: latest

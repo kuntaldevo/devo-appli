@@ -1,0 +1,7 @@
+---
+
+- name: Install Paxata RPM
+  yum:
+    name: "{{pax_server_ver}}"
+    disablerepo: "*"
+    enablerepo: "paxata-repo"

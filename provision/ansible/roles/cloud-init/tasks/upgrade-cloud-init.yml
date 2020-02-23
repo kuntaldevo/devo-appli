@@ -1,0 +1,23 @@
+---
+
+- name: Download Cloud-Init
+  get_url:
+    url: https://launchpad.net/cloud-init/trunk/{{cloud_init_version}}/+download/{{archive_name}}.tar.gz
+    dest: /tmp/cloud-init.tar.gz
+    mode: 0440
+
+- name: unzip cloud-init
+  unarchive:
+    src: /tmp/cloud-init.tar.gz
+    dest: "/tmp"
+    remote_src: yes
+
+- name: run Python build
+  command: python setup.py build
+  args:
+    chdir: /tmp/{{archive_name}}
+
+- name: run Python build
+  command: python setup.py install --init-system sysvinit
+  args:
+    chdir: /tmp/{{archive_name}}

@@ -1,0 +1,11 @@
+
+px.temp.storage.fs.type=local
+px.temp.storage.fs.rootDirectory=/usr/local/paxata/server/paxata/tmp
+px.temp.storage.fs.distribution=cdh5
+
+# Values: local, simple
+px.library.storage.fs.type=local
+px.library.storage.fs.distribution=cdh5
+
+# This is folder relative to s3 bucket and has to exist, typically paxata may not have permission to create these folders under the bucket
+px.library.storage.fs.rootDirectory=/library

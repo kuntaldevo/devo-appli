@@ -1,0 +1,7 @@
+---
+
+- name: Overwrite the existing Cloud Config
+  copy:
+    src: cloud.cfg.{{cloud_init_version}}
+    dest: /etc/cloud/cloud.cfg
+    backup: true

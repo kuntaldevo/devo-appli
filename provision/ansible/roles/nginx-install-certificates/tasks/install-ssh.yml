@@ -1,0 +1,86 @@
+---
+
+- name: Create a tmp sub dir to make cleanup easy
+  file:
+    path: /tmp/secrets
+    state: directory
+    mode: 0755
+
+- name: Get Secret Keyfile from Secrets
+  aws_s3:
+    bucket: paxata-secrets
+    object: digicert-secret
+    dest: /tmp/secrets/digicert-secret
+    mode: get
+
+- name: Get the SSL Keys from the Private Github Vault
+  git:
+    repo: 'git@git-ansible-repo:Paxata/ansible.git'
+    dest: /tmp/secrets/git/
+    depth: 1
+    accept_hostkey: yes
+
+- name: Decrypt the Dev SSL Private Key
+  command: ansible-vault decrypt --vault-password-file /tmp/secrets/digicert-secret /tmp/secrets/git/vault/certs/digicert/certs/digicert_star_paxatadev_com.key
+
+- name: Decrypt the Prod SSL Private Key
+  command: ansible-vault decrypt --vault-password-file /tmp/secrets/digicert-secret /tmp/secrets/git/vault/certs/digicert/certs/digicert_star_paxata_com.key
+
+- name: Copy the dev SSL Key to nginx
+  copy:
+    src: /tmp/secrets/git/vault/certs/digicert/certs/digicert_star_paxatadev_com.key
+    dest: /etc/nginx/star.paxatadev.com.key
+    remote_src: yes
+    backup: true
+
+- name: Copy the Production SSL Key to nginx
+  copy:
+    src: /tmp/secrets/git/vault/certs/digicert/certs/digicert_star_paxata_com.key
+    dest: /etc/nginx/star.paxata.com.key
+    remote_src: yes
+    backup: true
+
+- name: Append a chain to dev cert
+  shell: cat /tmp/secrets/git/vault/certs/digicert/certs/DigiCertCA.crt >> /tmp/secrets/git/vault/certs/digicert/certs/digicert_star_paxatadev_com.crt
+
+- name: Append a chain to dev cert
+  shell: cat /tmp/secrets/git/vault/certs/digicert/certs/DigiCertGlobalRootCA.crt >> /tmp/secrets/git/vault/certs/digicert/certs/digicert_star_paxatadev_com.crt
+
+- name: Append a chain to prod cert
+  shell: cat /tmp/secrets/git/vault/certs/digicert/certs/DigiCertCA.crt >> /tmp/secrets/git/vault/certs/digicert/certs/digicert_star_paxata_com.crt
+
+- name: Append a chain to prod cert
+  shell: cat /tmp/secrets/git/vault/certs/digicert/certs/DigiCertGlobalRootCA.crt >> /tmp/secrets/git/vault/certs/digicert/certs/digicert_star_paxata_com.crt
+
+- name: Copy the dev SSL Cert to nginx
+  copy:
+    src: /tmp/secrets/git/vault/certs/digicert/certs/digicert_star_paxatadev_com.crt
+    dest: /etc/nginx/star.paxatadev.com.crt
+    remote_src: yes
+    backup: true
+
+- name: Copy the Production SSL Cert to nginx
+  copy:
+    src: /tmp/secrets/git/vault/certs/digicert/certs/digicert_star_paxata_com.crt
+    dest: /etc/nginx/star.paxata.com.crt
+    remote_src: yes
+    backup: true
+
+- name: Get Paxata Ninja Key from S3
+  aws_s3:
+    bucket: paxata-secrets
+    object: digicert_star_paxata_ninja.crt
+    dest: /etc/nginx/star.paxata.ninja.crt
+    mode: get
+
+- name: Get Paxata Ninja Cert from S3
+  aws_s3:
+    bucket: paxata-secrets
+    object: digicert_star_paxata_ninja.key
+    dest: /etc/nginx/star.paxata.ninja.key
+    mode: get
+
+- name: Delete the secrets directory
+  file:
+    path: /tmp/secrets
+    state: absent

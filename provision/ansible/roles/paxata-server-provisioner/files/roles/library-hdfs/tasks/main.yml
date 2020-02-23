@@ -1,0 +1,4 @@
+---
+
+- name: Configure an HDFS Library
+  import_tasks: configure-library-hdfs.yml

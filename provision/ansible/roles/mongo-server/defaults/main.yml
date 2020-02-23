@@ -1,0 +1,10 @@
+---
+
+mongodb_major_version: 3
+mongodb_minor_version: 6
+mongodb_revision_version: 17
+
+mongodb_short_version: "{{mongodb_major_version}}.{{mongodb_minor_version}}"
+mongodb_version: "{{mongodb_major_version}}.{{mongodb_minor_version}}.{{mongodb_revision_version}}"
+
+mongodb_conf_port: 27017

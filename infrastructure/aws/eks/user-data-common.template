@@ -1,0 +1,38 @@
+#!/bin/bash
+set -o xtrace
+
+### BEGIN COMMON USER DATA
+
+#### Set display clock to Pacific Time
+#https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html#change_time_zone
+CLOCK_FILE="/etc/sysconfig/clock"
+TZ_FILE_PATH="/usr/share/zoneinfo/"
+TIMEZONE="America/Los_Angeles"
+OLD_TEXT='ZONE="UTC"'
+NEW_TEXT="ZONE=\"$${TIMEZONE}\""
+#Use Comma to delimit SED to avoid conflicts with slash
+sudo sed -i "s,$${OLD_TEXT},$${NEW_TEXT},g" $${CLOCK_FILE}
+
+sudo ln -sf "$${TZ_FILE_PATH}$${TIMEZONE}" /etc/localtime
+
+# Docs say to restart the node for
+sudo systemctl restart chronyd.service
+######
+
+# setting max open file limit
+cat > /etc/sysctl.d/99-file-max.conf <<LIMIT
+fs.file-max=100240
+LIMIT
+cat > /etc/security/limits.d/99-file-max.conf <<LIMIT
+spark soft nofile 100240
+spark hard nofile 100240
+paxata soft nofile 100240
+paxata hard nofile 100240
+root soft nofile 100240
+root hard nofile 100240
+LIMIT
+# apply new limit
+sysctl --system
+# end open file limit
+
+### END COMMON USER DATA

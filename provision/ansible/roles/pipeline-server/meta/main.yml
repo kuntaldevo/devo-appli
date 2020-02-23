@@ -1,0 +1,12 @@
+---
+dependencies:
+  - { role: provider-os-specific }
+
+  - { role: install-bind-utils }
+  - { role: install-openjdk-8 }
+  - { role: ssh-private-vpc }
+
+  - { role: host-name-provisioner }
+  - { role: mount-cache-provisioner }
+  - { role: pipeline-server-provisioner }
+  - { role: apm-instana }

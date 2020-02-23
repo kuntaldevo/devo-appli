@@ -1,0 +1,9 @@
+---
+
+- name: Copy the nginx config
+  copy:
+    src: nginx.conf
+    dest: "{{nginx_home}}/nginx.conf"
+    backup: yes
+
+###TODO add the Favicon to /usr/local/openresty/nginx/html/

@@ -1,0 +1,25 @@
+
+
+
+nameReference:
+
+
+# This tells Kustomize that In Types of PaxInstallation, the folowing path, that value is referring to a 'kind' of Secret
+# Kustomize will update the secret name in the path to the new name automatically
+- kind: Secret
+  fieldSpecs:
+  - path: spec/pesKeySecretName
+    kind: PaxInstallation
+
+# This tells Kustomize that In Types of PaxInstallation, the folowing path, that value is referring to a 'kind' of Secret
+# Kustomize will update the secret name in the path to the new name automatically
+- kind: Secret
+  fieldSpecs:
+  - path: spec/libraryStorage/coreSiteSecretName
+    kind: PaxInstallation
+
+varReference:
+# This tells customize that the vars are allowed to replace this path as well.
+- path: spec/paxserver/applicationProperties/px.pipeline.url
+- path: spec/paxserver/applicationProperties/guardrail.pipeline.url
+  kind: PaxInstallation

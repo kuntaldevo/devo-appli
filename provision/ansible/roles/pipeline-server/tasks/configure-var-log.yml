@@ -1,0 +1,7 @@
+
+- name: Create Link for Pipeline Logs
+  file:
+    src: "/usr/local/paxata/pipeline/logs"
+    dest: "/var/log/pipeline"
+    state: link
+    mode: 0777

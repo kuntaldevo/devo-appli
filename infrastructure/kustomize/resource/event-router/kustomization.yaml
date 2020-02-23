@@ -1,0 +1,12 @@
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+# URLs Not yet supported;  - raw.githubusercontent.com/heptiolabs/eventrouter/master/yaml/eventrouter.yaml
+- eventrouter.yaml
+# Only run the deployment pod on a general server
+patchesStrategicMerge:
+- add-node-selector.yaml
+
+#TODO Patch the YAML to set an explicit version of the event router

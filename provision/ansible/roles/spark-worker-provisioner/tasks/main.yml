@@ -1,0 +1,27 @@
+---
+
+- name: Upload the shell script for cloud cfg
+  template:
+    src: "instance-provisioner.sh"
+    dest: /var/lib/cloud/scripts/per-instance/{{provisioner_name}}.sh
+    mode: 0744
+
+- name: Creates directory for files
+  file:
+    path: /var/lib/cloud/scripts/per-instance/{{provisioner_name}}
+    state: directory
+
+- name: Upload the main playbook
+  copy:
+    src: "{{provisioner_name}}-playbook.yml"
+    dest: /var/lib/cloud/scripts/per-instance/{{provisioner_name}}/{{provisioner_name}}-playbook.yml
+    mode: 0644
+    backup: true
+
+# Note: No slash for recursive copy
+- name: Install the Roles
+  copy:
+    src: roles
+    dest: /var/lib/cloud/scripts/per-instance/{{provisioner_name}}
+    mode: 0744
+    backup: true

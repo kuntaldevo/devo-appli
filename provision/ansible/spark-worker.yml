@@ -1,0 +1,11 @@
+---
+# This Ansible playbook triggers the role that we desire
+
+- hosts: all
+  remote_user: centos
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Create Spark Worker AMI
+      include_role:
+        name: spark-worker-2

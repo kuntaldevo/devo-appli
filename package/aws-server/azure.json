@@ -1,0 +1,57 @@
+{
+  "variables": {
+    "client_id": "{{env `AZURE_CLIENT_ID`}}",
+    "client_secret": "{{env `AZURE_CLIENT_SECRET`}}",
+    "subscription_id": "{{env `AZURE_SUBSCRIPTION_ID`}}",
+    "region-id": "{{env `REGION_ID`}}",
+    "resource-group-id": "{{env `RESOURCE_GROUP_ID`}}",
+    "project-root": "{{env `PROJECT_ROOT`}}",
+    "scm-branch": "{{env `SCM_BRANCH`}}",
+
+    "create-user": "{{env `SCM_USER`}}",
+    "scm-id": "{{env `SCM_SHA`}}",
+    "scm-branch": "{{env `SCM_BRANCH`}}",
+
+    "create-user": "{{env `SCM_USER`}}"
+  },
+  "builders": [
+    {
+      "type": "azure-arm",
+      "location": "{{user `region-id`}}",
+
+      "client_id": "{{user `client_id`}}",
+      "client_secret": "{{user `client_secret`}}",
+      "subscription_id": "{{user `subscription_id`}}",
+
+      "managed_image_resource_group_name": "{{user `resource-group-id`}}",
+      "managed_image_name": "mongo-server",
+
+      "os_type": "Linux",
+      "custom_managed_image_resource_group_name": "{{user `resource-group-id`}}",
+      "custom_managed_image_name": "server-base-6",
+
+      "azure_tags": {
+        "Name": "Building Mongo Server",
+        "role": "mongo-server",
+        "scm-id": "{{user `scm-id`}}",
+        "scm-branch": "{{user `scm-branch`}}",
+        "create-timestamp": "{{isotime}}",
+        "create-user": "{{user `create-user`}}"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible-local",
+      "playbook_dir": "{{user `project-root`}}/provision/ansible",
+      "playbook_file": "{{user `project-root`}}/provision/ansible/mongo-server.yml"
+    },
+    {
+    "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'",
+    "inline": [
+      "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
+    ],
+    "inline_shebang": "/bin/sh -x",
+    "type": "shell"
+  }]
+}

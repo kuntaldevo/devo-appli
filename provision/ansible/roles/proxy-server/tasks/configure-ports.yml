@@ -1,0 +1,14 @@
+---
+
+
+- name: Allow the Reverse Proxy to bind to 4040
+  command: semanage port -a -t http_port_t -p tcp 4040
+
+- name: Allow the Reverse Proxy to bind to 8090
+  command: semanage port -a -t http_port_t -p tcp 8090
+
+- name: Allow the Reverse Proxy to bind to 8081, This is already bound to another process so we can modify though
+  command: semanage port -m -t http_port_t -p tcp 8081
+
+- name: Allow the Reverse Proxy to punch out to the private VPN
+  command: setsebool -P httpd_can_network_connect 1

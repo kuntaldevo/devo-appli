@@ -1,0 +1,7 @@
+---
+
+# Don't actually start the spark master, as in some cases it will not due to network config or missing dependencies
+- name: Enable the spark master to start on boot
+  service:
+    name: spark-master
+    enabled: true

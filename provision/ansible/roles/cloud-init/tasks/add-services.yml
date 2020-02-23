@@ -1,0 +1,12 @@
+
+  - name: Add Service cloud-config
+    shell: chkconfig --add cloud-config
+
+  - name: Add Service cloud-final
+    shell: chkconfig --add cloud-final
+
+  - name: Add Service cloud-init
+    shell: chkconfig --add cloud-init
+
+  - name: Add Service cloud-init-local
+    shell: chkconfig --add cloud-init-local

@@ -1,0 +1,54 @@
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+configurations:
+- varconfig.yaml
+
+resources:
+- mandatory.yaml
+- service-l7.yaml
+#  - raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.25.1/deploy/static/mandatory.yaml
+#  - raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.25.1/deploy/static/provider/aws/service-l7.yaml
+###NOTE: Not used because we can't patch a patch so we just use our patch
+#  - raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.25.1/deploy/static/provider/aws/patch-configmap-l7.yaml
+images:
+#Update to 0.25.1 because the 0.25.1 tag does not have that version
+- name: "quay.io/kubernetes-ingress-controller/nginx-ingress-controller"
+  newTag: 0.26.1
+patchesStrategicMerge:
+- patch-node-selector.yaml
+- patch-configmap.yaml
+patches:
+  # Patch the SERVICE
+#Re: aws-load-balancer-internal, I might foget but maybe AWS has fixed this issue and I can specif false in the prod, using a replacement var instead.
+  # Otherwise I might need to move this config under the regional configurations
+- patch: |-
+    - op: add
+      path: /metadata/annotations/service.beta.kubernetes.io~1aws-load-balancer-proxy-protocol
+      value: "*"
+    - op: add
+      path: /metadata/annotations/service.beta.kubernetes.io~1aws-load-balancer-backend-protocol
+      value: "tcp"
+    - op: add
+      path: /metadata/annotations/service.beta.kubernetes.io~1aws-load-balancer-connection-idle-timeout
+      value: "3600"
+    - op: add
+      path: /metadata/annotations/service.beta.kubernetes.io~1aws-load-balancer-cross-zone-load-balancing-enabled
+      value: "true"
+    - op: add
+      path: /metadata/annotations/service.beta.kubernetes.io~1aws-load-balancer-ssl-negotiation-policy
+      value: "ELBSecurityPolicy-TLS-1-2-2017-01"
+    - op: add
+      path: /metadata/annotations/service.beta.kubernetes.io~1aws-load-balancer-ssl-ports
+      value: "443"
+    - op: add
+      path: /metadata/annotations/service.beta.kubernetes.io~1aws-load-balancer-ssl-cert
+      value: $(AWS-TLS-CERTIFICATE-ARN)
+    - op: add
+      path: /metadata/annotations/service.beta.kubernetes.io~1aws-load-balancer-internal
+      value: "$(INTERNAL-ELB)"
+  target:
+    kind: Service
+    name: ingress-nginx
+    namespace: ingress-nginx

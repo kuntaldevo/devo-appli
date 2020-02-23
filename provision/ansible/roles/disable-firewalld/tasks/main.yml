@@ -1,0 +1,5 @@
+---
+- name: Disable the FirewallD serivce to prevent it from starting
+  service:
+    name: firewalld
+    enabled: no

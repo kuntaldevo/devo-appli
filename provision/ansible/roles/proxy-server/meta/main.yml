@@ -1,0 +1,10 @@
+---
+dependencies:
+  - { role: provider-os-specific }
+
+  - { role: repo-centos-release-scl }
+  - { role: ssh-private-vpc }
+  - { role: proxy-server-nginx-config }
+  - { role: install-paxata-certificates }
+  - { role: host-name-provisioner }
+  - { role: proxy-ssl-provisioner }

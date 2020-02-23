@@ -1,0 +1,18 @@
+---
+
+# Create and properly configure a Centos Admin user
+- name: Make sure there is a Centos user
+  user:
+    name: centos
+    comment: "Centos Admin"
+    groups: adm, wheel
+    shell: /bin/bash
+    createhome: yes
+
+- name: Allow 'wheel' group to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    validate: visudo -cf %s

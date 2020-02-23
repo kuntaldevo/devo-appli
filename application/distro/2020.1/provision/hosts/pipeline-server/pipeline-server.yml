@@ -1,0 +1,25 @@
+---
+
+#pipeline_version: paxata-pipeline-db2.2.0
+
+#java_rpm: jdk-8u112-linux-x64.rpm
+
+# Feature, Source
+# If the source will come from a URL that will be provided set feature_source to url
+#url: requires the fact rpm_url which is the URL to directly download the rpm
+
+#feature_source: url
+#rpm_url: http://tc.paxatadev.com/repository/download/id20182_Assemble_Pipeline/284326:id/pipeline/dist/rpm/paxata-pipeline-db2.2.0-2018.2.pr.2018.2_jxi_PIPE~2371-20180710060434.noarch.rpm
+
+
+#rpm_url:  http://nexus.paxatadev.com:8081/nexus/content/groups/public/paxata/paxata-pipeline-db2.2.0/2.23-SNAPSHOT/paxata-pipeline-db2.2.0-2.23-20180321.030142-9.rpm
+#rpm_url:  http://tc.paxatadev.com/repository/download/v2_23_Pipeline_Snapshot/199060:id/rpm/target/rpm/paxata-pipeline-db2.2.0/RPMS/noarch/paxata-pipeline-db2.2.0-2.23-SNAPSHOT20180316133106.noarch.rpm
+
+
+### Using the of the pax_server_ver use the Team City repo ( using the TC API )
+feature_source: teamcity
+build_id: id20201_Assemble_Pipeline
+tag_id: 2020.1_GA
+
+# Override the locator path so we get the correct distro
+artifact_path: "pipeline/dist/rpm/?locator=pattern:*db2.4.0*.rpm"

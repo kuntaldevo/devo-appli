@@ -1,0 +1,25 @@
+
+- name: Validate
+  assert:
+      that:
+        - "rpm_url != '' "
+      msg: Please define rpm_url in the group vars
+
+###
+# Dealing with Team City or other URL
+###
+- name: Download {{rpm_url}}
+  get_url:
+    url: "{{rpm_url}}"
+    dest: /tmp/to-install.rpm
+    mode: 0440
+    url_username: devops
+    url_password: l6hKW1CzRULbuLQQgEIs
+  when: rpm_url != ''
+
+
+- name: Install RPM File
+  yum:
+    name:  /tmp/to-install.rpm
+    state: present
+  when: rpm_url != ''

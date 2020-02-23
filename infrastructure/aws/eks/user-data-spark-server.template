@@ -1,0 +1,26 @@
+
+### NOTE: Be sure to have the "Common" User data pre-pended
+
+###  Make Sure Raid has already been setup
+#raid script sets device_name
+
+
+# Move Docker to Ephemeral Drive
+if [[ -b "$device_name" ]]; then
+  echo "Found $device_name, mounting and moving docker"
+  yum -y install rsync
+  mv /var/lib/docker /var/lib/docker.orig
+  mkdir -p /var/lib/docker
+  mount $device_name /var/lib/docker
+  rsync -a /var/lib/docker.orig/ /var/lib/docker
+  echo "Completed moving docker"
+fi
+
+# End Docker
+
+chmod 777 /mnt/cache
+
+/etc/eks/bootstrap.sh '${cluster-name}' \
+    --kubelet-extra-args \
+        "--root-dir=\"/mnt/cache\" --node-labels=\"paxata.com/role-id\"=spark-server,\"kubernetes.io/role\"=spark-server"
+###TODO Put taint Here for spark servers when it is supported

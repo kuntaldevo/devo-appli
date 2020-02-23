@@ -1,0 +1,31 @@
+---
+
+
+- name: Add Kerberos auth HDFS Block to px.properties
+  blockinfile:
+    path: "{{ paxata_home }}/config/px.properties"
+    marker: "# {mark} HDFS"
+    block: |
+      px.library.storage.fs.type=keytab
+      px.library.storage.fs.storage.fs.realm=PAXATADEV.COM
+      px.library.storage.fs.keytab.file=/home/paxata/cdh5_7_kerb/paxata.keytab
+      px.library.storage.fs.kdc.hostname=kdc1.paxatadev.com
+      px.library.storage.fs.krb5.conf.file=/home/paxata/cdh5_7_kerb/krb5.conf
+      px.library.storage.fs.distribution=cdh5
+      px.library.storage.fs.rootDirectory=/user/datalibrary/performance-sbx/new2_23
+      px.library.storage.fs.user=paxata@PAXATADEV.COM
+      px.library.storage.fs.resources=/home/paxata/cdh5_7_kerb/hdfs-site.xml:/home/paxata/cdh5_7_kerb/core-site.xml
+
+- name: Upload HDFS Properties
+  copy:
+    src: hdfs/{{item}}
+    dest: /home/paxata/cdh5_7_kerb
+    owner: paxata
+    group: paxata
+    mode: 0644
+    backup: true
+with_items:
+    - core-site.xml
+    - hdfs-site.xml
+    - krb5.conf
+    - paxata.keytab

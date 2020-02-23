@@ -1,0 +1,14 @@
+{
+  "public-domain": "${public-domain}",
+  "server-role": "${server-role}",
+  "env-key": "${env-key}",
+  "region-id": "${region-id}",
+  "host-name": "${host-name}",
+  "feature-library": "${feature-library}",
+  "feature-ddl": "${feature-ddl}",
+  "hdfs-host": "${hdfs-host}.private.vpc'",
+  "volume-labels": ${volume-labels},
+
+  "null": "null"
+
+}

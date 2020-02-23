@@ -1,0 +1,5 @@
+cd /usr/lib/spark/conf
+sudo rm -rf /var/log/spark/*.*
+tailf -1000 /var/log/spark/spark-root-org.apache.spark.deploy.worker.Worker-1-spark-worker-0.private.vpc.out
+sudo service spark-worker status
+journalctl -ex

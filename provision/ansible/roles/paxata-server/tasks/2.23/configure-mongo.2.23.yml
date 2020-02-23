@@ -1,0 +1,11 @@
+---
+# New Method, instead of wholesale overwrite, just update the properties we want to
+- name: Configure Mongo
+  blockinfile:
+    path: "{{ paxata_home }}/config/px.properties"
+    marker: "# {mark} Mongo"
+    block: |
+      mongo.hosts=mongo-server-0:27017
+      mongo.database=paxata
+      mongo.authentication.cr.username=paxatadmin
+      mongo.authentication.cr.password=password

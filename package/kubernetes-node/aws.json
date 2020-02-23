@@ -1,0 +1,72 @@
+{
+  "variables": {
+    "scm-id": "{{env `SCM_SHA`}}",
+    "scm-branch": "{{env `SCM_BRANCH`}}",
+    "create-user": "{{env `SCM_USER`}}",
+    "project-root": "{{env `PROJECT_ROOT`}}",
+    "name": "Kubernetes Node",
+    "role": "kubernetes-node",
+    "base-source-ami": "{{env `BASE_SERVER_AMI`}}",
+    "host-var-path":"{{env `HOST_VAR_PATH`}}",
+    "group-var-path":"{{env `GROUP_VAR_PATH`}}",
+    "region-id": "{{env `REGION_ID`}}",
+    "distro-id": "{{env `DISTRO_ID`}}",
+    "vpc-id": "{{env `VPC_ID`}}",
+    "subnet-id": "{{env `SUBNET_ID`}}"
+  },
+  "builders": [{
+    "vpc_id": "{{user `vpc-id`}}",
+    "subnet_id": "{{user `subnet-id`}}",
+    "type": "amazon-ebs",
+    "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "amazon-eks-node-1.12-*",
+          "root-device-type": "ebs"
+        },
+        "owners": ["602401143452"],
+        "most_recent": true
+    },
+    "region":  "{{user `region-id`}}",
+    "instance_type": "t2.medium",
+    "ssh_username": "ec2-user",
+    "ami_name": "{{user `role`}} {{isotime | clean_ami_name}}",
+    "iam_instance_profile": "packer-build",
+    "tags": {
+      "Name": "{{user `name`}} {{user `distro-id`}}",
+      "distro-id": "{{user `distro-id`}}",
+      "role": "{{user `role`}}",
+      "scm-id": "{{user `scm-id`}}",
+      "scm-branch": "{{user `scm-branch`}}",
+      "create-timestamp": "{{isotime}}",
+      "create-user": "{{user `create-user`}}"
+    },
+    "run_tags": {
+      "Name": "Packer {{user `name`}} {{user `distro-id`}}",
+      "distro-id": "{{user `distro-id`}}",
+      "role": "{{user `role`}}",
+      "scm-id": "{{user `scm-id`}}",
+      "scm-branch": "{{user `scm-branch`}}",
+      "create-timestamp": "{{isotime}}",
+      "create-user": "{{user `create-user`}}"
+    }
+    }],
+    "provisioners": [
+      {
+        "type": "shell",
+        "inline": ["sudo easy_install pip"]
+      },
+      {
+        "type": "shell",
+        "inline": ["sudo pip install ansible"]
+      },
+      {
+        "type": "ansible-local",
+        "playbook_dir": "{{user `project-root`}}/provision/ansible",
+        "playbook_file": "{{user `project-root`}}/provision/ansible/{{user `role`}}.yml",
+        "host_vars": "{{user `host-var-path`}}",
+        "group_vars": "{{user `group-var-path`}}",
+        "inventory_file": "inventory-file.yml"
+      }
+    ]
+  }

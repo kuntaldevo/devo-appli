@@ -1,0 +1,42 @@
+configurations:
+- varconfig.yaml
+
+resources:
+  - region-config-map.yaml
+
+vars:
+  - name: AWS-TLS-CERTIFICATE-ARN
+    objref:
+      kind: ConfigMap
+      name: region-config
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.AWS-TLS-CERTIFICATE-ARN
+  - name: DOMAIN-FILTER
+    objref:
+      kind: ConfigMap
+      name: region-config
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.DNS-DOMAIN-SUFFIX
+  - name: DNS-DOMAIN-SUFFIX
+    objref:
+      kind: ConfigMap
+      name: region-config
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.DNS-DOMAIN-SUFFIX
+  - name: AWS-ZONE-TYPE
+    objref:
+      kind: ConfigMap
+      name: region-config
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.AWS-ZONE-TYPE
+  - name: INTERNAL-ELB
+    objref:
+      kind: ConfigMap
+      name: region-config
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.INTERNAL-ELB

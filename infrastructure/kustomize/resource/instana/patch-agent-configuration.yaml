@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: instana-configuration
+  namespace: instana-agent
+data:
+  configuration.yaml: |
+    com.instana.plugin.javatrace:
+      instrumentation:
+        enabled: true
+        opentracing: false
+        sdk:
+          packages:
+            - 'com.paxata.frontend.trace.instana'
+    com.instana.plugin.statsd:
+        enabled: true
+        ports:
+          udp: 8125
+          mgmt: 8126
+        flush-interval: 10 # seconds

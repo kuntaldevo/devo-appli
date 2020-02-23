@@ -1,0 +1,28 @@
+---
+
+- name: Upload the shell script for cloud cfg
+  copy:
+    src: raid-cache-provisioner.sh
+    dest: /var/lib/cloud/scripts/per-instance/m-raid-cache-provisioner.sh
+    mode: 0744
+    backup: true
+
+- name: Creates directory for files
+  file:
+    path: /var/lib/cloud/scripts/per-instance/raid-cache-provisioner
+    state: directory
+
+- name: Upload the main playbook
+  copy:
+    src: raid-cache-provisioner-playbook.yml
+    dest: /var/lib/cloud/scripts/per-instance/raid-cache-provisioner/raid-cache-provisioner-playbook.yml
+    mode: 0644
+    backup: true
+
+# Note: No slash for recursive copy
+- name: Install the Roles
+  copy:
+    src: roles
+    dest: /var/lib/cloud/scripts/per-instance/raid-cache-provisioner
+    mode: 0744
+    backup: true

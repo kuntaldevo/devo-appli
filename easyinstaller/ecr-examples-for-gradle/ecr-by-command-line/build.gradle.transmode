@@ -1,0 +1,21 @@
+
+
+apply plugin: 'docker'
+
+buildscript {
+    repositories { jcenter() }
+    dependencies {
+        classpath 'se.transmode.gradle:gradle-docker:1.2'
+    }
+}
+
+docker {
+  useApi true
+  hostUrl 'https://011447054295.dkr.ecr.us-west-2.amazonaws.com/devops-application'
+}
+
+// Use task types
+task buildImage(type: Docker) {
+  dockerfile = file("Dockerfile")
+  tagVersion = 'latest'
+}

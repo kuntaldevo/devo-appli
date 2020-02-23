@@ -1,0 +1,13 @@
+{
+
+  "server-role": "${server-role}",
+  "env-key": "${env-key}",
+  "region-id": "${region-id}",
+  "host-name": "${host-name-count}",
+  "volume-labels": ${volume-labels},
+  "feature-library": "${feature-library}",
+  "feature-ddl": "${feature-ddl}",
+
+  "null": "null"
+
+}

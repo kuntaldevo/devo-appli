@@ -1,0 +1,10 @@
+# A Configmap of ARNs and whatnot that are specific to this region
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: region-config
+data:
+  AWS-ZONE-TYPE: "private"
+  AWS-TLS-CERTIFICATE-ARN: arn:aws:acm:us-west-2:011447054295:certificate/46c54de2-86ce-47a4-abc8-981bbfe3634f
+  DNS-DOMAIN-SUFFIX: paxata.ninja
+  INTERNAL-ELB: "true"

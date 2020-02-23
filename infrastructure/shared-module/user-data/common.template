@@ -1,0 +1,14 @@
+{
+  "public-domain": "${public-domain}",
+  "server-role": "${server-role}",
+  "env-key": "${env-key}",
+  "region-id": "${region-id}",
+  "host-name": "${host-name}",
+  "volume-labels": ${volume-labels},
+  "feature-ddl": "${feature-ddl}",
+  "instana-api-key": "${instana-api-key}",
+  "feature-library": "${feature-library}",
+  "feature-ddl": "${feature-ddl}",
+  "null": "null"
+
+}

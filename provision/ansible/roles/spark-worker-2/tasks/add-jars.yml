@@ -1,0 +1,28 @@
+---
+
+### For the Direct Dataload Feature the spark worker needs two jars.
+
+### For now I'm just going to make sure they are installed even if the spark worker is not used in a DDL configuration
+
+# The version of hadoop ( 2.7.3 a.t.m. ) is hard linked to AWS SDK 1.7.4
+- name: Download AWS SDK Jar
+  get_url:
+    url: https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk/1.7.4/aws-java-sdk-1.7.4.jar
+    validate_certs: false
+    dest: /usr/local/paxata/spark/jars/aws-java-sdk-1.7.4.jar
+    mode: 0444
+
+# Determine the version of Hadoop packaged with Spark and install the HADOOP-AWS jar
+- name: Get the version of hadoop-common jar
+  shell: ls -A1 hadoop-common*.jar | sed "s/^.*hadoop-common-\([^;]*\).*.jar/\1/"
+  args:
+    chdir: /usr/local/paxata/spark/jars/
+  register: command_out
+
+# Download the
+- name: Download hadoop-aws-{{command_out.stdout}}
+  get_url:
+    url: https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/{{command_out.stdout}}/hadoop-aws-{{command_out.stdout}}.jar
+    validate_certs: false
+    dest: /usr/local/paxata/spark/jars/hadoop-aws-{{command_out.stdout}}.jar
+    mode: 0444

@@ -1,0 +1,9 @@
+---
+# This playbook triggers the role that we desire
+
+- hosts: all
+  remote_user: centos
+  become: yes
+  become_method: sudo
+  roles:
+  - yum-plugin-s3

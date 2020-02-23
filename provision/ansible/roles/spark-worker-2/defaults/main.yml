@@ -1,0 +1,5 @@
+---
+cache_root: "/mnt/cache"
+cache_dir: "/usr/local/paxata/pipeline/cache"
+spark_work: "/usr/lib/spark/work"
+spark_tmp: "/usr/lib/spark/tmp"

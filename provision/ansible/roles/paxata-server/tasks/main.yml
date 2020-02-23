@@ -1,0 +1,46 @@
+---
+
+- name:  Allow Java & Jetty to use priveliged ports
+  import_tasks: allow-java-netbind.yml
+
+- name: Create Service Accounts
+  import_tasks: create-service-accounts.yml
+
+- name: Download and Install Paxata Server
+  import_tasks: install-paxata-server.yml
+
+- name: Configure Paxata Server
+  import_tasks: installation.yml
+
+- name: Install Java Crypto
+  import_tasks: install-java-crypto.yml
+
+- name: Configure Property files
+  import_tasks: configure-px.properties.yml
+
+- name: Configure Mongo Details
+  import_tasks: configure-mongo.yml
+
+- name: Configure Temp Storage Details
+  import_tasks: configure-temp-local.yml
+
+- name: Configure Authentication
+  import_tasks: configure-auth-kerberos.yml
+
+- name: Configure the Library for Default Local Access
+  import_tasks: configure-library-local.yml
+
+- name: Configure Jetty
+  import_tasks: configure-jetty.yml
+
+- name: Add SSL KeyStores
+  import_tasks: install-certificates.yml
+
+- name: Enable the service to start on startup
+  import_tasks: enable-service.yml
+
+- name: Add Sym Links to Var Log
+  import_tasks: configure-var-log.yml
+
+- name: Link the external Cache tmp
+  import_tasks: link-cache.yml

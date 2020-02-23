@@ -1,0 +1,19 @@
+---
+
+- name: Set default Mongo Location
+  lineinfile:
+    path: "{{ paxata_home }}/config/database.properties"
+    regexp: '^[#]?mongo.hosts=.*$'
+    line: 'mongo.hosts=mongo-server-0:27017'
+
+- name: Set default Mongo User
+  lineinfile:
+    path: "{{ paxata_home }}/config/database.properties"
+    regexp: '^[#]?mongo.authentication.cr.username=.*$'
+    line: 'mongo.authentication.cr.username=paxatadmin'
+
+- name: Set default Mongo Password
+  lineinfile:
+    path: "{{ paxata_home }}/config/database.properties"
+    regexp: '^[#]?mongo.authentication.cr.password=.*$'
+    line: 'mongo.authentication.cr.password=password'

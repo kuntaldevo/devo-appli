@@ -1,0 +1,37 @@
+###
+###  This is the default application installation template
+###
+### Changes here will effect ALL Customers
+###
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongo-pes-key
+type: Opaque
+stringData:
+  pes.properties: |-
+    px.encryption.pes.keyseed=paxata123
+
+---
+apiVersion: paxata.com/v1
+kind: PaxInstallation
+metadata:
+  name: pax-installation
+spec:
+  active: true
+  libraryStorage:
+    type: local
+  paxserver:
+    imageName: dtr.paxatadev.com/paxata/release_k8s_paxata-server
+    imageVersion: 2019.2.0.1.2167
+    memoryMB: 2048
+    numCpus: 2
+  pesKeySecretName: mongo-pes-key
+  pipelineProxy:
+    applicationProperties:
+      px_pps_spark_conf_spark_kubernetes_memoryOverheadFactor: "0.95"
+    imageName: dtr.paxatadev.com/paxata/release_pipeline_proxy
+    imageVersion: 2019.2.0.1.2167
+    memoryMB: 2048
+    numCpus: 2

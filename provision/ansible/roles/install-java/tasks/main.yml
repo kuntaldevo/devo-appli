@@ -1,0 +1,21 @@
+- name: Validate
+  assert:
+      that:
+        - "java_rpm != '' "
+      msg: Please define spark_java_rpm in the group vars
+
+- name: Download Java from S3
+  aws_s3:
+    mode: get
+    bucket: "{{ paxata_file_repo_s3 }}"
+    object: /binary/{{ java_rpm }}
+    dest: /tmp/{{ java_rpm }}
+    aws_access_key: "{{pfr_aws_access_key}}"
+    aws_secret_key: "{{pfr_aws_secret_key}}"
+    overwrite: false # Prevent RE-download during testing
+
+
+- name: Install Java
+  yum:
+    name: /tmp/{{java_rpm}}
+    state: present

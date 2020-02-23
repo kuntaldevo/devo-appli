@@ -1,0 +1,13 @@
+
+---
+- hosts: all
+  become: yes
+  tasks:
+
+    - name: Parse the User Data into Facts
+      include_role:
+        name: load-user-data
+
+    - name: Provision this Instance
+      include_role:
+        name: provision-instance

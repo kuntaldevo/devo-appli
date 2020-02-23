@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!-- provision/ansible/roles/library-s3-provisioner/files/roles/library-s3/files/core-site.xml -->
+<!-- This Configuration requires an IAM Policy to 'Assume Role' and have explicit policy allowing access to the S3 bucket-->
+<!-- When proper IAM roles are applied there is no need for the Access Credentials-->
+<configuration>
+      <property>
+          <name>fs.defaultFS</name>
+          <value>fs.defaultFS</value>
+      </property>
+      <property>
+          <name>fs.s3a.aws.credentials.provider</name>
+          <value>com.amazonaws.auth.DefaultAWSCredentialsProviderChain</value>
+       </property>
+       <property>
+          <name>hadoop.security.authentication</name>
+          <value>simple</value>
+        </property>
+        <property>
+          <name>fs.s3a.buffer.dir</name>
+          <value>/usr/local/paxata/server/tmp</value>
+        </property>
+        <property>
+          <name>fs.s3a.impl</name>
+          <value>org.apache.hadoop.fs.s3a.S3AFileSystem</value>
+          <description>The implementation class of the S3A Filesystem</description>
+        </property>
+        <property>
+          <name>fs.s3.enableServerSideEncryption</name>
+          <value>true</value>
+        </property>
+        <property>
+          <name>fs.s3a.fast.upload</name>
+          <value>true</value>
+        </property>
+
+</configuration>

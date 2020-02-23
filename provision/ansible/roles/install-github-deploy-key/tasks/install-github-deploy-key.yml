@@ -1,0 +1,30 @@
+---
+
+- name: Get the Github Private Deploy Key
+  aws_s3:
+    bucket: paxata-secrets
+    object: github-ansbile-deploy-key-private
+    dest: ~/.ssh/github-ansbile-deploy-key-private
+    mode: get
+
+- name: Update Private Key access for SSH
+  file:
+    path: ~/.ssh/github-ansbile-deploy-key-private
+    mode: 0400
+
+- name: Ensure SSH Config file exists
+  copy:
+    content: ""
+    dest: "~/.ssh/config"
+    force: no
+    mode: 0555
+    backup: true
+
+- name: Update the SSH Config
+  blockinfile:
+    path: "~/.ssh/config"
+    marker: "# {mark} Github Deploy Key"
+    block: |
+      Host git-ansible-repo
+           Hostname github.com
+           IdentityFile ~/.ssh/github-ansbile-deploy-key-private

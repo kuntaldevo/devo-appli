@@ -1,0 +1,21 @@
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: perf-prod
+
+resources:
+- portal-pipeline.yaml
+- portal-spark.yaml
+
+configurations:
+- varconfig.yaml
+
+vars:
+- name: CLUSTER-NAME
+  objref:
+    kind: ConfigMap
+    name: source-vars
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.CLUSTER-NAME

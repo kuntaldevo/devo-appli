@@ -1,0 +1,33 @@
+#Valid config options are spark://master:port or yarn-client
+
+spark.home={{ spark_home }}
+
+{% if "aws" == provider_id %}
+
+master.url=spark://spark-master.private.vpc:7077
+
+{% elif "azure" == provider_id %}
+
+master.url=spark://spark-master:7077
+
+{% else %}
+
+{{ "Variable provider_id is not defined or its value is not supported."/0 }}
+
+{% endif %}
+
+##The config variables below are only required for Spark on YARN
+# hadoop.conf=/etc/hadoop/conf
+# yarn.num.executors=5
+# yarn.executor.cores=1
+# spark.yarn.jar=hdfs://paxcdh54yik/user/spark/share/lib/spark-assembly-1.3.0-cdh5.4.8-hadoop2.6.0-cdh5.4.8.jar
+# spark.yarn.queue=spark
+# additional arguments to pass to spark-submit; for example, for security options see http://spark.apache.org/docs/latest/security.html
+# spark-submit.extra.args=
+
+
+# JVM/GC options for spark executors in standalone mode
+spark-standalone.extra.args=-XX:-UseCompressedOops -XX:+AlwaysPreTouch -XX:-OmitStackTraceInFastThrow -XX:MetaspaceSize=192m -XX:MaxMetaspaceSize=256m
+
+# JVM/GC options for spark executors in Yarn-managed cluster
+spark-submit.extra.args=--conf "-XX:-UseCompressedOops -XX:+AlwaysPreTouch -XX:-OmitStackTraceInFastThrow -XX:MetaspaceSize=192m -XX:MaxMetaspaceSize=256m"

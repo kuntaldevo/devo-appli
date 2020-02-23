@@ -1,0 +1,5 @@
+---
+- name: Download packer archive Linux 64 bits
+  get_url:
+    url: https://releases.hashicorp.com/packer/{{ packer_version }}/packer_{{ packer_version }}_linux_amd64.zip
+    dest: /tmp/packer-{{packer_version}}.zip

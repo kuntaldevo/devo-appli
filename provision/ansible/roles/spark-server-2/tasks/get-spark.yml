@@ -1,0 +1,16 @@
+---
+- name: "Get Spark {{ spark_archive }} from S3 repo"
+  aws_s3:
+    mode: get
+    bucket: "{{ paxata_file_repo_s3 }}"
+    object: /files/{{ spark_archive }}
+    dest: /tmp/{{ spark_archive }}
+    aws_access_key: "{{pfr_aws_access_key}}"
+    aws_secret_key: "{{pfr_aws_secret_key}}"
+    overwrite: never # Prevent RE-download during testing
+
+- name: Extract Spark distribution
+  unarchive:
+    src: "/tmp/{{ spark_archive }}"
+    remote_src: yes
+    dest: "/usr/lib"

@@ -1,0 +1,16 @@
+---
+
+- name: Validate
+  assert:
+      that:
+        - "spark_version != '' "
+
+
+- name: Install Spark
+  import_tasks: get-spark.yml
+
+- name: Configure Spark
+  import_tasks: configure-spark.yml
+
+- name: Add Sym Links to Var Log
+  import_tasks: configure-var-log.yml

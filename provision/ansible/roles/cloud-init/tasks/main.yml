@@ -1,0 +1,28 @@
+---
+- name: UnInstall Existing Cloud Init
+  import_tasks: remove-cloud-init.yml
+
+- name: Update to a newer version of cloud init
+  import_tasks: upgrade-cloud-init.yml
+
+- name: Change the cloud init configuration
+  import_tasks: configure-cloud-init.yml
+
+- name: Add the Services
+  import_tasks: add-services.yml
+
+- name: Enable the Services
+  import_tasks: enable-services.yml
+
+- name: Enable Debug to console
+  replace:
+    path: /etc/cloud/cloud.cfg.d/05_logging.cfg
+    regexp: '(WARNING)'
+    replace: 'DEBUG'
+
+
+# Didn't work. instance cache is created every time
+#- name: Cleanup Cloud Config Integration tests
+#  file:
+#    state: absent
+#    path: "/run/cloud-init/"

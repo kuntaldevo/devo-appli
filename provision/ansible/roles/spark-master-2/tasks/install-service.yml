@@ -1,0 +1,9 @@
+---
+- name: Copy spark-master startup script
+  copy:
+    src: spark-master.service
+    dest: /etc/systemd/system/spark-master.service
+    owner: root
+    group: root
+    mode: 0755
+    backup: true

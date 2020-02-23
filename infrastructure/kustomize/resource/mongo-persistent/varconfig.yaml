@@ -1,0 +1,5 @@
+varReference:
+- path: spec/replicas
+  kind: StatefulSet
+- path: spec/awsElasticBlockStore
+  kind: PersistentVolume

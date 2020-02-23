@@ -1,0 +1,28 @@
+
+resources:
+  - clusterRole.yaml
+  - clusterRoleAggregator.yaml
+  - clusterRoleBinding.yaml
+  - clusterRoleBindingAggregator.yaml
+  - configMap.yaml
+  - configMapMetricsAggregator.yaml
+  - deployment.yaml
+  - deploymentMetricsAggregator.yaml
+  - secret.yaml
+  - serviceAccount.yaml
+
+patchesStrategicMerge:
+- patch-configmap.yaml
+- patch-configmap-metrics-aggregator.yaml
+- patch-deployment.yaml
+- patch-deployment-metrics-aggregator.yaml
+- patch-metrics-aggregator-select-general-nodes.yaml
+- patch-secret.yaml
+patchesJson6902:
+# Because there is an existing toleration I need to use this method to append and not overwrite
+- target:
+    group: apps
+    version: v1
+    kind: DaemonSet
+    name: splunk-kubernetes-metrics
+  path: patch-deployment-tolerate-all-nodes.yaml

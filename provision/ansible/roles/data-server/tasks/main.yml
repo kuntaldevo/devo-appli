@@ -1,0 +1,69 @@
+
+
+- name:  Set the client ID
+  lineinfile:
+    path: /usr/local/paxata/server/config/px.properties
+    regexp: '^[#]?px.clientId=.*$'
+    line: 'px.clientId=data-server'
+
+- name: Update px.properties to reference other HQ servers
+  lineinfile:
+    path: "{{ paxata_home }}/config/px.properties"
+    regexp: '^[#]?px.messaging.remote.hosts=.*$'
+    line: 'px.messaging.remote.hosts=automation-server.private.vpc,paxata-server.private.vpc'
+
+- name:  number of concurrent threads during adding datasets to project
+  lineinfile:
+    path: /usr/local/paxata/server/config/px.properties
+    regexp: '^[#]?px.pipeline.get.max.requests=.*$'
+    line: 'px.pipeline.get.max.requests=64'
+
+- name:  max number of waiting threads that can wait in the get queue at a time
+  lineinfile:
+    path: /usr/local/paxata/server/config/px.properties
+    regexp: '^[#]?px.pipeline.get.max.queue=.*$'
+    line: 'px.pipeline.get.max.queue=1000'
+
+- name:  number of concurrent threads during publishing project to Answerset
+  lineinfile:
+    path: /usr/local/paxata/server/config/px.properties
+    regexp: '^[#]?px.pipeline.publish.max.requests=.*$'
+    line: 'px.pipeline.publish.max.requests=64'
+
+- name:  max number of waiting threads that can wait in the publish queue at a time
+  lineinfile:
+    path: /usr/local/paxata/server/config/px.properties
+    regexp: '^[#]?px.pipeline.publish.max.queue=.*$'
+    line: 'px.pipeline.publish.max.queue=1000'
+
+- name: Set messaging local host
+  lineinfile:
+    path: "{{ paxata_home }}/config/px.properties"
+    regexp: '^[#]?px.messaging.local.host=.*$'
+    line: 'px.messaging.local.host=data-server.private.vpc'
+
+#- name: Set Pipeline point to local spark master
+#  lineinfile:
+#    path: /usr/local/paxata/pipeline/config/spark.properties
+#    regexp: '^[#]?master.url=.*$'
+#    line: 'master.url=spark://data-server.private.vpc:7077'
+
+- name: Add garbage collection settings to px defaults
+  blockinfile:
+    path: "{{ paxata_home }}/config/px-defaults.properties"
+    marker: "# {mark} Java Garbage Collection"
+    block: |
+      # Data Server Ansible
+      # To roll back GC changes, comment out the following lines
+      px.xx.+UseG1GC
+      px.xx.-UseStringDeduplication
+      px.xx.-UseCompressedOops
+      px.xx.+AlwaysPreTouch
+      px.xx.-OmitStackTraceInFastThrow
+      px.xx.InitiatingHeapOccupancyPercent=45
+      px.xx.MaxGCPauseMillis=500
+      #
+      # To roll back GC changes, comment out the previous px.xx properties, and leave these as-is
+      px.xx.MaxHeapSize=60g
+      px.xx.MetaspaceSize=256m
+      px.xx.MaxMetaspaceSize=512m

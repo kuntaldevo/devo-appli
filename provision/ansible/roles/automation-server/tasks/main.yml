@@ -1,0 +1,45 @@
+
+- name: Update Px.properties to point Data Server
+  lineinfile:
+    path: "{{ paxata_home }}/config/px.properties"
+    regexp: '^[#]?px.automation.scheduler.numThreads=.*$'
+    line: 'px.automation.scheduler.numThreads=9'
+
+
+- name:  Set the client ID
+  lineinfile:
+    path: /usr/local/paxata/server/config/px.properties
+    regexp: '^[#]?px.clientId=.*$'
+    line: 'px.clientId=automation-server'
+
+- name: Update px.properties to reference other HQ servers
+  lineinfile:
+    path: "{{ paxata_home }}/config/px.properties"
+    regexp: '^[#]?px.messaging.remote.hosts=.*$'
+    line: 'px.messaging.remote.hosts=data-server.private.vpc,paxata-server.private.vpc'
+
+- name: Set messaging local host
+  lineinfile:
+    path: "{{ paxata_home }}/config/px.properties"
+    regexp: '^[#]?px.messaging.local.host=.*$'
+    line: 'px.messaging.local.host=automation-server.private.vpc'
+
+- name: Add garbage collection settings to px defaults
+  blockinfile:
+    path: "{{ paxata_home }}/config/px-defaults.properties"
+    marker: "# {mark} Java Garbage Collection"
+    block: |
+      # Data Server Ansible
+      # To roll back GC changes, comment out the following lines
+      px.xx.+UseG1GC
+      px.xx.+UseStringDeduplication
+      px.xx.+UseCompressedOops
+      px.xx.+AlwaysPreTouch
+      px.xx.-OmitStackTraceInFastThrow
+      px.xx.InitiatingHeapOccupancyPercent=45
+      px.xx.MaxGCPauseMillis=200
+      #
+      # To roll back GC changes, comment out the previous px.xx properties, and leave these as-is
+      px.xx.MaxHeapSize=30g
+      px.xx.MetaspaceSize=256m
+      px.xx.MaxMetaspaceSize=512m

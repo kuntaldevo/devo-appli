@@ -1,0 +1,4 @@
+---
+
+- name: Configure nginx.conf
+  import_tasks: update-nginx.conf.yml

@@ -1,0 +1,70 @@
+{
+  "variables": {
+    "scm-id": "{{env `SCM_SHA`}}",
+    "scm-branch": "{{env `SCM_BRANCH`}}",
+    "create-user": "{{env `SCM_USER`}}",
+    "project-root": "{{env `PROJECT_ROOT`}}",
+    "name": "Mongo Server",
+    "role": "mongo-server",
+    "playbook": "{{env `ANSIBLE_PLAYBOOK`}}",
+    "host-var-path":"{{env `HOST_VAR_PATH`}}",
+    "group-var-path":"{{env `GROUP_VAR_PATH`}}",
+    "region-id": "{{env `REGION_ID`}}",
+    "distro-id": "{{env `DISTRO_ID`}}",
+    "vpc-id": "{{env `VPC_ID`}}",
+    "subnet-id": "{{env `SUBNET_ID`}}"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "vpc_id":  "{{user `vpc-id`}}",
+    "subnet_id":  "{{user `subnet-id`}}",
+    "source_ami_filter": {
+      "filters": {
+        "tag:role": "base-server",
+        "tag:distro-id": "centos-7"
+      },
+      "owners": ["self"],
+      "most_recent": true
+    },
+    "region":  "{{user `region-id`}}",
+    "instance_type": "t2.medium",
+    "ssh_username": "centos",
+    "ami_name": "{{user `role`}} {{isotime | clean_resource_name}}",
+    "iam_instance_profile": "packer-build",
+    "tags": {
+      "Name": "{{user `name`}} {{user `distro-id`}}",
+      "distro-id": "{{user `distro-id`}}",
+      "role": "{{user `role`}}",
+      "playbook": "{{user `playbook`}}",
+      "scm-id": "{{user `scm-id`}}",
+      "scm-branch": "{{user `scm-branch`}}",
+      "create-timestamp": "{{isotime}}",
+      "create-user": "{{user `create-user`}}"
+    },
+    "run_tags": {
+      "Name": "Packer {{user `name`}} {{user `distro-id`}}",
+      "distro-id": "{{user `distro-id`}}",
+      "role": "{{user `role`}}",
+      "playbook": "{{user `playbook`}}",
+      "scm-id": "{{user `scm-id`}}",
+      "scm-branch": "{{user `scm-branch`}}",
+      "create-timestamp": "{{isotime}}",
+      "create-user": "{{user `create-user`}}"
+    }
+    }],
+    "provisioners": [
+      {
+        "type": "file",
+        "source": "bash_history",
+        "destination": "~/.bash_history"
+      },
+      {
+        "type": "ansible-local",
+        "playbook_dir": "{{user `project-root`}}/provision/ansible",
+        "playbook_file": "{{user `project-root`}}/provision/ansible/{{user `playbook`}}.yml",
+        "host_vars": "{{user `host-var-path`}}",
+        "group_vars": "{{user `group-var-path`}}",
+        "inventory_file": "inventory-file.yml"
+      }
+    ]
+  }

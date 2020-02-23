@@ -1,0 +1,16 @@
+---
+
+- name: Create Log directory
+  file:
+    path: "{{ pipeline_home }}/logs"
+    state: directory
+    owner: "{{ pipeline_user }}"
+    group: "{{ pipeline_user }}"
+
+- name: Update pipeline_home to be owned by the service user
+  file:
+    path: "{{ pipeline_home }}"
+    state: directory
+    owner: "{{ pipeline_user }}"
+    group: "{{ pipeline_user }}"
+    recurse: yes

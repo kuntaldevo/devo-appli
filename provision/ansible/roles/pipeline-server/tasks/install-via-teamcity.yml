@@ -1,0 +1,4 @@
+---
+- name: Get Pipeline Server from TeamCity
+  import_role:
+    name: repo-teamcity

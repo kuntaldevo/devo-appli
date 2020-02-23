@@ -1,0 +1,5 @@
+apiVersion: paxata.com/v1
+kind: PaxInstallation
+spec:
+  mongo:
+    databaseName: paxata

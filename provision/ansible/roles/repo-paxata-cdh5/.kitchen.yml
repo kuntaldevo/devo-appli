@@ -1,0 +1,17 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: ansible_playbook
+  hosts: test-kitchen
+  roles_path: ../../roles
+  require_chef_for_busser: false
+
+platforms:
+  - name: package-repos
+    driver_plugin: vagrant
+    driver_config:
+      box: paxata/server-base
+suites:
+  - name: default

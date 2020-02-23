@@ -1,0 +1,8 @@
+---
+
+#Possibly put variables here
+#major_version: 2020
+#minor_version: 1
+
+#TODO refactor this, not that we have libraries and other ways to get it etc.
+pre_release: true

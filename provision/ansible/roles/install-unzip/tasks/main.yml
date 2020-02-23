@@ -1,0 +1,5 @@
+---
+- name: Install Unzip via Yum
+  yum:
+    name: unzip
+    state: latest

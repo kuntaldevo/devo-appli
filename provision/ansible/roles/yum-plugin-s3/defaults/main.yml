@@ -1,0 +1,10 @@
+---
+#Archive Version
+yum_s3_archive: yum-s3-0.2.4-1.noarch.rpm
+
+#Paxata File Repo
+paxata_file_repo_s3: paxata-deployment
+
+# AWS Credentials
+pfr_aws_access_key: AKIAIBDL3W7YUQDJPFHA
+pfr_aws_secret_key: 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

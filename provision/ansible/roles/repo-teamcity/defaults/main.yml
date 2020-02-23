@@ -1,0 +1,14 @@
+---
+
+build_id:
+tag_id:
+branch_id:
+artifact_path: "?locator=pattern:*.rpm"
+
+teamcity_prefix: "http://tc.paxatadev.com/app/rest/builds/"
+teamcity_suffix: "/artifacts/{{artifact_path}}"
+teamcity_build: "buildType:(id:{{build_id}})"
+teamcity_branch: ",branch:($base64:{{branch_id | b64encode }})"
+teamcity_tag: ",tag:({{tag_id}})"
+#teamcity_api: http://tc.paxatadev.com/app/rest/builds/buildType:(id:{{build_id}})/artifacts/{{artifact_path}}
+#teamcity_api_branch: http://tc.paxatadev.com/app/rest/builds/buildType:(id:{{build_id}}),branch:($base64:{{branch_id | b64encode }})/artifacts/{{artifact_path}}

@@ -1,0 +1,13 @@
+---
+# For Paxata Server we can install Snapshots Or Releases
+
+- hosts: all
+  remote_user: centos
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Include Paxata-Server Role
+      include_role:
+        name: paxata-server
+
+        

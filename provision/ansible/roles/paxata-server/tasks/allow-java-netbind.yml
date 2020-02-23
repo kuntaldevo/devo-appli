@@ -1,0 +1,70 @@
+---
+
+- name: Get the Path to the Java we are using
+  command: which java
+  register: which_java
+
+- name: Get the Full canonical path to the java executable
+  command: realpath {{ which_java.stdout }}
+  register: realpath_java_exe
+
+- name: Create a Var that has standard out already parsed off
+  set_fact:
+    actual_java_exe: "{{realpath_java_exe.stdout}}"
+
+- name: Get the directory path of the Java EXE
+  command: dirname {{ actual_java_exe }}
+  register: dirname_java_exe
+
+- name: Create a Var that has Just the Dir
+  set_fact:
+    actual_java_exe_dir: "{{dirname_java_exe.stdout}}"
+
+
+- name: Allow Java and consequently Jetty to connect to privileged ports 80 and 443
+  capabilities:
+    path: "{{ actual_java_exe }}"
+    capability: cap_net_bind_service+ep
+    state: present
+
+### To fix the library issue I create the path to the lib and then create a link to it
+
+- name: Get the canonical path to the JRE
+  command: realpath /etc/alternatives/jre
+  register: realpath_jre
+
+- name: Create a Var that has JRE Dir
+  set_fact:
+    actual_jre_dir: "{{realpath_jre.stdout}}"
+
+
+
+#https://techblog.jeppson.org/2017/12/make-java-run-privileged-ports-centos-7/
+#https://superuser.com/questions/710253/allow-non-root-process-to-bind-to-port-80-and-443/892391
+#https://github.com/kaitoy/pcap4j/issues/63
+- name:  Setcap Breaks something, fix it here
+  file:
+    src: "{{ actual_jre_dir }}/lib/amd64/jli/libjli.so"
+    dest: "/usr/lib/libjli.so"
+    state: link
+    mode: 0777
+    force: yes
+
+
+- name: Update ldconfig
+  command: ldconfig
+
+#- name: copy java.conf to /etc/ld.so.conf.d
+#  copy:
+#    src: java.conf
+#    dest: /etc/ld.so.conf.d/java.conf
+#    owner: root
+#    group: root
+#    mode: 0644
+#    backup: yes
+#  register: java_conf
+
+
+#- name: run ldconfig
+#  command: /sbin/ldconfig
+#  when: java_conf.changed

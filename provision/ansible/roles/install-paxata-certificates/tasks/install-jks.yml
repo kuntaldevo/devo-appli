@@ -1,0 +1,15 @@
+---
+
+- name: Get Paxata Ninja JKS from S3
+  aws_s3:
+    bucket: paxata-secrets
+    object: star.paxata.ninja.jks
+    dest: /usr/local/paxata/ssl-cert/star.paxata.ninja.jks
+    mode: get
+
+- name: Get PaxataDev JKS from S3
+  aws_s3:
+    bucket: paxata-secrets
+    object: star.paxatadev.com.jks
+    dest: /usr/local/paxata/ssl-cert/star.paxatadev.com.jks
+    mode: get

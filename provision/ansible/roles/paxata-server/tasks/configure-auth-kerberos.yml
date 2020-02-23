@@ -1,0 +1,9 @@
+---
+
+- name: Create Directory to Store Kerberos Files
+  file:
+    path: /home/paxata/cdh5_7_kerb
+    state: directory
+    owner: paxata
+    group: paxata
+    mode: 0755

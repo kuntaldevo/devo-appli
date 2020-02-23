@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: restic
+  namespace: velero
+spec:
+  selector:
+    matchLabels:
+      name: restic
+  template:
+    spec:
+      tolerations:
+      - effect: "NoSchedule"
+        operator: "Exists"

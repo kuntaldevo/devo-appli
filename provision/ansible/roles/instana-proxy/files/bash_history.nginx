@@ -1,0 +1,5 @@
+sudo vi /etc/init.d/nginx
+tailf /usr/local/nginx/logs/debug.log
+sudo vi /etc/nginx/conf.d/default.conf
+sudo vi /etc/nginx/nginx.conf
+sudo service nginx status

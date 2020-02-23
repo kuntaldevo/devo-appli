@@ -1,0 +1,25 @@
+---
+
+- name:  Wait for Spark Cache
+  wait_for:
+    path: /mnt/cache/MOUNTED.txt
+    timeout: 5000
+
+
+- name: Create Temp Folder
+  file:
+    path: "/mnt/cache/tmp"
+    state: directory
+    mode: 0777
+
+- name: Create Work Folder
+  file:
+    path: "/mnt/cache/work"
+    state: directory
+    mode: 0777
+
+- name: Create Work Folder
+  file:
+    path: "/mnt/cache/cache"
+    state: directory
+    mode: 0777

@@ -1,0 +1,4 @@
+---
+dependencies:
+
+  - { role: library-s3-provisioner }

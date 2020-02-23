@@ -1,0 +1,5 @@
+---
+dependencies:
+  - { role: install-lsblk }
+  - { role: install-curl }
+  - { role: install-mdadm }

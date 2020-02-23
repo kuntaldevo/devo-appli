@@ -1,0 +1,23 @@
+
+
+plugins {
+
+  id 'java'
+  id 'com.google.cloud.tools.jib' version '1.5.0'
+}
+
+
+jib {
+  from {
+    image = 'openjdk:alpine'
+  }
+  to {
+    image = '011447054295.dkr.ecr.region.amazonaws.com/devops-application'
+    credHelper = 'ecr-login'
+    tags = ['tag2', 'latest']
+  }
+  container {
+  entrypoint = 'INHERIT'
+
+  }
+}

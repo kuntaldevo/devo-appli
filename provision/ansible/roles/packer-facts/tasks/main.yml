@@ -1,0 +1,20 @@
+---
+
+#Originally a way, I thought to be able to get the env variables that were used to invoke Packer
+#Didn't work to get Packer's env vars but it does write the existing facts to a file
+
+- name: Collect the Ansible Facts
+  setup:
+  register: packer_facts
+
+# create a directory if it doesn't exist
+- file:
+    path: /var/paxata
+    state: directory
+    mode: 0755
+
+- name: Write the facts to /var/paxata
+  copy:
+    content: "{{ packer_facts }}"
+    dest: /var/paxata/packer-facts.json
+    backup: yes

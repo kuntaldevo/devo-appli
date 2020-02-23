@@ -1,0 +1,13 @@
+allowVolumeExpansion: true
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: mongo-storage-class
+parameters:
+  encrypted: "true"
+  fsType: xfs
+  kmsKeyId: arn:aws:kms:us-east-1:365762923425:key/4c74ee95-f151-40c6-9789-89fe91700500
+  type: gp2
+provisioner: kubernetes.io/aws-ebs
+reclaimPolicy: Retain
+volumeBindingMode: Immediate

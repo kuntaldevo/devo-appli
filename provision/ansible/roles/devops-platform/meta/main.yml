@@ -1,0 +1,7 @@
+---
+  dependencies:
+    - { role: user-centos }
+
+    - { role: devops-git }
+    - { role: devops-terraform }
+    - { role: devops-packer }

@@ -1,0 +1,14 @@
+---
+
+- name:  Wait for all of the drives to be attached
+  wait_for:
+    path: /dev/{{item}}
+  with_items: "{{ volume_labels }}"
+
+- name: Run script to format and mount volumes
+  script: files/mount-cache.sh {{ volume_labels  | join(" ") }}
+  register: mount_cache_stdout
+
+- name: Output Standard Out from mount-cache.sh
+  debug:
+    msg: "{{ mount_cache_stdout.stdout_lines }}"

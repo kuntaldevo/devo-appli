@@ -1,0 +1,10 @@
+  brew_cask_packages:
+  brew_packages:
+    - 'awscli'
+    - 'gnu-getopt'
+    - 'git'
+    - 'jq'
+    - 'kubernetes-cli'
+    - 'oath-toolkit'
+    - 'packer'
+    - 'terraform'

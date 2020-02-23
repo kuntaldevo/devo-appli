@@ -1,0 +1,8 @@
+- hosts: all
+  remote_user: centos
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: The Primary Role
+      include_role:
+        name: per-instance-provisioner

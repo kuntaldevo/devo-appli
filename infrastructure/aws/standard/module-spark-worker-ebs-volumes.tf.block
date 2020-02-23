@@ -1,0 +1,27 @@
+
+
+
+module "spark-cache" {
+
+  source = "../module/ebs-volume"
+
+  instance-count = var.spark-worker-count
+  volume-count = "${var.spark-worker-cache-volume-count}"
+  volume-label = ["${module.spark-worker-volume-label.volume-labels}"]
+
+  #Pass in the Zone and the instance Ids of the Spark Workers to create and attach the volumes
+  zone = "${module.spark-worker.spark-worker-instance-zone}"
+  instance-id = "${module.spark-worker.spark-worker-instance-id}"
+
+  type = "gp2"
+  size = 100
+  iops = 9000
+
+#  size = 1024
+#  iops = 18000
+
+
+  # Tag Vars
+  tag-map = var.tag-map
+
+}

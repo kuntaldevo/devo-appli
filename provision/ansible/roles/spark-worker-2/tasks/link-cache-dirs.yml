@@ -1,0 +1,33 @@
+
+
+- name: Link the Work Dir
+  file:
+    src: "{{cache_root}}/work"
+    dest: "{{spark_work}}"
+    state: link
+    mode: 0777
+    force: yes
+
+- name: Link the Tmp Dir
+  file:
+    src: "{{cache_root}}/tmp"
+    dest: "{{spark_tmp}}"
+    state: link
+    mode: 0777
+    force: yes
+
+#I'm guessing this setting comes from the Pipeline some how
+
+- name: Creates directory
+  file:
+    path: /usr/local/paxata/pipeline/
+    state: directory
+    recurse: yes
+
+- name: Link the Cache Dir
+  file:
+    src: "{{cache_root}}/cache"
+    dest: "/usr/local/paxata/pipeline/cache"
+    state: link
+    mode: 0777
+    force: yes

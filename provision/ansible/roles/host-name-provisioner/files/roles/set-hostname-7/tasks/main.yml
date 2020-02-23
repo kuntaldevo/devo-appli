@@ -1,0 +1,10 @@
+---
+
+- name:  Set the host name as specified in the User Data
+  hostname:
+    name: "{{host_name}}"
+
+- name: Add Preserve Hostname True to cloud config
+  lineinfile:
+    path: "/etc/cloud/cloud.cfg"
+    line: 'preserve_hostname: true'

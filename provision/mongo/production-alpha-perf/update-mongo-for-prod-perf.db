@@ -1,0 +1,73 @@
+### mongo -u admin -p admin --authenticationDatabase admin
+
+use paxata
+
+// Disalbe pipeline progress because it was causing problems
+db.guardraillimits.updateMany({"guardRailTypeName": "guardrail.pipeline.progress.enabled", "resourceType": "tenants"}, {$set: {"value": false}})
+
+// Disable automation on global level
+db.guardraillimits.updateOne({"guardRailTypeName": "guardrail.automation.enabled", "resourceType": "global_default"}, {$set: {"value": false}})
+
+# disable automation for all tenants
+db.guardraillimits.updateMany({"guardRailTypeName": "guardrail.automation.enabled", "resourceType": "tenants"}, {$set: {"value": false}})
+
+// delete library row limits for tenants
+db.guardraillimits.deleteMany({guardRailTypeName: "guardrail.library.row.limit", resourceType: "tenants"})
+db.guardraillimits.deleteMany({guardRailTypeName: "guardrail.project.row.limit", resourceType: "tenants"})
+
+// enable automation for paxata-* tenants
+// var tenantIds = db.tenants.find( { name : /paxata-.*/ }, {"_id" : "true" } ).toArray()
+db.guardraillimits.updateOne({'tenantId' : '5ac8fce113ba4ca2b246e24f4ce3c5e0', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : 'cec073b3fdd94896a64764579e8e50b9', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '4dcb304f7d0d4b3fad62f01e4e1911e2', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '8cd39f6ab6de4d2895acb854ea1311ca', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : 'a72d5084e9d94a9587770b778fd296dd', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : 'c2d1e75917c442b6a7a6db98a02658bf', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : 'a1ec15cc134041c3939c63b1e8567faf', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '9c2c8225e2674fd6a20c188040033399', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '98e1e47b6109496d9d6b010ad0e58ff7', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '3fc2205372c9446bae5cc38de2b6152a', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '8ebaaa536c0f4d86ab7f03a452f68ba9', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '13345dea2f0542ac991fb21af8ea6e57', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '39ac2713045d43dc96984a59a3ef3be6', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '24583fbc520d43e7b2c43bbbd7d9a4c8', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '5ef6e5081f4a4494b4da29049ae67e03', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : 'fd0acf07d19c436a86b8673f233097ae', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : 'a13161b6377a4e5f88483d9242276d85', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '00aa45b2ddf14e4691c45d1e1907e90a', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '126dc451a08748eca836e805c0c16316', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '20543f5f4900458b92d60b98155e995f', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '04c1164d7ef049968fce17978a047ffb', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '1869bc43dc3145b89be1c5178e7efcbc', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '7b7dcb8c72df4d2da006544a0ce15f30', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '90c990535f194c55a6d58471131ec3fd', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '8bdc53bbdbff4ca7ad1d9999297e8e10', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '350ba72a89394217b9878c6072230536', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : 'e023cd15de8149548a8dc30741725040', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '46a4b441a11e4575b242356504a354f9', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '5a637eeb30ed4b6388be2064f28ef0bf', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '59f1ccd5291e4c2fa02513762f9991fa', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '182fd6e9fb6d45cda4394824c408b3b9', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : 'a128d3b3c3534dec9ecad93c638a3275', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '409578d853544cddb7937d7e20f7e943', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '840d2872df724224a3f248f30163b715', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '205bc1e8ec464a07845e1b2c96ca3c99', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '753bf09d7b9244d7bbe78d1b11002291', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '24856f3a398f4c328e41725663414bce', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : 'fde96edd8da8473bb1d9a3493f5c9a7e', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '75dc803fdab047528dc200c702e1610f', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+db.guardraillimits.updateOne({'tenantId' : '1b1be47904c0423ea0822280af612f4e', 'guardRailTypeName' : 'guardrail.automation.enabled', 'resourceType': 'tenants'}, {$set: {'value': true}})
+
+// Enable Batch Gateway
+db.guardraillimits.updateMany({ 'guardRailTypeName' : 'guardrail.batch.gateway.k8s.enabled', 'resourceType': 'global_default'}, {$set: {'value': true}})
+
+// Clear Gateway URLs
+db.guardraillimits.updateMany({ 'guardRailTypeName' : 'guardrail.batch.gateway.url', 'resourceType': 'global_default'}, {$set: {'value': "" }})
+
+// Clean out old Pipeline URLs per tenant
+db.tenants.updateMany({ }, {$set: {'pipelineUrl': "" }})
+
+
+
+// Example: Update the number of executors.
+//{ "_id" : "e5898f9d4ae343c3b3277278a8fe119c", "guardRailTypeName" : "guardrail.pipeline.url", "resourceType" : "global_default", "value" : "http://paxata-alpha-pipeline-proxy.paxata-alpha.svc.cluster.local:8800/?pp_inactivityThresholdMinutes=60&pp_numOfExecutors=10" }

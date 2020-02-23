@@ -1,0 +1,78 @@
+#!/bin/bash
+#
+# this script will attempt to detect any ephemeral drives on an EC2 node and create a RAID-0 stripe
+# mounted at /mnt. It should be run early on the first boot of the system.
+#
+# Beware, This script is NOT fully idempotent.
+#
+
+METADATA_URL_BASE="http://169.254.169.254/latest"
+
+#yum -y -d0 install mdadm curl
+
+ephemerals="$@"
+
+for e in $ephemerals; do
+  echo "Probing $e .."
+
+  device_name="$e"
+  device_path="/dev/$device_name"
+
+  # test that the device actually exists since you can request more ephemeral drives than are available
+  # for an instance type and the meta-data API will happily tell you it exists when it really does not.
+  if [ -b $device_path ]; then
+    echo "Detected ephemeral disk: $device_path"
+    drives="$drives $device_path"
+    ephemeral_count=$((ephemeral_count + 1 ))
+  else
+    echo "Ephemeral disk $e, $device_path is not present. skipping"
+  fi
+done
+
+if [ "$ephemeral_count" = 0 ]; then
+  echo "No ephemeral disk detected. exiting"
+  exit 0
+fi
+
+# ephemeral0 is typically mounted for us already. umount it here
+umount /mnt
+
+# overwrite first few blocks in case there is a filesystem, otherwise mdadm will prompt for input
+for drive in $drives; do
+  dd if=/dev/zero of=$drive bs=4096 count=1024
+done
+
+partprobe
+
+device_name="/dev/md0"
+
+if [[ "$ephemeral_count" > 1 ]]; then
+
+  mdadm --create --verbose $device_name --level=stripe -c256 --raid-devices=$ephemeral_count $drives
+  echo DEVICE $drives | tee /etc/mdadm.conf
+  mdadm --detail --scan | tee -a /etc/mdadm.conf
+  blockdev --setra 65536 $device_name
+  mkfs -t ext4 $device_name
+  mount -t ext4 -o noatime $device_name /mnt
+
+else
+  device_name=$drives
+  sudo mkfs -t ext4 $drives
+  mount -t ext4 -o noatime $drives /mnt
+fi
+
+
+# Remove xvdb/sdb from fstab
+chmod 777 /etc/fstab
+sed -i "/${DRIVE_SCHEME}b/d" /etc/fstab
+
+# Make raid appear on reboot
+echo "$device_name /mnt ext4 noatime 0 0" | tee -a /etc/fstab
+
+#Make some directories
+mkdir /mnt/cache
+chmod 777 /mnt/cache
+mkdir /mnt/work
+chmod 777 /mnt/work
+mkdir /mnt/tmp
+chmod 777 /mnt/tmp

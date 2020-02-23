@@ -1,0 +1,13 @@
+- name: Add the server IP to a security group so we can connect to Nexus
+  ec2_group:
+    name: example
+    description: an example EC2 group
+    vpc_id: vpc-3a3e3c53
+    region: us-east-2
+    aws_secret_key: AKIAIA5DGXFZSKWYY2PA
+    aws_access_key: V763SmNSQn5HTbH5VvZd2b8OCDULSTKoUe2WOeNa
+    rules:
+      - proto: tcp
+        from_port: 8081
+        to_port: 8081
+        cidr_ip: 0.0.0.0/0

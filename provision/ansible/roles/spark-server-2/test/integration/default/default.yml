@@ -1,0 +1,13 @@
+---
+# This Ansible playbook triggers the role that we desire
+
+- hosts: all
+  remote_user: centos
+  become: yes
+  become_method: sudo
+#  strategy: debug
+
+  vars:
+
+  roles:
+  - spark-worker

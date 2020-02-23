@@ -1,0 +1,6 @@
+---
+
+- name: Install Nginx OSS
+  yum:
+    name: nginx
+    state: latest

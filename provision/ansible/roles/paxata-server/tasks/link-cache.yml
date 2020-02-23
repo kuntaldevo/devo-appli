@@ -1,0 +1,8 @@
+
+- name: Create link paxata tmp
+  file:
+    src: "/mnt/cache/tmp"
+    dest: "{{tmp_dir}}"
+    state: link
+    mode: 0777
+    force: yes

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+  labels:
+    app: myapp
+spec:
+  containers:
+  - name: myapp-container
+    image: 011447054295.dkr.ecr.us-west-2.amazonaws.com/devops-application:latest
+    command: ['sh', '-c', 'echo Hello Devops! && sleep 3600']

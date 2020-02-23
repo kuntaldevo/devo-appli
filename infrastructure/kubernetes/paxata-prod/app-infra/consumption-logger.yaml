@@ -1,0 +1,77 @@
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: consumption-logger
+
+---
+
+apiVersion: v1
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJkdHIucGF4YXRhZGV2LmNvbSI6eyJ1c2VybmFtZSI6Ims4cyIsInBhc3N3b3JkIjoibm94cW85LWphd2p5dy1HYWdzYWIiLCJlbWFpbCI6ImRsZXZpbmdlckBwYXhhdGEuY29tIiwiYXV0aCI6ImF6aHpPbTV2ZUhGdk9TMXFZWGRxZVhjdFIyRm5jMkZpIn19fQ==
+kind: Secret
+metadata:
+  name: dtr-auth
+  namespace: consumption-logger
+type: kubernetes.io/dockerconfigjson
+
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: consumption-logger
+  namespace: consumption-logger
+imagePullSecrets:
+  - name: dtr-auth
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: consumption-logger
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: consumption-logger
+  namespace: consumption-logger
+subjects:
+  - kind: ServiceAccount
+    name: consumption-logger
+    namespace: consumption-logger
+roleRef:
+  kind: ClusterRole
+  name: consumption-logger
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: consumption-logger
+  name: consumption-logger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: consumption-logger
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: consumption-logger
+    spec:
+      serviceAccountName: consumption-logger
+      containers:
+        - name: consumption-logger
+          image: dtr.paxatadev.com/paxata/pr_consumption-logger:2019.1.pr.2019.1_service-pack-development
+          imagePullPolicy: Always

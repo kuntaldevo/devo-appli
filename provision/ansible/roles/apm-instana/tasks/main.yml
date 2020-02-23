@@ -1,0 +1,15 @@
+
+- command: test -e /opt/instana    # or use -r if you're too particular.
+  register: instana_installed
+  ignore_errors: yes
+
+- name: Install Instana
+  import_tasks: download-and-install.yml
+  when: instana_installed.rc != 0
+
+- name: Configure Instana
+  import_tasks: configure-instana.yml
+  when: instana_installed.rc != 0
+
+- debug: msg="Instana appears to be installed already, skipping"
+  when: instana_installed.rc == 0

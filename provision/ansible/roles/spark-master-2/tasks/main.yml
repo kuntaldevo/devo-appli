@@ -1,0 +1,10 @@
+---
+
+- name: Turn the spark installation into a spark master
+  import_tasks: install-service.yml
+
+- name: Turn the spark installation into a spark master
+  import_tasks: install-spark-env.sh.yml
+
+- name: Enable the Spark Master to start on boot
+  import_tasks: enable-autostart.yml

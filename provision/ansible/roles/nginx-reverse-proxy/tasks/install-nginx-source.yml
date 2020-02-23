@@ -1,0 +1,67 @@
+---
+
+- name: Make sure wget is available
+  yum:
+    name: wget
+    state: latest
+
+- name: Make PCRE source is available
+  yum:
+    name: pcre-devel
+    state: latest
+
+- name: Make sure unzip is available
+  yum:
+    name: unzip
+    state: latest
+
+- name: Get the Version of Nninx installed so we can get the correct source
+  shell: rpm -qa nginx --qf "%{VERSION}\n"
+  register: rpm_qa_nginx
+
+- name: Get the Version of Nninx installed so we can get the correct source
+  set_fact:
+    nginx_version: "{{rpm_qa_nginx.stdout}}"
+
+- name: download matching source for version {{ nginx_version }}
+  get_url:
+    url: https://nginx.org/download/nginx-{{ nginx_version }}.tar.gz
+    dest: /tmp/nginx-src.tar.gz
+    validate_certs: no
+
+- name: Extract nginx source
+  unarchive:
+    src: /tmp/nginx-src.tar.gz
+    dest: /tmp
+
+- name: Download the HTTP Sub plugin that allows Reg-Ex
+  get_url:
+    url: https://github.com/yaoweibin/ngx_http_substitutions_filter_module/archive/master.zip
+    dest: /tmp/ngx_http_substitutions_filter_module.zip
+    validate_certs: no
+
+- name: Extract plugin source
+  unarchive:
+    src: /tmp/ngx_http_substitutions_filter_module.zip
+    dest: /tmp
+
+- name: Overwrite the config file to make the project be dynamic
+  copy:
+    src: config
+    dest: /tmp/ngx_http_substitutions_filter_module-master/config
+    backup: yes
+
+- name: Configure to Build the plugin
+  shell: ./configure --with-compat --add-dynamic-module=../ngx_http_substitutions_filter_module-master/
+  args:
+    chdir: /tmp/nginx-{{ nginx_version }}
+
+- name: Make the Module
+  shell: make modules
+  args:
+    chdir: /tmp/nginx-{{ nginx_version }}
+
+- name: Copy the module to Nginx
+  shell: sudo cp objs/ngx_http_subs_filter_module.so /etc/nginx/modules/
+  args:
+    chdir: /tmp/nginx-{{ nginx_version }}

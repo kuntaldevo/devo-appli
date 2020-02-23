@@ -1,0 +1,7 @@
+cd /usr/lib/spark/conf
+tailf -1000 /var/log/spark/spark-root-org.apache.spark.deploy.master.Master-1-spark-master.private.vpc.out
+curl localhost:8080
+sudo service spark-master status
+lsof -i -P -n | grep LISTEN
+journalctl -ex
+systemctl status spark-master -l

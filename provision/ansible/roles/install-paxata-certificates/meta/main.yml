@@ -1,0 +1,4 @@
+---
+dependencies:
+#  - { role: install-s3-vault }
+  - { role: install-github-deploy-key }

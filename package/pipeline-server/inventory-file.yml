@@ -1,0 +1,13 @@
+# Pipeline (now) requires a installation of Spark to provide the correct JARs
+# Therefore I will use the group mechanism and make a PipeLine Server be in the
+# pipline-server group as well as the spark-server group
+all:
+  hosts:
+    pipeline-server
+  children:
+    aws:
+      hosts:
+        pipeline-server:
+    spark-server:
+      hosts:
+        pipeline-server:

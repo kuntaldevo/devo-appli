@@ -1,0 +1,11 @@
+all:
+  hosts:
+    spark-worker
+  children:
+    aws:
+      hosts:
+        spark-worker:
+    spark-server:
+      hosts:
+        spark-worker:
+          

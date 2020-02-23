@@ -1,0 +1,13 @@
+---
+
+- name: Validate server_role is set
+  assert:
+      that:
+        - "region_id != '' "
+      msg: "region-id in user-data is required"
+
+- name: Add the region to monitor which is the same region this server is in
+  lineinfile:
+    path: /opt/instana/agent/bin/setenv
+    insertafter: '#!/bin/sh'
+    line: "export INSTANA_AWS_REGION_CONFIG={{region_id}}"

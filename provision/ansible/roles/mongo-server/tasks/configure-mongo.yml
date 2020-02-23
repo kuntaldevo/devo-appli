@@ -1,0 +1,16 @@
+---
+- name: configure mongod.conf
+  copy:
+    src: "mongod.conf"
+    dest: "/etc/mongod.conf"
+    owner: root
+    group: root
+    mode: 0755
+    backup: true
+
+- name: create data directory for mongodb
+  file:
+    path: "/data/db"
+    state: directory
+    owner: mongod
+    group: mongod

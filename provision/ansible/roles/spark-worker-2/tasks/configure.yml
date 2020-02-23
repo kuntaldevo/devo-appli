@@ -1,0 +1,47 @@
+---
+- name: Copy Basic Spark-Env.sh
+  copy:
+    src: spark-env.sh
+    dest: /usr/lib/spark/conf/spark-env.sh
+    owner: root
+    group: root
+    mode: 0755
+    backup: true
+
+
+- name: Copy wait-for-spark-cache.sh
+  copy:
+    src: pax-wait-for-spark-cache.sh
+    dest: /usr/lib/spark/sbin/pax-wait-for-spark-cache.sh
+    owner: root
+    group: root
+    mode: 0755
+    backup: true
+
+
+- name: Copy wait for Spark master.sh
+  copy:
+    src: pax-wait-for-spark-master.sh
+    dest: /usr/lib/spark/sbin/pax-wait-for-spark-master.sh
+    owner: root
+    group: root
+    mode: 0755
+    backup: true
+
+- name: Copy Pax's Start Slave.sh
+  copy:
+    src: pax-start-slave.sh
+    dest: /usr/lib/spark/sbin/pax-start-slave.sh
+    owner: root
+    group: root
+    mode: 0755
+    backup: true
+
+- name: Copy clean /var/log/spark
+  copy:
+    src: pax-clean-spark-logs.sh
+    dest: /usr/lib/spark/sbin/pax-clean-spark-logs.sh
+    owner: root
+    group: root
+    mode: 0755
+    backup: true

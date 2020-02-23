@@ -1,0 +1,50 @@
+# Gradle
+.gradle/
+
+#Kubernetes
+.kube/
+
+
+#Kustomize Work Dir
+infrastructure/kustomize/.workdir
+application/.workdir
+
+
+#Linux
+nohup.out
+
+#MacOs
+.DS_Store
+
+#Packer
+ec2_amazon-ebs.pem
+
+#Terraform
+.terraform
+*.tfstate
+*.tfstate.backup
+.terraform.tfstate.lock.info
+
+# Terraform Shell Resource module
+exitstatus.???????????????????
+stderr.???????????????????
+stdout.???????????????????
+
+# Terraform Dynamic backend
+remote_config_file.tf
+
+
+# Test Kitchen
+.kitchen/
+
+#Vagrant
+.vagrant/
+*.box
+
+#Vault
+private.key
+
+# Velero
+infrastructure/kustomize/resource/velero/build/credentials-velero
+
+application/logs/*

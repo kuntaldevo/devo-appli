@@ -1,0 +1,23 @@
+[Unit]
+Description=Apache Spark Master
+After=network.target
+After=systemd-user-sessions.service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=root
+Type=forking
+ExecStartPre=rm -rf /var/log/spark/*.*
+ExecStart=/usr/lib/spark/sbin/start-master.sh
+ExecStop=/usr/lib/spark/sbin/stop-master.sh
+ExecReload=/usr/lib/spark/sbin/stop-master.sh
+ExecReload=/usr/lib/spark/sbin/start-master.sh
+TimeoutSec=30
+Restart= on-failure
+RestartSec= 30
+StartLimitInterval=350
+StartLimitBurst=10
+
+[Install]
+WantedBy=multi-user.target

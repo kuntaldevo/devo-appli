@@ -1,0 +1,26 @@
+plugins {
+  id "com.bmuschko.docker-remote-api" version "5.0.0"
+  id "com.patdouble.awsecr" version "0.5.2"
+}
+
+docker {
+    registryCredentials {
+      url = 'https://011447054295.dkr.ecr.us-west-2.amazonaws.com/devops-application'
+    }
+}
+
+
+// Import task types
+import com.bmuschko.gradle.docker.tasks.image.*
+
+// Use task types
+task buildImage(type: DockerBuildImage) {
+    inputDir = file('../automatic')
+    tags.add('011447054295.dkr.ecr.us-west-2.amazonaws.com/devops-application:latest')
+}
+
+// Use task types
+task pushImage(type: DockerPushImage) {
+    dependsOn buildImage
+    imageName = '011447054295.dkr.ecr.us-west-2.amazonaws.com/devops-application:latest'
+}

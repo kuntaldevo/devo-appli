@@ -1,0 +1,22 @@
+---
+
+- name: Copy Instana's Config file
+  copy:
+    src: configuration.yaml
+    dest: "{{instana_config}}"
+    mode: 0644
+    backup: true
+
+- name: Enable WebSocket Instrumentation for Paxata-Servers
+  blockinfile:
+    path: "{{instana_config}}"
+    marker: "# {mark} Enable Java Instrumentation"
+    block: |2
+      com.instana.plugin.javatrace:
+        instrumentation:
+          enabled: true
+          opentracing: false
+          sdk:
+            packages:
+              - 'com.paxata.frontend.trace.instana'
+  when: (inventory_hostname == "paxata-server") or ( inventory_hostname == "pipeline-server" )

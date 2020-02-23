@@ -1,0 +1,22 @@
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- instana-agent.yaml
+
+# Make sure Instana gets scheduled on all nodes.
+# Add Configuration
+patchesStrategicMerge:
+- patch-toleration-all-nodes.yaml
+- patch-agent-configuration.yaml
+- patch-customer-key.yaml
+- patch-instana-env.yaml
+vars:
+- name: CLUSTER-NAME
+  objref:
+    kind: ConfigMap
+    name: source-vars
+    apiVersion: v1
+  fieldref:
+    fieldpath: data.CLUSTER-NAME

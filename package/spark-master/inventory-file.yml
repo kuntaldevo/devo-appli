@@ -1,0 +1,10 @@
+all:
+  hosts:
+    spark-master
+  children:
+    aws:
+      hosts:
+        spark-master:
+    spark-server:
+      hosts:
+        spark-master:

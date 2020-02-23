@@ -1,0 +1,14 @@
+---
+
+- name: Create Paxata Certificate Directory
+  file:
+    path: /usr/local/paxata/ssl-cert
+    state: directory
+    mode: 0755
+    recurse: yes
+
+- name: Get the SSL Certificates from the Vault and install them
+  import_tasks: install-certs.yml
+
+- name: Get the JKS from the S3 private secrets
+  import_tasks: install-jks.yml

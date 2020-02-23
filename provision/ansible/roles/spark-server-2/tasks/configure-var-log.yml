@@ -1,0 +1,22 @@
+
+# Spark Logs dir doesn't exist yet becuase spark has not been started yet
+- name: Create Spark Logs Dir
+  file:
+    path: "/usr/lib/spark/logs"
+    state: directory
+    mode: 0777
+
+
+- name: Create Link for spark Logs
+  file:
+    src: "/usr/lib/spark/logs"
+    dest: "/var/log/spark"
+    state: link
+    mode: 0777
+
+- name: Create Link for spark Logs
+  file:
+    src: "/usr/lib/spark/logs"
+    dest: "/var/log/paxata"
+    state: link
+    mode: 0777

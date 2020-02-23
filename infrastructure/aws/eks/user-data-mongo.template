@@ -1,0 +1,8 @@
+
+### NOTE: Be sure to have the "Common" User data pre-pended
+
+
+/etc/eks/bootstrap.sh '${cluster-name}' \
+    --kubelet-extra-args \
+    "--node-labels=\"paxata.com/role-id\"=mongo-server,\"kubernetes.io/role\"=mongo-server \
+     --register-with-taints=dedicated=mongo-server:NoSchedule"

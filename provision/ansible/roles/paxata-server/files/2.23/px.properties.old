@@ -1,0 +1,24 @@
+###
+### Mongo
+###
+mongo.hosts=mongo-server-0:27017
+
+mongo.database=paxata
+
+mongo.authentication.cr.username=paxatadmin
+mongo.authentication.cr.password=password
+
+###
+### The passwords for the stores
+###
+px.ssl.keystore.password=OBF:1lfg1i9a1mme1ri71z0f1ri71mig1i6o1lc2
+px.ssl.truststore.password=OBF:1lfg1i9a1mme1ri71z0f1ri71mig1i6o1lc2
+
+
+###
+### Pipeline
+###
+#The Pipeline Server, Default Port 8090
+px.pipeline.url=http://pipeline-server:8090
+#Passed to the Pipeline Server, where to find the library Default Port 9080
+px.library.url=http://paxata-server:9080/library

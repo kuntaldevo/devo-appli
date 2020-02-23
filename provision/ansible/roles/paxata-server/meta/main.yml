@@ -1,0 +1,12 @@
+---
+dependencies:
+  - { role: provider-os-specific }
+
+  - { role: install-openjdk-8}
+  - { role: ssh-private-vpc }
+  - { role: host-name-provisioner }
+  - { role: paxata-server-provisioner }
+  - { role: mount-cache-provisioner }
+  - { role: install-paxata-certificates }
+###Optional
+  - { role: apm-instana }

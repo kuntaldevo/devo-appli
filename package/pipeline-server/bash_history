@@ -1,0 +1,4 @@
+cd /usr/local/paxata/pipeline/config
+tailf -1000 /var/log/pipeline/pipeline.log
+curl localhost:4040
+sudo service paxata-pipeline status

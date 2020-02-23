@@ -1,0 +1,11 @@
+---
+
+- name: add Mongo CE repo
+  template:
+    src: repo-mongo-ce.repo.j2
+    dest: /etc/yum.repos.d/repo-mongo-ce.repo
+
+- name: install mongodb {{mongodb_version}}
+  yum:
+    name: mongodb-org-{{mongodb_version}}
+    state: present
